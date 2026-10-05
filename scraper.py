@@ -1,7 +1,8 @@
+
 import os
 import json
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from statistics import mean
 
 import requests
@@ -25,7 +26,7 @@ REQUEST_DELAY = 0.25
 
 
 # ============================================================
-# KONTROL
+# API KONTROL
 # ============================================================
 
 if not API_KEY:
@@ -41,46 +42,24 @@ HEADERS = {
 
 
 # ============================================================
-# SADECE BU LİGLER
-# ============================================================
-
-ALLOWED_LEAGUES = {
-    "NBA",
-    "EUROLEAGUE",
-    "EURO LEAGUE",
-    "BASKETBALL EUROLEAGUE",
-    "TURKIYE BSL",
-    "TURKEY BSL",
-    "BSL",
-    "TBSL",
-    "SUPER LIG",
-    "SUPER LIGI",
-    "TURKEY - BSL",
-    "TÜRKIYE BSL",
-}
-
-
-# ============================================================
 # CACHE
 # ============================================================
 
 TEAM_GAMES_CACHE = {}
 
-LEAGUE_CACHE = {}
-
 
 # ============================================================
-# YARDIMCI
+# METİN NORMALİZASYONU
 # ============================================================
 
 def normalize(text):
+
     if text is None:
         return ""
 
     text = str(text).strip().upper()
 
     replacements = {
-        "İ": "I",
         "İ": "I",
         "Ş": "S",
         "Ğ": "G",
@@ -100,19 +79,70 @@ def normalize(text):
     return " ".join(text.split())
 
 
+# ============================================================
+# API İSTEĞİ
+# ============================================================
+
+def api_get(endpoint, params=None):
+
+    try:
+
+        response = requests.get(
+            API_BASE + endpoint,
+            headers=HEADERS,
+            params=params,
+            timeout=30
+        )
+
+        remaining = response.headers.get(
+            "x-ratelimit-requests-remaining"
+        )
+
+        if remaining is not None:
+            print(
+                f"   📊 Kalan API hakkı: {remaining}"
+            )
+
+        response.raise_for_status()
+
+        data = response.json()
+
+        time.sleep(REQUEST_DELAY)
+
+        return data
+
+    except requests.RequestException as e:
+
+        print(
+            f"   ❌ API hatası: {e}"
+        )
+
+        return None
+
+    except ValueError:
+
+        print(
+            "   ❌ API geçerli JSON döndürmedi."
+        )
+
+        return None
+
+
+# ============================================================
+# LİG FİLTRESİ
+# ============================================================
+
 def is_allowed_league(league):
+
     if not league:
         return False
 
     name = normalize(
-        league.get("name")
-        or league.get("league")
-        or ""
+        league.get("name", "")
     )
 
     country = normalize(
-        league.get("country")
-        or ""
+        league.get("country", "")
     )
 
     # --------------------------------------------------------
@@ -126,81 +156,35 @@ def is_allowed_league(league):
     # EUROLEAGUE
     # --------------------------------------------------------
 
-    compact = name.replace(" ", "")
-
-    if compact == "EUROLEAGUE":
+    if name in {
+        "EUROLEAGUE",
+        "EURO LEAGUE"
+    }:
         return True
 
     # --------------------------------------------------------
     # TÜRKİYE BSL
     # --------------------------------------------------------
 
-    if (
-        name in {
-            "BSL",
-            "TBSL",
-            "SUPER LIG",
-            "SUPER LIGI",
-            "TURKEY BSL",
-            "TURKIYE BSL",
-            "TURKEY - BSL",
-        }
-        and (
-            "TURKEY" in country
-            or "TURKIYE" in country
-            or "TÜRKIYE" in country
-            or country == ""
-        )
-    ):
+    turkey = country in {
+        "TURKEY",
+        "TURKIYE"
+    }
+
+    bsl_name = name in {
+        "BSL",
+        "TBSL",
+        "SUPER LIG",
+        "SUPER LIGI",
+        "TURKEY BSL",
+        "TURKEY - BSL",
+        "TURKIYE BSL"
+    }
+
+    if turkey and bsl_name:
         return True
 
     return False
-
-
-def safe_int(value):
-    try:
-        return int(value)
-    except Exception:
-        return None
-
-
-# ============================================================
-# API
-# ============================================================
-
-def api_get(endpoint, params=None):
-    url = API_BASE + endpoint
-
-    try:
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            params=params,
-            timeout=30
-        )
-
-        remaining = response.headers.get(
-            "x-ratelimit-requests-remaining"
-        )
-
-        if remaining is not None:
-            print(f"   📊 Kalan API hakkı: {remaining}")
-
-        response.raise_for_status()
-
-        data = response.json()
-
-        time.sleep(REQUEST_DELAY)
-
-        return data
-
-    except requests.RequestException as e:
-        print(f"   ❌ API hatası: {e}")
-        return None
-
-    except ValueError:
-        print("   ❌ API geçerli JSON döndürmedi.")
-        return None
 
 
 # ============================================================
@@ -209,10 +193,14 @@ def api_get(endpoint, params=None):
 
 def fetch_today_games():
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now().strftime(
+        "%Y-%m-%d"
+    )
 
     print()
-    print("📡 Bugünün basketbol maçları alınıyor...")
+    print(
+        "📡 Bugünün basketbol maçları alınıyor..."
+    )
 
     data = api_get(
         "/games",
@@ -225,37 +213,58 @@ def fetch_today_games():
     if not data:
         return []
 
-    response = data.get("response", [])
+    response = data.get(
+        "response",
+        []
+    )
 
-    print(f"📦 API toplam {len(response)} maç döndürdü.")
+    print(
+        f"📦 API toplam "
+        f"{len(response)} maç döndürdü."
+    )
 
-    allowed = []
+    games = []
 
     for game in response:
 
-        league = game.get("league") or {}
+        league = game.get(
+            "league"
+        ) or {}
 
-        league_name = league.get("name", "")
-        country = league.get("country", "")
-
-        if not is_allowed_league(league):
+        if not is_allowed_league(
+            league
+        ):
             continue
 
-        teams = game.get("teams") or {}
+        teams = game.get(
+            "teams"
+        ) or {}
 
-        home = teams.get("home") or {}
-        away = teams.get("away") or {}
+        home = teams.get(
+            "home"
+        ) or {}
 
-        if not home.get("id") or not away.get("id"):
+        away = teams.get(
+            "away"
+        ) or {}
+
+        if not home.get("id"):
             continue
 
-        status = game.get("status") or {}
+        if not away.get("id"):
+            continue
 
-        status_short = str(
-            status.get("short") or ""
-        ).upper()
+        status = game.get(
+            "status"
+        ) or {}
 
-        # Tamamlanmış eski maçları bugünkü analizden çıkar.
+        status_short = normalize(
+            status.get("short", "")
+        )
+
+        # Tamamlanmış / iptal edilmiş maçları
+        # bugünün analizine alma.
+
         if status_short in {
             "FT",
             "AOT",
@@ -263,45 +272,51 @@ def fetch_today_games():
             "ABD",
             "AWD",
             "POST",
-            "PST",
+            "PST"
         }:
             continue
 
-        allowed.append({
+        games.append({
             "id": game.get("id"),
 
             "date": game.get("date"),
 
-            "timestamp": game.get("timestamp"),
+            "timestamp": game.get(
+                "timestamp"
+            ),
 
-            "timezone": game.get("timezone"),
+            "league": league.get(
+                "name"
+            ),
 
-            "league_id": league.get("id"),
+            "country": league.get(
+                "country"
+            ),
 
-            "league": league_name,
-
-            "country": country,
+            "league_id": league.get(
+                "id"
+            ),
 
             "home": {
                 "id": home.get("id"),
                 "name": home.get("name"),
-                "logo": home.get("logo"),
+                "logo": home.get("logo")
             },
 
             "away": {
                 "id": away.get("id"),
                 "name": away.get("name"),
-                "logo": away.get("logo"),
+                "logo": away.get("logo")
             },
 
-            "status": status_short,
+            "status": status_short
         })
 
-    return allowed
+    return games
 
 
 # ============================================================
-# TAKIM MAÇLARI
+# TAKIM GEÇMİŞİ
 # ============================================================
 
 def get_team_games(team_id):
@@ -309,81 +324,30 @@ def get_team_games(team_id):
     if team_id in TEAM_GAMES_CACHE:
         return TEAM_GAMES_CACHE[team_id]
 
-    print(f"   🔎 Takım geçmişi: {team_id}")
-
-    # --------------------------------------------------------
-    # Önce team endpoint
-    # --------------------------------------------------------
+    print(
+        f"   🔎 Takım geçmişi: {team_id}"
+    )
 
     data = api_get(
         "/games",
         {
             "team": team_id,
-            "last": 100
+            "last": 20
         }
     )
 
-    games = []
+    if not data:
+        TEAM_GAMES_CACHE[team_id] = []
+        return []
 
-    if data:
-        games = data.get("response", []) or []
+    games = data.get(
+        "response",
+        []
+    ) or []
 
-    print(f"   📦 {len(games)} geçmiş maç bulundu.")
-
-    # --------------------------------------------------------
-    # API team= bazen boş dönebiliyor.
-    # Bu durumda son günleri tarıyoruz.
-    # --------------------------------------------------------
-
-    if not games:
-
-        print("   🔄 Alternatif geçmiş maç araması başlıyor...")
-
-        found = {}
-
-        today = datetime.now()
-
-        # Son 120 gün
-        for i in range(0, 120):
-
-            day = today - timedelta(days=i)
-
-            date_string = day.strftime("%Y-%m-%d")
-
-            data = api_get(
-                "/games",
-                {
-                    "date": date_string,
-                    "timezone": TIMEZONE
-                }
-            )
-
-            if not data:
-                continue
-
-            for game in data.get("response", []) or []:
-
-                teams = game.get("teams") or {}
-
-                home = teams.get("home") or {}
-                away = teams.get("away") or {}
-
-                if (
-                    str(home.get("id")) == str(team_id)
-                    or
-                    str(away.get("id")) == str(team_id)
-                ):
-                    found[str(game.get("id"))] = game
-
-            if len(found) >= 15:
-                break
-
-        games = list(found.values())
-
-        print(
-            f"   📦 Alternatif aramada "
-            f"{len(games)} maç bulundu."
-        )
+    print(
+        f"   📦 {len(games)} geçmiş maç bulundu"
+    )
 
     TEAM_GAMES_CACHE[team_id] = games
 
@@ -391,64 +355,60 @@ def get_team_games(team_id):
 
 
 # ============================================================
-# MAÇ TAMAMLANDI MI?
+# MAÇ TAMAMLANMIŞ MI?
 # ============================================================
 
 def is_finished(game):
 
-    status = game.get("status") or {}
+    status = game.get(
+        "status"
+    ) or {}
 
-    short = str(
-        status.get("short") or ""
-    ).upper()
+    value = normalize(
+        status.get("short", "")
+    )
 
-    return short in {
+    return value in {
         "FT",
         "AOT"
     }
 
 
 # ============================================================
-# TARİH
-# ============================================================
-
-def game_date(game):
-
-    value = game.get("date")
-
-    if not value:
-        return ""
-
-    try:
-        return value[:10]
-    except Exception:
-        return ""
-
-
-# ============================================================
-# SKOR
+# SKORLAR
 # ============================================================
 
 def get_scores(game):
 
-    scores = game.get("scores") or {}
+    scores = game.get(
+        "scores"
+    ) or {}
 
-    home_score = scores.get("home")
-    away_score = scores.get("away")
+    home = scores.get(
+        "home"
+    )
 
-    if isinstance(home_score, dict):
-        home_score = home_score.get("total")
+    away = scores.get(
+        "away"
+    )
 
-    if isinstance(away_score, dict):
-        away_score = away_score.get("total")
+    if isinstance(home, dict):
+        home = home.get(
+            "total"
+        )
 
-    home_score = safe_int(home_score)
-    away_score = safe_int(away_score)
+    if isinstance(away, dict):
+        away = away.get(
+            "total"
+        )
 
-    if home_score is None or away_score is None:
+    try:
+        home = int(home)
+        away = int(away)
+    except:
         return None, None
 
-    return home_score, away_score
+    return home, away
 
 
 # ============================================================
@@ -457,7 +417,9 @@ def get_scores(game):
 
 def get_last_home_games(team_id):
 
-    games = get_team_games(team_id)
+    games = get_team_games(
+        team_id
+    )
 
     result = []
 
@@ -466,21 +428,37 @@ def get_last_home_games(team_id):
         if not is_finished(game):
             continue
 
-        teams = game.get("teams") or {}
+        teams = game.get(
+            "teams"
+        ) or {}
 
-        home = teams.get("home") or {}
+        home = teams.get(
+            "home"
+        ) or {}
 
-        if str(home.get("id")) != str(team_id):
+        if str(
+            home.get("id")
+        ) != str(team_id):
             continue
 
-        home_score, away_score = get_scores(game)
+        home_score, away_score = get_scores(
+            game
+        )
 
-        if home_score is None or away_score is None:
+        if home_score is None:
+            continue
+
+        if away_score is None:
             continue
 
         result.append({
-            "date": game_date(game),
+            "date": (
+                game.get("date")
+                or ""
+            )[:10],
+
             "points_for": home_score,
+
             "points_against": away_score
         })
 
@@ -498,7 +476,9 @@ def get_last_home_games(team_id):
 
 def get_last_away_games(team_id):
 
-    games = get_team_games(team_id)
+    games = get_team_games(
+        team_id
+    )
 
     result = []
 
@@ -507,21 +487,37 @@ def get_last_away_games(team_id):
         if not is_finished(game):
             continue
 
-        teams = game.get("teams") or {}
+        teams = game.get(
+            "teams"
+        ) or {}
 
-        away = teams.get("away") or {}
+        away = teams.get(
+            "away"
+        ) or {}
 
-        if str(away.get("id")) != str(team_id):
+        if str(
+            away.get("id")
+        ) != str(team_id):
             continue
 
-        home_score, away_score = get_scores(game)
+        home_score, away_score = get_scores(
+            game
+        )
 
-        if home_score is None or away_score is None:
+        if home_score is None:
+            continue
+
+        if away_score is None:
             continue
 
         result.append({
-            "date": game_date(game),
+            "date": (
+                game.get("date")
+                or ""
+            )[:10],
+
             "points_for": away_score,
+
             "points_against": home_score
         })
 
@@ -537,21 +533,21 @@ def get_last_away_games(team_id):
 # GÜVEN
 # ============================================================
 
-def calculate_confidence(sample_count):
+def calculate_confidence(count):
 
-    if sample_count >= 5:
+    if count >= 5:
         return 85
 
-    if sample_count == 4:
+    if count == 4:
         return 80
 
-    if sample_count == 3:
+    if count == 3:
         return 75
 
-    if sample_count == 2:
+    if count == 2:
         return 65
 
-    if sample_count == 1:
+    if count == 1:
         return 55
 
     return 0
@@ -566,67 +562,66 @@ def analyze_game(game):
     home = game["home"]
     away = game["away"]
 
-    home_id = home["id"]
-    away_id = away["id"]
-
     print()
     print(
-        f"[ANALİZ] {home['name']} - {away['name']}"
+        f"🏀 {home['name']} - "
+        f"{away['name']}"
     )
 
     print(
-        f"   🏆 {game['league']} "
-        f"({game['country']})"
+        f"   🏆 {game['league']}"
     )
 
-    # --------------------------------------------------------
-    # HOME
-    # --------------------------------------------------------
-
-    home_games = get_last_home_games(home_id)
+    home_games = get_last_home_games(
+        home["id"]
+    )
 
     print(
-        f"   🏠 Son {LAST_GAMES} ev maçı: "
+        f"   🏠 Son 5 ev maçı: "
         f"{len(home_games)}"
     )
 
-    # --------------------------------------------------------
-    # AWAY
-    # --------------------------------------------------------
-
-    away_games = get_last_away_games(away_id)
+    away_games = get_last_away_games(
+        away["id"]
+    )
 
     print(
-        f"   ✈️ Son {LAST_GAMES} deplasman maçı: "
+        f"   ✈️ Son 5 deplasman maçı: "
         f"{len(away_games)}"
     )
 
-    if not home_games or not away_games:
+    if not home_games:
+        print(
+            "   ⚠️ Ev sahibi geçmişi yok."
+        )
+        return None
 
-        print("   ⚠️ Yeterli veri yok.")
-
+    if not away_games:
+        print(
+            "   ⚠️ Deplasman geçmişi yok."
+        )
         return None
 
     # --------------------------------------------------------
     # ORTALAMALAR
     # --------------------------------------------------------
 
-    home_for_avg = mean(
+    home_for = mean(
         x["points_for"]
         for x in home_games
     )
 
-    home_against_avg = mean(
+    home_against = mean(
         x["points_against"]
         for x in home_games
     )
 
-    away_for_avg = mean(
+    away_for = mean(
         x["points_for"]
         for x in away_games
     )
 
-    away_against_avg = mean(
+    away_against = mean(
         x["points_against"]
         for x in away_games
     )
@@ -636,13 +631,13 @@ def analyze_game(game):
     # --------------------------------------------------------
 
     expected_home = (
-        home_for_avg +
-        away_against_avg
+        home_for +
+        away_against
     ) / 2
 
     expected_away = (
-        away_for_avg +
-        home_against_avg
+        away_for +
+        home_against
     ) / 2
 
     match_total = (
@@ -650,17 +645,21 @@ def analyze_game(game):
         expected_away
     )
 
-    quarter_avg = match_total / 4
+    first_half = (
+        match_total / 2
+    )
 
-    first_half = match_total / 2
+    quarter_avg = (
+        match_total / 4
+    )
 
-    sample_count = min(
+    games = min(
         len(home_games),
         len(away_games)
     )
 
     confidence = calculate_confidence(
-        sample_count
+        games
     )
 
     print(
@@ -729,43 +728,48 @@ def analyze_game(game):
             2
         ),
 
-        "games": sample_count,
+        "games": games,
 
-        "confidence": confidence,
-
-        "home_sample": home_games,
-
-        "away_sample": away_games
+        "confidence": confidence
     }
 
 
 # ============================================================
-# DATA.JSON
+# DATA.JSON OKU
 # ============================================================
 
-def load_existing_data():
+def load_data():
 
-    if not os.path.exists(DATA_FILE):
+    if not os.path.exists(
+        DATA_FILE
+    ):
         return {}
 
     try:
+
         with open(
             DATA_FILE,
             "r",
             encoding="utf-8"
         ) as f:
+
             data = json.load(f)
 
         if isinstance(data, dict):
             return data
 
     except Exception as e:
+
         print(
             f"⚠️ data.json okunamadı: {e}"
         )
 
     return {}
 
+
+# ============================================================
+# DATA.JSON KAYDET
+# ============================================================
 
 def save_data(data):
 
@@ -784,7 +788,7 @@ def save_data(data):
 
 
 # ============================================================
-# ANA
+# ANA PROGRAM
 # ============================================================
 
 def main():
@@ -797,10 +801,11 @@ def main():
     print("=" * 65)
     print("🏀 BASKETBOL ANALİZ SİSTEMİ")
     print("=" * 65)
-    print(f"📅 Tarih: {today}")
     print(
-        "🏆 Ligler: "
-        "NBA + EuroLeague + Türkiye BSL"
+        f"📅 Tarih: {today}"
+    )
+    print(
+        "🏆 Ligler: NBA + EuroLeague + Türkiye BSL"
     )
     print(
         "🏠 Ev sahibi: Son 5 ev maçı"
@@ -814,25 +819,32 @@ def main():
 
     print()
     print(
-        f"🎯 NBA + EuroLeague + BSL: "
-        f"{len(games)} maç"
+        f"🎯 Uygun liglerden maç: "
+        f"{len(games)}"
     )
 
     if not games:
 
         print(
-            "⚠️ Bugün analiz edilecek "
-            "uygun maç bulunamadı."
+            "⚠️ Bugün NBA, EuroLeague "
+            "veya Türkiye BSL maçı bulunamadı."
         )
 
-        return
+        # Bugünün kaydını boş olarak tut.
+        data = load_data()
 
-    results = []
+        data[today] = []
+
+        save_data(data)
+
+        return
 
     print(
         f"📊 Analiz edilecek maç: "
         f"{len(games)}"
     )
+
+    results = []
 
     for index, game in enumerate(
         games,
@@ -841,35 +853,53 @@ def main():
 
         print()
         print(
-            f"[{index}/{len(games)}] "
-            f"{game['home']['name']} - "
-            f"{game['away']['name']}"
+            f"[{index}/{len(games)}]"
         )
 
-        result = analyze_game(game)
+        result = analyze_game(
+            game
+        )
 
         if result:
-            results.append(result)
+            results.append(
+                result
+            )
+
+    # --------------------------------------------------------
+    # DATA.JSON
+    # --------------------------------------------------------
+
+    data = load_data()
+
+    data[today] = results
+
+    save_data(data)
 
     print()
     print("=" * 65)
+
+    if results:
+
+        print(
+            f"✅ {len(results)} maç analiz edildi."
+        )
+
+    else:
+
+        print(
+            "⚠️ Analiz üretilebilen maç yok."
+        )
+
     print(
-        f"✅ Analiz tamamlandı: "
-        f"{len(results)} maç"
+        f"💾 data.json → {today}"
     )
+
     print("=" * 65)
 
-    existing = load_existing_data()
 
-    existing[today] = results
-
-    save_data(existing)
-
-    print(
-        f"💾 data.json güncellendi: "
-        f"{today}"
-    )
-
+# ============================================================
+# ÇALIŞTIR
+# ============================================================
 
 if __name__ == "__main__":
     main()
