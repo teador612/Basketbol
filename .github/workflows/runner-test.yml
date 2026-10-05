@@ -1,15 +1,21 @@
-name: Runner Test
+name: Python Test
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test
+      - name: Repository indir
+        uses: actions/checkout@v4
+
+      - name: Python kontrol
         run: |
-          echo "RUNNER CALISTI"
-          date
-          uname -a
+          python --version
+          pip --version
+          python -c "import requests; print('REQUESTS OK')"
