@@ -1,484 +1,975 @@
-import asyncio
 import json
 import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
-from playwright.async_api import async_playwright
+
+from playwright.sync_api import sync_playwright
+
+
 URL = "https://www.iddaa.com/euroleague-avrupa-basketbol-ligi"
 OUTPUT = Path("data.json")
-# EuroLeague takımları
-TEAMS = [
-    "Anadolu Efes",
-    "AS Monaco",
-    "Baskonia",
-    "Bayern Münih",
-    "Dubai Basketball",
-    "Olimpia Milano",
-    "FC Barcelona",
-    "Fenerbahçe Beko",
-    "Hapoel IBI Tel Aviv",
-    "Kızılyıldız",
-    "LDLC ASVEL",
-    "Maccabi Rapyd Tel Aviv",
-    "Olympiakos",
-    "Panathinaikos",
-    "Paris Basketball",
-    "Partizan",
-    "Real Madrid",
-    "Valencia Basket",
-    "Virtus Bologna",
-    "Zalgiris Kaunas",
-]
-# Sayfada farklı yazılabilen isimler
-TEAM_ALIASES = {
+DEBUG_HTML = Path("iddaa-rendered.html")
+DEBUG_TEXT = Path("iddaa-rendered.txt")
+
+TODAY = datetime.now(timezone.utc).date().isoformat()
+
+
+# ============================================================
+# EUROLEGUE TAKIMLARI
+# ============================================================
+
+TEAMS = {
     "Anadolu Efes": [
         "Anadolu Efes",
         "A. Efes",
+        "Efes"
     ],
+
     "AS Monaco": [
         "AS Monaco",
-        "Monaco",
+        "Monaco"
     ],
+
     "Baskonia": [
         "Baskonia",
-        "Kosner Baskonia",
+        "Cazoo Baskonia",
+        "Baskonia Vitoria"
     ],
+
     "Bayern Münih": [
         "Bayern Münih",
         "Bayern Munich",
-        "B. Münih",
+        "B. Münih"
     ],
+
     "Dubai Basketball": [
         "Dubai Basketball",
         "Dubai BC",
-        "Dubai Basketball FC",
+        "Dubai"
     ],
+
     "Olimpia Milano": [
         "Olimpia Milano",
         "EA7 Emporio Armani Milan",
-        "EA7 Emporio Armani Milano",
+        "Milano",
+        "Olimpia"
     ],
+
     "FC Barcelona": [
         "FC Barcelona",
-        "Barcelona",
+        "Barcelona"
     ],
+
     "Fenerbahçe Beko": [
         "Fenerbahçe Beko",
-        "Fenerbahce",
-        "Fenerbahçe",
+        "Fenerbahce Beko",
         "Fenerbahce Tarfin",
+        "Fenerbahçe"
     ],
+
     "Hapoel IBI Tel Aviv": [
         "Hapoel IBI Tel Aviv",
         "Hapoel Tel Aviv",
-        "Hap.Tel Aviv",
+        "Hap.Tel Aviv"
     ],
+
     "Kızılyıldız": [
         "Kızılyıldız",
         "Crvena Zvezda",
-        "C.Zvezda",
+        "C.Zvezda"
     ],
+
     "LDLC ASVEL": [
         "LDLC ASVEL",
-        "ASVEL",
+        "ASVEL"
     ],
+
     "Maccabi Rapyd Tel Aviv": [
         "Maccabi Rapyd Tel Aviv",
         "Maccabi Tel Aviv",
-        "Maccabi",
+        "Maccabi"
     ],
+
     "Olympiakos": [
         "Olympiakos",
-        "Olympiacos",
+        "Olympiacos"
     ],
+
     "Panathinaikos": [
         "Panathinaikos",
-        "Panathinaikos AKTOR",
+        "Panathinaikos AKTOR"
     ],
+
     "Paris Basketball": [
         "Paris Basketball",
-        "Paris BC",
-        "Paris",
+        "Paris BC"
     ],
+
     "Partizan": [
-        "Partizan",
+        "Partizan"
     ],
+
     "Real Madrid": [
         "Real Madrid",
-        "R. Madrid",
+        "R. Madrid"
     ],
+
     "Valencia Basket": [
         "Valencia Basket",
-        "Valencia",
+        "Valencia"
     ],
+
     "Virtus Bologna": [
         "Virtus Bologna",
         "Virtus Olidata Bologna",
-        "V. Bologna",
+        "V. Bologna"
     ],
+
     "Zalgiris Kaunas": [
         "Zalgiris Kaunas",
-        "Zalgiris",
+        "Zalgiris"
     ],
 }
+
+
+# ============================================================
+# NORMALIZE
+# ============================================================
+
 def normalize(text):
-    if not text:
-        return ""
-    text = text.lower()
+    text = str(text or "").strip().lower()
+
     replacements = {
-        "ç": "c",
-        "ğ": "g",
-        "ı": "i",
-        "ö": "o",
         "ş": "s",
+        "ı": "i",
+        "ğ": "g",
         "ü": "u",
-        "â": "a",
-        "î": "i",
-        "û": "u",
+        "ö": "o",
+        "ç": "c",
+        "é": "e",
+        "á": "a",
+        "ã": "a",
     }
+
     for a, b in replacements.items():
         text = text.replace(a, b)
+
     text = re.sub(r"\s+", " ", text)
     return text.strip()
+
+
+TEAM_LOOKUP = {}
+
+for canonical, aliases in TEAMS.items():
+    for alias in aliases:
+        TEAM_LOOKUP[normalize(alias)] = canonical
+
+
 def find_team(text):
     n = normalize(text)
-    # Önce uzun isimlerden başla
-    candidates = []
-    for official, aliases in TEAM_ALIASES.items():
-        for alias in aliases:
-            a = normalize(alias)
-            if a and a in n:
-                candidates.append((len(a), official))
-    if not candidates:
-        return None
-    candidates.sort(reverse=True)
-    return candidates[0][1]
+
+    if n in TEAM_LOOKUP:
+        return TEAM_LOOKUP[n]
+
+    # Daha uzun alias'ları önce dene
+    aliases = sorted(
+        TEAM_LOOKUP.items(),
+        key=lambda x: len(x[0]),
+        reverse=True
+    )
+
+    for alias, canonical in aliases:
+        if len(alias) >= 6 and alias in n:
+            return canonical
+
+    return None
+
+
+# ============================================================
+# SKOR
+# ============================================================
+
 def parse_score(text):
     """
-    94 84
-    94-84
-    94 : 84
-    gibi skorları yakalar.
+    Sadece açık skor formatlarını kabul eder.
+
+    Örnek:
+        94 84
+        94-84
+        94 : 84
     """
-    patterns = [
-        r"\b(\d{2,3})\s*[-:]\s*(\d{2,3})\b",
-        r"\b(\d{2,3})\s+(\d{2,3})\b",
-    ]
-    for pattern in patterns:
-        m = re.search(pattern, text)
-        if m:
-            a = int(m.group(1))
-            b = int(m.group(2))
-            # Saatleri skor zannetme
-            if 0 <= a <= 200 and 0 <= b <= 200:
-                return a, b
-    return None, None
-def extract_date(text):
-    """
-    29 Sep 2026
-    30 Sep 2026
-    5 Oct 2026
-    gibi tarihleri yakalar.
-    """
-    patterns = [
-        r"\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})\b",
-        r"\b(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})\b",
-    ]
-    months = {
-        "Jan": 1,
-        "Feb": 2,
-        "Mar": 3,
-        "Apr": 4,
-        "May": 5,
-        "Jun": 6,
-        "Jul": 7,
-        "Aug": 8,
-        "Sep": 9,
-        "Oct": 10,
-        "Nov": 11,
-        "Dec": 12,
-        "January": 1,
-        "February": 2,
-        "March": 3,
-        "April": 4,
-        "May": 5,
-        "June": 6,
-        "July": 7,
-        "August": 8,
-        "September": 9,
-        "October": 10,
-        "November": 11,
-        "December": 12,
-    }
-    for pattern in patterns:
-        m = re.search(pattern, text, re.I)
-        if m:
-            day = int(m.group(1))
-            month = months[m.group(2).title()]
-            year = int(m.group(3))
-            return f"{year:04d}-{month:02d}-{day:02d}"
+
+    if not text:
+        return None
+
+    text = str(text).strip()
+
+    # 94 - 84
+    m = re.search(r"\b(\d{1,3})\s*[-:]\s*(\d{1,3})\b", text)
+
+    if m:
+        return {
+            "home": int(m.group(1)),
+            "away": int(m.group(2))
+        }
+
+    # 94 84
+    m = re.search(r"(?<!\d)(\d{2,3})\s+(\d{2,3})(?!\d)", text)
+
+    if m:
+        return {
+            "home": int(m.group(1)),
+            "away": int(m.group(2))
+        }
+
     return None
+
+
+# ============================================================
+# DURUM
+# ============================================================
+
 def detect_status(text):
     n = normalize(text)
-    if "ft" in n or "finished" in n or "tamamlandi" in n:
+
+    if any(x in n for x in [
+        "ft",
+        "finished",
+        "final",
+        "bitti"
+    ]):
         return "finished"
-    if (
-        "live" in n
-        or "canli" in n
-        or "1. yarı" in n
-        or "2. yarı" in n
-        or "quarter" in n
-    ):
+
+    if any(x in n for x in [
+        "live",
+        "canli",
+        "1q",
+        "2q",
+        "3q",
+        "4q",
+        "ot"
+    ]):
         return "live"
+
+    if any(x in n for x in [
+        "sch",
+        "scheduled",
+        "baslamadi"
+    ]):
+        return "scheduled"
+
     return "scheduled"
-def build_match(home, away, score_home, score_away, date, raw):
-    if score_home is not None and score_away is not None:
-        if score_home > score_away:
-            winner = "home"
-        elif score_away > score_home:
-            winner = "away"
-        else:
-            winner = "draw"
-    else:
-        winner = None
-    return {
-        "id": normalize(home) + "__" + normalize(away) + "__" + str(date),
+
+
+# ============================================================
+# TARİH
+# ============================================================
+
+MONTHS = {
+    "ocak": 1,
+    "subat": 2,
+    "şubat": 2,
+    "mart": 3,
+    "nisan": 4,
+    "mayis": 5,
+    "mayıs": 5,
+    "haziran": 6,
+    "temmuz": 7,
+    "agustos": 8,
+    "ağustos": 8,
+    "eylul": 9,
+    "eylül": 9,
+    "ekim": 10,
+    "kasim": 11,
+    "kasım": 11,
+    "aralik": 12,
+    "aralık": 12,
+}
+
+
+def extract_date(text, fallback=TODAY):
+    if not text:
+        return fallback
+
+    # 05.10.2026
+    m = re.search(
+        r"\b(\d{1,2})[./-](\d{1,2})[./-](20\d{2})\b",
+        text
+    )
+
+    if m:
+        d = int(m.group(1))
+        mo = int(m.group(2))
+        y = int(m.group(3))
+
+        try:
+            return f"{y:04d}-{mo:02d}-{d:02d}"
+        except Exception:
+            pass
+
+    # 5 October 2026
+    m = re.search(
+        r"\b(\d{1,2})\s+([A-Za-zÇĞİÖŞÜçğıöşü]+)\s+(20\d{2})\b",
+        text
+    )
+
+    if m:
+        d = int(m.group(1))
+        month_name = normalize(m.group(2))
+        y = int(m.group(3))
+
+        if month_name in MONTHS:
+            return f"{y:04d}-{MONTHS[month_name]:02d}-{d:02d}"
+
+    # 05/10
+    m = re.search(
+        r"\b(\d{1,2})[./-](\d{1,2})\b",
+        text
+    )
+
+    if m:
+        d = int(m.group(1))
+        mo = int(m.group(2))
+
+        try:
+            return f"{datetime.now().year:04d}-{mo:02d}-{d:02d}"
+        except Exception:
+            pass
+
+    return fallback
+
+
+# ============================================================
+# MAÇ BLOĞU
+# ============================================================
+
+def make_match(home, away, date, score=None, status="scheduled", source="iddaa.com"):
+    if home == away:
+        return None
+
+    item = {
+        "id": f"{date}_{normalize(home)}_{normalize(away)}",
         "league": "EuroLeague",
         "home": home,
         "away": away,
         "date": date,
         "score": {
-            "home": score_home,
-            "away": score_away,
+            "home": None,
+            "away": None
         },
-        "status": detect_status(raw),
-        "winner": winner,
-        "source": "iddaa.com",
+        "status": status,
+        "winner": None,
+        "source": source
     }
-async def get_page_text(page):
-    print("🌐 iddaa.com açılıyor...")
-    await page.goto(
-        URL,
-        wait_until="domcontentloaded",
-        timeout=90000,
-    )
-    print("✅ Sayfa açıldı")
-    # Next.js / Broadage widget'ın yüklenmesi için zaman tanı
-    await page.wait_for_timeout(8000)
-    # Widget'ın kendisini beklemeyi dene
+
+    if score:
+        item["score"] = score
+
+        if score["home"] > score["away"]:
+            item["winner"] = home
+
+        elif score["away"] > score["home"]:
+            item["winner"] = away
+
+        else:
+            item["winner"] = "draw"
+
+    return item
+
+
+# ============================================================
+# DOM'DAN GERÇEK FIXTURE SATIRLARINI BUL
+# ============================================================
+
+def extract_fixture_rows(page):
+    """
+    Broadage widget genellikle fixture bilgisini kendi DOM'u içinde
+    oluşturuyor.
+
+    Burada bütün sayfayı takım takım bölmek yerine:
+      - fixture alanlarını
+      - Broadage container'larını
+      - iframe'ları
+      ayrı ayrı tarıyoruz.
+    """
+
+    results = []
+
     selectors = [
         '[id*="DOM_element_id"]',
         '[class*="broadage"]',
-        '[class*="Broadage"]',
-        'iframe',
+        '[class*="fixture"]',
+        '[class*="Fixture"]',
+        '[class*="match"]',
+        '[class*="Match"]',
+        '[class*="event"]',
+        '[class*="Event"]',
     ]
+
+    seen = set()
+
     for selector in selectors:
         try:
-            count = await page.locator(selector).count()
-            if count:
-                print(f"🔎 {selector}: {count} adet")
+            elements = page.locator(selector).all()
+
+            for el in elements:
+                try:
+                    text = el.inner_text(timeout=1000).strip()
+                except Exception:
+                    continue
+
+                if not text:
+                    continue
+
+                if text in seen:
+                    continue
+
+                seen.add(text)
+
+                if len(text) > 20000:
+                    continue
+
+                results.append(text)
+
         except Exception:
-            pass
-    text = await page.locator("body").inner_text()
-    return text
-async def main():
+            continue
+
+    return results
+
+
+# ============================================================
+# METİN BLOĞUNU MAÇA ÇEVİR
+# ============================================================
+
+def parse_fixture_text(text):
+    matches = []
+
+    lines = [
+        x.strip()
+        for x in text.splitlines()
+        if x.strip()
+    ]
+
+    if len(lines) < 2:
+        return matches
+
+    current_date = TODAY
+
+    i = 0
+
+    while i < len(lines):
+
+        line = lines[i]
+
+        # Tarih satırı
+        possible_date = extract_date(line, None)
+
+        if possible_date:
+            current_date = possible_date
+
+        # Aynı satırda iki takım
+        found = []
+
+        for line_index in range(
+            max(0, i - 2),
+            min(len(lines), i + 3)
+        ):
+            team = find_team(lines[line_index])
+
+            if team and team not in found:
+                found.append(team)
+
+        # TAM OLARAK iki farklı takım bulduysak,
+        # aradaki küçük bloğu incele.
+        if len(found) == 2:
+
+            block_start = max(0, i - 2)
+            block_end = min(len(lines), i + 6)
+
+            block = "\n".join(lines[block_start:block_end])
+
+            score = parse_score(block)
+            status = detect_status(block)
+
+            home = found[0]
+            away = found[1]
+
+            match = make_match(
+                home,
+                away,
+                current_date,
+                score,
+                status
+            )
+
+            if match:
+                matches.append(match)
+
+        i += 1
+
+    return matches
+
+
+# ============================================================
+# SADECE GÜVENİLİR MAÇLARI FİLTRELE
+# ============================================================
+
+def validate_matches(matches):
+
+    valid = []
+    seen = set()
+
+    for m in matches:
+
+        if not m:
+            continue
+
+        home = m["home"]
+        away = m["away"]
+
+        if home not in TEAMS:
+            continue
+
+        if away not in TEAMS:
+            continue
+
+        if home == away:
+            continue
+
+        key = (
+            m["date"],
+            home,
+            away
+        )
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        valid.append(m)
+
+    return valid
+
+
+# ============================================================
+# SAYFAYI ÇEK
+# ============================================================
+
+def scrape():
+
     print("=" * 60)
     print("🏀 EUROLEAGUE SCRAPER")
     print("=" * 60)
-    print(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=True,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-            ],
+
+    print(
+        f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    )
+
+    all_texts = []
+
+    with sync_playwright() as p:
+
+        browser = p.chromium.launch(
+            headless=True
         )
-        page = await browser.new_page(
+
+        page = browser.new_page(
             viewport={
                 "width": 1440,
-                "height": 1000,
+                "height": 1200
             },
             locale="tr-TR",
+            timezone_id="Europe/Istanbul"
         )
+
+        print("🌐 iddaa.com açılıyor...")
+
+        page.goto(
+            URL,
+            wait_until="domcontentloaded",
+            timeout=60000
+        )
+
+        print("✅ Sayfa açıldı")
+
+        # Widget'ın JS ile oluşmasını bekle
+        time.sleep(8)
+
+        # Biraz aşağı kaydır.
+        # Broadage widget'ları lazy-load olabilir.
+        for _ in range(5):
+            page.mouse.wheel(0, 1000)
+            time.sleep(1)
+
+        page.mouse.wheel(0, -6000)
+
+        time.sleep(3)
+
+        # ----------------------------------------------------
+        # ANA SAYFA
+        # ----------------------------------------------------
+
         try:
-            text = await get_page_text(page)
-            print(f"📄 Sayfa metni: {len(text)} karakter")
-            # Debug için
-            Path("iddaa-rendered.txt").write_text(
-                text,
-                encoding="utf-8",
+            body_text = page.locator("body").inner_text(
+                timeout=5000
             )
-            print("📁 iddaa-rendered.txt oluşturuldu")
-            matches = []
-            lines = [
-                x.strip()
-                for x in text.splitlines()
-                if x.strip()
-            ]
-            current_date = None
-            for i, line in enumerate(lines):
-                possible_date = extract_date(line)
-                if possible_date:
-                    current_date = possible_date
-                # Bu satır veya yakınındaki birkaç satır içinde
-                # iki EuroLeague takımı arıyoruz.
-                block = " ".join(lines[max(0, i - 2): min(len(lines), i + 6)])
-                teams = []
-                for official in TEAM_ALIASES:
-                    if find_team(block) == official:
-                        if official not in teams:
-                            teams.append(official)
-                # Daha sağlam takım tespiti
-                found = []
-                for official, aliases in TEAM_ALIASES.items():
-                    for alias in aliases:
-                        if normalize(alias) in normalize(block):
-                            if official not in found:
-                                found.append(official)
-                if len(found) < 2:
-                    continue
-                # Aynı takımın iki kez yakalanmasını engelle
-                found = list(dict.fromkeys(found))
-                if len(found) < 2:
-                    continue
-                home = found[0]
-                away = found[1]
-                score_home, score_away = parse_score(block)
-                # Aynı maç için tarih yoksa o anki başlığı kullan
-                match_date = current_date
-                if not match_date:
-                    match_date = datetime.now().strftime("%Y-%m-%d")
-                raw = block
-                match = build_match(
-                    home,
-                    away,
-                    score_home,
-                    score_away,
-                    match_date,
-                    raw,
-                )
-                if not any(x["id"] == match["id"] for x in matches):
-                    matches.append(match)
-            # Eğer genel text parser yeterli sonuç vermediyse,
-            # DOM elemanlarını ayrıca tarıyoruz.
-            if len(matches) < 2:
-                print("⚠️ Metin taraması az maç buldu.")
-                print("🔎 DOM taraması başlıyor...")
-                elements = await page.locator(
-                    "div, li, article, section"
-                ).all()
-                for element in elements:
-                    try:
-                        txt = (await element.inner_text()).strip()
-                    except Exception:
-                        continue
-                    if not txt or len(txt) > 500:
-                        continue
-                    found = []
-                    for official, aliases in TEAM_ALIASES.items():
-                        for alias in aliases:
-                            if normalize(alias) in normalize(txt):
-                                if official not in found:
-                                    found.append(official)
-                    if len(found) < 2:
-                        continue
-                    found = list(dict.fromkeys(found))
-                    home = found[0]
-                    away = found[1]
-                    score_home, score_away = parse_score(txt)
-                    date = extract_date(txt)
-                    if not date:
-                        date = current_date
-                    if not date:
-                        date = datetime.now().strftime("%Y-%m-%d")
-                    match = build_match(
-                        home,
-                        away,
-                        score_home,
-                        score_away,
-                        date,
-                        txt,
-                    )
-                    if not any(x["id"] == match["id"] for x in matches):
-                        matches.append(match)
-            # Tarihe göre sırala
-            matches.sort(
-                key=lambda x: (
-                    x.get("date", ""),
-                    x.get("home", ""),
-                    x.get("away", ""),
-                )
+        except Exception:
+            body_text = ""
+
+        if body_text:
+            all_texts.append(
+                ("MAIN_PAGE", body_text)
             )
-            print()
-            print(f"🏀 Bulunan EuroLeague maçı: {len(matches)}")
-            for match in matches:
-                score = match["score"]
-                if (
-                    score["home"] is not None
-                    and score["away"] is not None
-                ):
-                    result = f'{score["home"]}-{score["away"]}'
-                else:
-                    result = "-"
+
+        # ----------------------------------------------------
+        # BROADAGE / FIXTURE DOM
+        # ----------------------------------------------------
+
+        fixture_texts = extract_fixture_rows(page)
+
+        print(
+            f'🔎 Broadage/fixture DOM bloğu: '
+            f'{len(fixture_texts)}'
+        )
+
+        for idx, text in enumerate(fixture_texts):
+            all_texts.append(
+                (f"FIXTURE_{idx}", text)
+            )
+
+        # ----------------------------------------------------
+        # IFRAMELAR
+        # ----------------------------------------------------
+
+        frames = page.frames
+
+        print(
+            f"🔎 iframe/frame: {len(frames)}"
+        )
+
+        for idx, frame in enumerate(frames):
+
+            if frame == page.main_frame:
+                continue
+
+            try:
+                frame_url = frame.url
+
                 print(
-                    f'  {match["date"]} | '
-                    f'{match["home"]} - {match["away"]} | '
-                    f'{result}'
+                    f"   iframe {idx}: {frame_url[:160]}"
                 )
-            if not matches:
-                print()
-                print("❌ Hiç EuroLeague maçı bulunamadı.")
-                print("📁 iddaa-rendered.txt dosyasını kontrol et.")
-                await browser.close()
-                return
-            # Tarihe göre grupla
-            output = {}
-            for match in matches:
-                date = match["date"]
-                if date not in output:
-                    output[date] = []
-                output[date].append(match)
-            # Mevcut dosya varsa geçmişi koru
-            old = {}
-            if OUTPUT.exists():
-                try:
-                    old = json.loads(
-                        OUTPUT.read_text(encoding="utf-8")
+
+                text = frame.locator(
+                    "body"
+                ).inner_text(
+                    timeout=3000
+                )
+
+                if text.strip():
+                    all_texts.append(
+                        (
+                            f"IFRAME_{idx}",
+                            text
+                        )
                     )
-                    if not isinstance(old, dict):
-                        old = {}
-                except Exception:
-                    old = {}
-            # Yeni veriler mevcut tarihler için güncellensin,
-            # eski tarihler silinmesin.
-            for date, new_matches in output.items():
-                if date not in old:
-                    old[date] = new_matches
-                    continue
-                old_map = {
-                    x.get("id"): x
-                    for x in old[date]
-                    if isinstance(x, dict)
-                }
-                for match in new_matches:
-                    old_map[match["id"]] = match
-                old[date] = list(old_map.values())
-            OUTPUT.write_text(
-                json.dumps(
-                    old,
-                    ensure_ascii=False,
-                    indent=2,
-                ),
-                encoding="utf-8",
+
+            except Exception:
+                continue
+
+        # ----------------------------------------------------
+        # DEBUG
+        # ----------------------------------------------------
+
+        try:
+            DEBUG_HTML.write_text(
+                page.content(),
+                encoding="utf-8"
             )
-            print()
-            print(f"💾 {OUTPUT} yazıldı")
-            print(f"📦 Toplam tarih: {len(old)}")
-        finally:
-            await browser.close()
-    print()
-    print("✅ EUROLeague scraper tamamlandı.")
+        except Exception:
+            pass
+
+        debug_parts = []
+
+        for name, text in all_texts:
+            debug_parts.append(
+                f"\n\n================ {name} ================\n"
+            )
+            debug_parts.append(text)
+
+        DEBUG_TEXT.write_text(
+            "\n".join(debug_parts),
+            encoding="utf-8"
+        )
+
+        print(
+            f"📄 Toplanan metin: "
+            f"{sum(len(x[1]) for x in all_texts)} karakter"
+        )
+
+        browser.close()
+
+    # ========================================================
+    # PARSE
+    # ========================================================
+
+    raw_matches = []
+
+    for source_name, text in all_texts:
+
+        parsed = parse_fixture_text(text)
+
+        if parsed:
+            print(
+                f"   ✓ {source_name}: "
+                f"{len(parsed)} aday"
+            )
+
+        raw_matches.extend(parsed)
+
+    matches = validate_matches(raw_matches)
+
+    # ========================================================
+    # TARİHE GÖRE SIRALA
+    # ========================================================
+
+    matches.sort(
+        key=lambda x: (
+            x["date"],
+            x["home"],
+            x["away"]
+        )
+    )
+
+    # ========================================================
+    # DUPLICATE TEMİZLE
+    # ========================================================
+
+    unique = {}
+
+    for match in matches:
+
+        key = (
+            match["date"],
+            match["home"],
+            match["away"]
+        )
+
+        unique[key] = match
+
+    matches = list(unique.values())
+
+    print(
+        f"🏀 Bulunan gerçek EuroLeague maçı: "
+        f"{len(matches)}"
+    )
+
+    for match in matches:
+        score = match["score"]
+
+        if (
+            score["home"] is not None
+            and score["away"] is not None
+        ):
+            score_text = (
+                f'{score["home"]}-{score["away"]}'
+            )
+        else:
+            score_text = "-"
+
+        print(
+            f'  {match["date"]} | '
+            f'{match["home"]} - {match["away"]} | '
+            f'{score_text} | '
+            f'{match["status"]}'
+        )
+
+    return matches
+
+
+# ============================================================
+# ESKİ VERİYİ KORU
+# ============================================================
+
+def load_old_data():
+
+    if not OUTPUT.exists():
+        return {
+            "source": URL,
+            "updatedAt": datetime.now(
+                timezone.utc
+            ).isoformat(),
+            "matches": []
+        }
+
+    try:
+        data = json.loads(
+            OUTPUT.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        if not isinstance(data, dict):
+            raise ValueError()
+
+        return data
+
+    except Exception:
+        return {
+            "source": URL,
+            "updatedAt": datetime.now(
+                timezone.utc
+            ).isoformat(),
+            "matches": []
+        }
+
+
+# ============================================================
+# MERGE
+# ============================================================
+
+def save_data(new_matches):
+
+    old_data = load_old_data()
+
+    old_matches = old_data.get(
+        "matches",
+        []
+    )
+
+    merged = {}
+
+    # Önce eski veriler
+    for match in old_matches:
+
+        if not isinstance(match, dict):
+            continue
+
+        key = (
+            match.get("date"),
+            match.get("home"),
+            match.get("away")
+        )
+
+        if all(key):
+            merged[key] = match
+
+    # Yeni veriler üzerine yaz
+    for match in new_matches:
+
+        key = (
+            match["date"],
+            match["home"],
+            match["away"]
+        )
+
+        # Eski kaydı koruyarak güncelle
+        if key in merged:
+
+            old = merged[key]
+
+            # Yeni skor varsa güncelle
+            if (
+                match["score"]["home"] is not None
+                and match["score"]["away"] is not None
+            ):
+                old["score"] = match["score"]
+                old["winner"] = match["winner"]
+
+            old["status"] = match["status"]
+            old["source"] = match["source"]
+
+            merged[key] = old
+
+        else:
+            merged[key] = match
+
+    final_matches = list(
+        merged.values()
+    )
+
+    final_matches.sort(
+        key=lambda x: (
+            x.get("date", ""),
+            x.get("home", ""),
+            x.get("away", "")
+        )
+    )
+
+    result = {
+        "source": URL,
+        "league": "EuroLeague",
+        "updatedAt": datetime.now(
+            timezone.utc
+        ).isoformat(),
+        "matches": final_matches
+    }
+
+    OUTPUT.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    OUTPUT.write_text(
+        json.dumps(
+            result,
+            ensure_ascii=False,
+            indent=2
+        ),
+        encoding="utf-8"
+    )
+
+    print(
+        f"💾 data.json yazıldı"
+    )
+
+    print(
+        f"📦 Toplam maç: "
+        f"{len(final_matches)}"
+    )
+
+    print(
+        f"📆 Toplam tarih: "
+        f"{len(set(
+            x.get('date')
+            for x in final_matches
+            if x.get('date')
+        ))}"
+    )
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
 if __name__ == "__main__":
-    asyncio.run(main())
+
+    try:
+
+        matches = scrape()
+
+        if not matches:
+            print(
+                "⚠️ Gerçek fixture bulunamadı."
+            )
+            print(
+                "📁 iddaa-rendered.html ve "
+                "iddaa-rendered.txt oluşturuldu."
+            )
+
+            # Eski data.json'ı bozma
+            raise SystemExit(0)
+
+        save_data(matches)
+
+        print(
+            "✅ EuroLeague scraper tamamlandı."
+        )
+
+    except Exception as e:
+
+        print(
+            f"❌ SCRAPER HATASI: {e}"
+        )
+
+        raise
