@@ -2,7 +2,7 @@ name: Basketbol Veri Güncelleme
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/30 * * * *"
 
   workflow_dispatch:
 
@@ -14,26 +14,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Repo indir
+      - name: Repository indir
         uses: actions/checkout@v4
 
       - name: Python kur
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Gereksinimleri kur
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
 
       - name: Basketbol verilerini güncelle
         env:
-          API_SPORTS_KEY: ${{ secrets.API_SPORTS_KEY }}
-        run: python scraper.py
+          BALLDONTLIE_API_KEY: ${{ secrets.BALLDONTLIE_API_KEY }}
+        run: |
+          python scraper.py
+
+      - name: Veriyi kontrol et
+        run: |
+          echo "data.json:"
+          cat data.json
 
       - name: Değişiklikleri kaydet
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add data.json
-          git diff --cached --quiet || git commit -m "Basketbol verilerini güncelle"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "Değişiklik yok."
+          else
+            git commit -m "Basketbol verilerini güncelle"
+            git push
+          fi
