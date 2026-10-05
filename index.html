@@ -1,276 +1,1370 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basketbol Analiz Masası</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #0b0e11; color: #ffffff; padding: 20px; }
 
-        .container { max-width: 1200px; margin: 0 auto; }
-        
-        .header-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
+<meta charset="UTF-8">
 
-        .page-title { color: #ffffff; font-size: 20px; font-weight: bold; }
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-        /* TARİH SEÇİCİ */
-        .date-picker-container {
-            display: flex;
-            align-items: center;
-            background-color: #12161a;
-            border: 1px solid #1e2329;
-            border-radius: 8px;
-            padding: 6px 12px;
-            gap: 10px;
-        }
+<title>Basketbol Analiz Masası</title>
 
-        .date-btn {
-            background: none;
-            border: none;
-            color: #848e9c;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
+<style>
 
-        .date-btn:hover { background-color: #181d22; color: #fff; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+}
 
-        .date-input-wrapper {
-            display: flex;
-            align-items: center;
-            background-color: #181d22;
-            border: 1px solid #2b313a;
-            border-radius: 6px;
-            padding: 4px 10px;
-            cursor: pointer;
-        }
+body {
+    background: #0b0e11;
+    color: #fff;
+    padding: 20px;
+}
 
-        .calendar-icon { font-size: 14px; margin-right: 6px; }
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
 
-        input[type="date"] {
-            background: transparent;
-            border: none;
-            color: #38d39f;
-            font-weight: bold;
-            font-size: 14px;
-            outline: none;
-            cursor: pointer;
-        }
+/* HEADER */
 
-        /* GRID YAPISI */
-        .match-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 16px;
-        }
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
-        .match-card {
-            background-color: #12161a;
-            border: 1px solid #1e2329;
-            border-radius: 8px;
-            padding: 16px;
-            cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-        }
+.page-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+}
 
-        .match-card:hover { border-color: #38d39f; transform: translateY(-2px); }
+/* DATE */
 
-        .card-header { display: flex; justify-content: space-between; color: #848e9c; font-size: 11px; font-weight: 600; margin-bottom: 12px; }
-        .teams-box { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-        .team-line { display: flex; justify-content: space-between; font-size: 15px; font-weight: bold; }
+.date-picker-container {
+    display: flex;
+    align-items: center;
+    background: #12161a;
+    border: 1px solid #1e2329;
+    border-radius: 8px;
+    padding: 6px 12px;
+    gap: 10px;
+}
 
-        .totals-row {
-            display: flex;
-            justify-content: space-between;
-            background-color: #181d22;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #2b313a;
-        }
+.date-btn {
+    background: none;
+    border: none;
+    color: #848e9c;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
 
-        .total-item { text-align: center; }
-        .total-item .label { color: #848e9c; font-size: 10px; font-weight: bold; }
-        .total-item .val { font-size: 18px; font-weight: bold; margin-top: 2px; }
-        .highlight { color: #38d39f; }
+.date-btn:hover {
+    background: #181d22;
+    color: #fff;
+}
 
-        /* MODAL / DETAY EKRANI */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: none; justify-content: center; align-items: center; padding: 20px;
-            z-index: 999;
-        }
+.date-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #181d22;
+    border: 1px solid #2b313a;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
 
-        .modal-content {
-            background-color: #12161a; border: 1px solid #1e2329;
-            border-radius: 8px; width: 100%; max-width: 800px; padding: 24px;
-            position: relative;
-        }
+.calendar-icon {
+    font-size: 14px;
+    margin-right: 7px;
+}
 
-        .close-btn { position: absolute; top: 15px; right: 20px; color: #848e9c; font-size: 24px; cursor: pointer; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
-        .box { background: #181d22; border: 1px solid #2b313a; padding: 12px; border-radius: 6px; text-align: center; }
-        .box-title { color: #848e9c; font-size: 11px; font-weight: bold; }
-        .box-val { font-size: 24px; font-weight: bold; margin: 4px 0; }
-        .section-title { color: #848e9c; font-size: 11px; font-weight: bold; margin: 20px 0 10px 0; }
-    </style>
+input[type="date"] {
+    background: transparent;
+    border: none;
+    color: #38d39f;
+    font-weight: 700;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* STATUS */
+
+.status-bar {
+    background: #12161a;
+    border: 1px solid #1e2329;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 18px;
+    color: #848e9c;
+    font-size: 13px;
+}
+
+.status-bar strong {
+    color: #38d39f;
+}
+
+/* GRID */
+
+.match-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+/* CARD */
+
+.match-card {
+    background: #12161a;
+    border: 1px solid #1e2329;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition:
+        transform .2s,
+        border-color .2s;
+}
+
+.match-card:hover {
+    border-color: #38d39f;
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    color: #848e9c;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.confidence-badge {
+    color: #38d39f;
+    font-weight: 700;
+}
+
+.teams-box {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 16px;
+}
+
+.team-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.team-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.team-score {
+    color: #848e9c;
+    white-space: nowrap;
+}
+
+/* TOTALS */
+
+.totals-row {
+    display: flex;
+    justify-content: space-between;
+    background: #181d22;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #2b313a;
+}
+
+.total-item {
+    flex: 1;
+    text-align: center;
+}
+
+.total-item .label {
+    color: #848e9c;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.total-item .val {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+.highlight {
+    color: #38d39f;
+}
+
+/* MODAL */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #12161a;
+    border: 1px solid #1e2329;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    color: #848e9c;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.modal-league {
+    color: #848e9c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.modal-teams {
+    margin: 8px 35px 20px 0;
+    font-size: 22px;
+}
+
+/* ANALYSIS */
+
+.grid-3 {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.box {
+    background: #181d22;
+    border: 1px solid #2b313a;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.box-title {
+    color: #848e9c;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.box-val {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 5px 0;
+}
+
+.section-title {
+    color: #848e9c;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 20px 0 10px;
+}
+
+/* EMPTY */
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #848e9c;
+    padding: 60px 20px;
+    background: #12161a;
+    border: 1px solid #1e2329;
+    border-radius: 8px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+    }
+
+    .header-bar {
+        align-items: stretch;
+    }
+
+    .page-title {
+        font-size: 18px;
+    }
+
+    .date-picker-container {
+        justify-content: center;
+    }
+
+    .match-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .modal-content {
+        padding: 18px;
+    }
+
+    .modal-teams {
+        font-size: 18px;
+    }
+
+}
+
+</style>
+
 </head>
+
 <body>
 
 <div class="container">
+
     <div class="header-bar">
-        <div class="page-title">Analiz Edilen Maçlar</div>
-        
+
+        <div class="page-title">
+            🏀 Basketbol Analiz Masası
+        </div>
+
         <div class="date-picker-container">
-            <button class="date-btn" onclick="changeDate(-1)">&lt;</button>
-            <div class="date-input-wrapper" onclick="openCalendarPicker()">
-                <span class="calendar-icon">📅</span>
-                <input type="date" id="match-date" onchange="loadMatches()">
+
+            <button
+                class="date-btn"
+                onclick="changeDate(-1)"
+            >
+                ‹
+            </button>
+
+            <div class="date-input-wrapper">
+
+                <span class="calendar-icon">
+                    📅
+                </span>
+
+                <input
+                    type="date"
+                    id="match-date"
+                    onchange="renderMatches()"
+                >
+
             </div>
-            <button class="date-btn" onclick="changeDate(1)">&gt;</button>
+
+            <button
+                class="date-btn"
+                onclick="changeDate(1)"
+            >
+                ›
+            </button>
+
         </div>
+
     </div>
 
-    <div class="match-grid" id="match-grid"></div>
-</div>
 
-<div class="modal-overlay" id="modal-overlay">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div style="color:#848e9c; font-size:12px; font-weight:bold;" id="m-league"></div>
-        <h2 style="margin: 8px 0 20px 0;" id="m-teams"></h2>
-
-        <div class="section-title">BASKETBOL MAÇ ANALİZİ</div>
-        <div class="grid-3">
-            <div class="box"><div class="box-title">1. PERİYOT</div><div class="box-val" id="m-q1"></div></div>
-            <div class="box"><div class="box-title">2. PERİYOT</div><div class="box-val" id="m-q2"></div></div>
-            <div class="box"><div class="box-title">İLK YARI</div><div class="box-val" id="m-iy"></div></div>
-        </div>
-        <div class="grid-3">
-            <div class="box"><div class="box-title">3. PERİYOT</div><div class="box-val" id="m-q3"></div></div>
-            <div class="box"><div class="box-title">4. PERİYOT</div><div class="box-val" id="m-q4"></div></div>
-            <div class="box"><div class="box-title">MAÇ TOPLAMI</div><div class="box-val highlight" id="m-total"></div></div>
-        </div>
-
-        <div class="section-title">TAKIM BAZLI TAHMİNLER</div>
-        <div class="grid-3">
-            <div class="box"><div class="box-title">EV SAHİBİ</div><div class="box-val" id="m-home"></div></div>
-            <div class="box"><div class="box-title">DEPLASMAN</div><div class="box-val" id="m-away"></div></div>
-            <div class="box"><div class="box-title">BEKLENEN TOPLAM</div><div class="box-val highlight" id="m-calc-total"></div></div>
-        </div>
+    <div
+        class="status-bar"
+        id="status-bar"
+    >
+        Veriler yükleniyor...
     </div>
+
+
+    <div
+        class="match-grid"
+        id="match-grid"
+    ></div>
+
 </div>
+
+
+<!-- MODAL -->
+
+<div
+    class="modal-overlay"
+    id="modal-overlay"
+    onclick="closeModalOutside(event)"
+>
+
+    <div
+        class="modal-content"
+        onclick="event.stopPropagation()"
+    >
+
+        <span
+            class="close-btn"
+            onclick="closeModal()"
+        >
+            ×
+        </span>
+
+        <div
+            class="modal-league"
+            id="m-league"
+        ></div>
+
+        <h2
+            class="modal-teams"
+            id="m-teams"
+        ></h2>
+
+
+        <div class="section-title">
+            BASKETBOL MAÇ ANALİZİ
+        </div>
+
+
+        <div class="grid-3">
+
+            <div class="box">
+                <div class="box-title">
+                    1. PERİYOT
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-q1"
+                ></div>
+            </div>
+
+
+            <div class="box">
+                <div class="box-title">
+                    2. PERİYOT
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-q2"
+                ></div>
+            </div>
+
+
+            <div class="box">
+                <div class="box-title">
+                    İLK YARI
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-iy"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="grid-3">
+
+            <div class="box">
+                <div class="box-title">
+                    3. PERİYOT
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-q3"
+                ></div>
+            </div>
+
+
+            <div class="box">
+                <div class="box-title">
+                    4. PERİYOT
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-q4"
+                ></div>
+            </div>
+
+
+            <div class="box">
+                <div class="box-title">
+                    MAÇ TOPLAMI
+                </div>
+
+                <div
+                    class="box-val highlight"
+                    id="m-total"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="section-title">
+            TAKIM BAZLI TAHMİNLER
+        </div>
+
+
+        <div class="grid-3">
+
+            <div class="box">
+
+                <div class="box-title">
+                    EV SAHİBİ
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-home"
+                ></div>
+
+            </div>
+
+
+            <div class="box">
+
+                <div class="box-title">
+                    DEPLASMAN
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-away"
+                ></div>
+
+            </div>
+
+
+            <div class="box">
+
+                <div class="box-title">
+                    BEKLENEN TOPLAM
+                </div>
+
+                <div
+                    class="box-val highlight"
+                    id="m-calc-total"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-title">
+            VERİ KALİTESİ
+        </div>
+
+
+        <div class="grid-3">
+
+            <div class="box">
+
+                <div class="box-title">
+                    EV GEÇMİŞİ
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-home-games"
+                ></div>
+
+            </div>
+
+
+            <div class="box">
+
+                <div class="box-title">
+                    DEP GEÇMİŞİ
+                </div>
+
+                <div
+                    class="box-val"
+                    id="m-away-games"
+                ></div>
+
+            </div>
+
+
+            <div class="box">
+
+                <div class="box-title">
+                    GÜVEN
+                </div>
+
+                <div
+                    class="box-val highlight"
+                    id="m-confidence"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <script>
-    let rawData = null;
-    let activeMatches = [];
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const dateInput = document.getElementById('match-date');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.value = today;
-        loadMatches();
-    });
+let rawData = {};
 
-    function openCalendarPicker() {
-        const dateInput = document.getElementById('match-date');
-        if (dateInput.showPicker) {
-            dateInput.showPicker();
-        } else {
-            dateInput.focus();
+let activeMatches = [];
+
+
+/* =====================================================
+   TÜRKİYE TARİHİ
+===================================================== */
+
+function getTodayString() {
+
+    const now = new Date();
+
+    const parts =
+        new Intl.DateTimeFormat(
+            "en-CA",
+            {
+                timeZone: "Europe/Istanbul",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }
+        ).formatToParts(now);
+
+    const obj = {};
+
+    parts.forEach(
+        part => {
+            if (part.type !== "literal") {
+                obj[part.type] = part.value;
+            }
         }
+    );
+
+    return `${obj.year}-${obj.month}-${obj.day}`;
+}
+
+
+/* =====================================================
+   BAŞLANGIÇ
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const input =
+            document.getElementById(
+                "match-date"
+            );
+
+        input.value =
+            getTodayString();
+
+        fetchData();
+
+    }
+);
+
+
+/* =====================================================
+   DATA.JSON
+===================================================== */
+
+async function fetchData() {
+
+    const grid =
+        document.getElementById(
+            "match-grid"
+        );
+
+    const status =
+        document.getElementById(
+            "status-bar"
+        );
+
+    try {
+
+        status.innerHTML =
+            "⏳ <strong>data.json</strong> yükleniyor...";
+
+        const response =
+            await fetch(
+                "data.json?t=" +
+                Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+        }
+
+        rawData =
+            await response.json();
+
+
+        if (
+            !rawData ||
+            typeof rawData !== "object"
+        ) {
+
+            throw new Error(
+                "data.json formatı geçersiz."
+            );
+
+        }
+
+
+        const dateCount =
+            Array.isArray(rawData)
+                ? 1
+                : Object.keys(rawData).length;
+
+
+        status.innerHTML =
+            `✅ <strong>${dateCount}</strong> tarih verisi yüklendi`;
+
+
+        renderMatches();
+
     }
 
-    async function loadMatches() {
-        const grid = document.getElementById('match-grid');
-        const selectedDate = document.getElementById('match-date').value;
+    catch (error) {
 
-        try {
-            if (!rawData) {
-                const res = await fetch('data.json?v=' + new Date().getTime());
-                rawData = await res.json();
-            }
+        console.error(error);
 
-            // Hem Dizi [] hem Obje {} Formatlarını Güvenle Destekler
-            if (Array.isArray(rawData)) {
-                activeMatches = rawData;
-            } else {
-                activeMatches = rawData[selectedDate] || [];
-            }
+        status.innerHTML =
+            "❌ <strong>data.json</strong> yüklenemedi.";
 
-            grid.innerHTML = '';
+        grid.innerHTML =
+            `
+            <div class="empty">
+                <div style="font-size:30px;margin-bottom:10px;">
+                    ⚠️
+                </div>
 
-            if (!activeMatches || activeMatches.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #848e9c; padding: 60px;">Seçilen tarih (${selectedDate}) için henüz maç analizi bulunmuyor.</div>`;
-                return;
-            }
+                Veri dosyası yüklenemedi.
 
-            activeMatches.forEach((m, idx) => {
-                grid.innerHTML += `
-                    <div class="match-card" onclick="openModal(${idx})">
-                        <div class="card-header">
-                            <span>${m.league}</span>
-                        </div>
-                        <div class="teams-box">
-                            <div class="team-line"><span>${m.home}</span><span style="color:#848e9c">${m.analysis.exp_home}</span></div>
-                            <div class="team-line"><span>${m.away}</span><span style="color:#848e9c">${m.analysis.exp_away}</span></div>
-                        </div>
-                        <div class="totals-row">
-                            <div class="total-item">
-                                <div class="label">MAÇ TOPLAMI</div>
-                                <div class="val highlight">${m.analysis.match_total}</div>
-                            </div>
-                            <div class="total-item">
-                                <div class="label">İLK YARI</div>
-                                <div class="val">${m.analysis.first_half}</div>
-                            </div>
-                        </div>
+                <div style="margin-top:10px;font-size:12px;">
+                    ${escapeHtml(error.message)}
+                </div>
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =====================================================
+   TARİH VERİSİNİ AL
+===================================================== */
+
+function getMatchesForDate(date) {
+
+    if (Array.isArray(rawData)) {
+        return rawData;
+    }
+
+    if (
+        rawData &&
+        Object.prototype.hasOwnProperty.call(
+            rawData,
+            date
+        )
+    ) {
+
+        const data =
+            rawData[date];
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+
+    return [];
+
+}
+
+
+/* =====================================================
+   MAÇLARI RENDER ET
+===================================================== */
+
+function renderMatches() {
+
+    const grid =
+        document.getElementById(
+            "match-grid"
+        );
+
+    const status =
+        document.getElementById(
+            "status-bar"
+        );
+
+    const selectedDate =
+        document.getElementById(
+            "match-date"
+        ).value;
+
+
+    activeMatches =
+        getMatchesForDate(
+            selectedDate
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if (
+        !activeMatches ||
+        activeMatches.length === 0
+    ) {
+
+        status.innerHTML =
+            `
+            📅 <strong>${selectedDate}</strong>
+            tarihinde analiz edilmiş maç bulunamadı.
+            `;
+
+        grid.innerHTML =
+            `
+            <div class="empty">
+
+                <div style="font-size:32px;margin-bottom:12px;">
+                    🏀
+                </div>
+
+                Bu tarihte analiz edilen maç yok.
+
+                <div style="font-size:12px;margin-top:10px;">
+                    Başka bir tarih seçebilirsin.
+                </div>
+
+            </div>
+            `;
+
+        return;
+    }
+
+
+    status.innerHTML =
+        `
+        📅 <strong>${selectedDate}</strong>
+        · <strong>${activeMatches.length}</strong>
+        analiz edilmiş maç
+        `;
+
+
+    activeMatches.forEach(
+        (match, index) => {
+
+            const analysis =
+                match.analysis || {};
+
+
+            const confidence =
+                analysis.confidence !== undefined
+                    ? `%${analysis.confidence}`
+                    : "";
+
+
+            const home =
+                safeText(
+                    match.home,
+                    "Ev Sahibi"
+                );
+
+
+            const away =
+                safeText(
+                    match.away,
+                    "Deplasman"
+                );
+
+
+            const league =
+                safeText(
+                    match.league,
+                    "Basketbol"
+                );
+
+
+            const expHome =
+                displayValue(
+                    analysis.exp_home
+                );
+
+
+            const expAway =
+                displayValue(
+                    analysis.exp_away
+                );
+
+
+            const matchTotal =
+                displayValue(
+                    analysis.match_total
+                );
+
+
+            const firstHalf =
+                displayValue(
+                    analysis.first_half
+                );
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "match-card";
+
+
+            card.onclick = () =>
+                openModal(index);
+
+
+            card.innerHTML =
+                `
+                <div class="card-header">
+
+                    <span>
+                        ${escapeHtml(league)}
+                    </span>
+
+                    ${
+                        confidence
+                        ?
+                        `
+                        <span class="confidence-badge">
+                            🎯 ${confidence} Güven
+                        </span>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+
+                <div class="teams-box">
+
+                    <div class="team-line">
+
+                        <span class="team-name">
+                            ${escapeHtml(home)}
+                        </span>
+
+                        <span class="team-score">
+                            ${expHome}
+                        </span>
+
                     </div>
+
+
+                    <div class="team-line">
+
+                        <span class="team-name">
+                            ${escapeHtml(away)}
+                        </span>
+
+                        <span class="team-score">
+                            ${expAway}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="totals-row">
+
+                    <div class="total-item">
+
+                        <div class="label">
+                            MAÇ TOPLAMI
+                        </div>
+
+                        <div class="val highlight">
+                            ${matchTotal}
+                        </div>
+
+                    </div>
+
+
+                    <div class="total-item">
+
+                        <div class="label">
+                            İLK YARI
+                        </div>
+
+                        <div class="val">
+                            ${firstHalf}
+                        </div>
+
+                    </div>
+
+                </div>
                 `;
-            });
-        } catch (e) {
-            console.error("Veri okuma hatası:", e);
-            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ef4444; padding: 40px;">Veriler yüklenirken bir hata oluştu. Lütfen data.json dosyanızı kontrol edin.</div>`;
+
+
+            grid.appendChild(card);
+
         }
+    );
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(index) {
+
+    const match =
+        activeMatches[index];
+
+    if (!match) return;
+
+
+    const analysis =
+        match.analysis || {};
+
+    const stats =
+        match.stats || {};
+
+
+    document.getElementById(
+        "m-league"
+    ).innerText =
+        safeText(
+            match.league,
+            "Basketbol"
+        );
+
+
+    document.getElementById(
+        "m-teams"
+    ).innerText =
+        `${safeText(match.home, "Ev Sahibi")} vs ${safeText(match.away, "Deplasman")}`;
+
+
+    document.getElementById(
+        "m-q1"
+    ).innerText =
+        displayValue(
+            analysis.q1
+        );
+
+
+    document.getElementById(
+        "m-q2"
+    ).innerText =
+        displayValue(
+            analysis.q2
+        );
+
+
+    document.getElementById(
+        "m-q3"
+    ).innerText =
+        displayValue(
+            analysis.q3
+        );
+
+
+    document.getElementById(
+        "m-q4"
+    ).innerText =
+        displayValue(
+            analysis.q4
+        );
+
+
+    document.getElementById(
+        "m-iy"
+    ).innerText =
+        displayValue(
+            analysis.first_half
+        );
+
+
+    document.getElementById(
+        "m-total"
+    ).innerText =
+        displayValue(
+            analysis.match_total
+        );
+
+
+    document.getElementById(
+        "m-home"
+    ).innerText =
+        displayValue(
+            analysis.exp_home
+        );
+
+
+    document.getElementById(
+        "m-away"
+    ).innerText =
+        displayValue(
+            analysis.exp_away
+        );
+
+
+    document.getElementById(
+        "m-calc-total"
+    ).innerText =
+        displayValue(
+            analysis.match_total
+        );
+
+
+    document.getElementById(
+        "m-home-games"
+    ).innerText =
+        stats.home_games !== undefined
+            ? stats.home_games
+            : "-";
+
+
+    document.getElementById(
+        "m-away-games"
+    ).innerText =
+        stats.away_games !== undefined
+            ? stats.away_games
+            : "-";
+
+
+    document.getElementById(
+        "m-confidence"
+    ).innerText =
+        analysis.confidence !== undefined
+            ? `%${analysis.confidence}`
+            : "-";
+
+
+    document.getElementById(
+        "modal-overlay"
+    ).style.display =
+        "flex";
+
+}
+
+
+/* =====================================================
+   MODAL KAPAT
+===================================================== */
+
+function closeModal() {
+
+    document.getElementById(
+        "modal-overlay"
+    ).style.display =
+        "none";
+
+}
+
+
+function closeModalOutside(event) {
+
+    if (
+        event.target.id ===
+        "modal-overlay"
+    ) {
+        closeModal();
     }
 
-    function changeDate(days) {
-        const dateInput = document.getElementById('match-date');
-        const currDate = new Date(dateInput.value);
-        currDate.setDate(currDate.getDate() + days);
-        dateInput.value = currDate.toISOString().split('T')[0];
-        loadMatches();
+}
+
+
+/* ESC */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "Escape") {
+            closeModal();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   TARİH DEĞİŞTİR
+===================================================== */
+
+function changeDate(days) {
+
+    const input =
+        document.getElementById(
+            "match-date"
+        );
+
+    if (!input.value) {
+
+        input.value =
+            getTodayString();
+
     }
 
-    function openModal(index) {
-        const m = activeMatches[index];
-        document.getElementById('m-league').innerText = m.league;
-        document.getElementById('m-teams').innerText = `${m.home} vs ${m.away}`;
-        document.getElementById('m-q1').innerText = m.analysis.q1;
-        document.getElementById('m-q2').innerText = m.analysis.q2;
-        document.getElementById('m-q3').innerText = m.analysis.q3;
-        document.getElementById('m-q4').innerText = m.analysis.q4;
-        document.getElementById('m-iy').innerText = m.analysis.first_half;
-        document.getElementById('m-total').innerText = m.analysis.match_total;
-        document.getElementById('m-home').innerText = m.analysis.exp_home;
-        document.getElementById('m-away').innerText = m.analysis.exp_away;
-        document.getElementById('m-calc-total').innerText = m.analysis.match_total;
 
-        document.getElementById('modal-overlay').style.display = 'flex';
+    const parts =
+        input.value.split("-");
+
+    const date =
+        new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            Number(parts[2])
+        );
+
+
+    date.setDate(
+        date.getDate() + days
+    );
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+
+    input.value =
+        `${year}-${month}-${day}`;
+
+
+    renderMatches();
+
+}
+
+
+/* =====================================================
+   GÜVENLİ DEĞER
+===================================================== */
+
+function displayValue(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        value === ""
+    ) {
+        return "-";
     }
 
-    function closeModal() {
-        document.getElementById('modal-overlay').style.display = 'none';
+    const numberValue =
+        Number(value);
+
+    if (
+        Number.isFinite(numberValue)
+    ) {
+        return numberValue
+            .toFixed(1)
+            .replace(".0", "");
     }
+
+    return escapeHtml(
+        String(value)
+    );
+
+}
+
+
+function safeText(value, fallback) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        String(value).trim() === ""
+    ) {
+        return fallback;
+    }
+
+    return String(value);
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
 </script>
+
 </body>
+
 </html>
