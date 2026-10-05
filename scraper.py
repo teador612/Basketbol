@@ -1,343 +1,203 @@
 import os
 import json
-import time
-from datetime import datetime
+import requests
+from datetime import datetime, timedelta
 from statistics import mean
 from zoneinfo import ZoneInfo
-
-import requests
 
 
 # =========================================================
 # AYARLAR
 # =========================================================
 
-API_KEY = os.getenv("API_SPORTS_KEY")
-
-if not API_KEY:
-    raise RuntimeError("API_SPORTS_KEY bulunamadı.")
-
-DATE = datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%Y-%m-%d")
+DATE = datetime.now(
+    ZoneInfo("Europe/Istanbul")
+).strftime("%Y-%m-%d")
 
 OUTPUT_FILE = "data.json"
 
-NBA_BASE = "https://v2.nba.api-sports.io"
-BASKETBALL_BASE = "https://v1.basketball.api-sports.io"
+NBA_API_KEY = os.getenv("BALLDONTLIE_API_KEY")
 
-HEADERS = {
-    "x-apisports-key": API_KEY
-}
+NBA_URL = "https://api.balldontlie.io/v1/games"
+
+EUROLEAGUE_URL = (
+    "https://api-live.euroleague.net"
+)
+
+EUROLEAGUE_SEASON = "E2026"
 
 TIMEOUT = 30
 
-SEASON = 2026
+HEADERS = {}
 
-# API-Basketball'da Euroleague ID'yi /leagues üzerinden bulacağız.
-EUROLEAGUE_ID = None
+if NBA_API_KEY:
+    HEADERS["Authorization"] = NBA_API_KEY
 
 
 # =========================================================
-# HTTP
+# SESSION
 # =========================================================
 
 session = requests.Session()
-session.headers.update(HEADERS)
+
+session.headers.update({
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "application/json",
+})
 
 
-def get_json(url, params=None):
+# =========================================================
+# GENEL HTTP
+# =========================================================
+
+def get_json(
+    url,
+    params=None,
+    headers=None
+):
+
     try:
-        r = session.get(
+
+        response = session.get(
             url,
             params=params,
+            headers=headers,
             timeout=TIMEOUT
         )
 
-        if r.status_code != 200:
-            print(f"❌ HTTP {r.status_code}: {url}")
+        if response.status_code != 200:
+
+            print(
+                f"❌ HTTP {response.status_code}: "
+                f"{url}"
+            )
+
+            try:
+                print(response.text[:500])
+            except:
+                pass
+
             return {}
 
-        data = r.json()
-
-        if data.get("errors"):
-            print("⚠️ API hatası:", data["errors"])
-
-        return data
+        return response.json()
 
     except Exception as e:
-        print("❌ İstek hatası:", e)
+
+        print(
+            f"❌ Bağlantı hatası: {e}"
+        )
+
         return {}
 
 
 # =========================================================
-# YARDIMCI
+# TARİH
 # =========================================================
 
-def to_float(value):
-    try:
-        if value is None:
-            return None
-        return float(value)
-    except:
-        return None
-
-
-def game_date(game):
-    """
-    API-NBA:
-        date.start
-
-    API-Basketball:
-        date
-    """
-
-    value = None
-
-    date_obj = game.get("date")
-
-    if isinstance(date_obj, dict):
-        value = (
-            date_obj.get("start")
-            or date_obj.get("start")
-            or date_obj.get("date")
-        )
-    else:
-        value = date_obj
+def parse_date(value):
 
     if not value:
         return None
 
+    value = str(value).strip()
+
     try:
-        value = str(value)
 
         if value.endswith("Z"):
-            value = value.replace("Z", "+00:00")
+            value = value[:-1] + "+00:00"
 
         dt = datetime.fromisoformat(value)
 
         if dt.tzinfo:
-            dt = dt.astimezone(ZoneInfo("Europe/Istanbul"))
+
+            dt = dt.astimezone(
+                ZoneInfo("Europe/Istanbul")
+            )
 
         return dt.date().isoformat()
 
     except:
-        return str(value)[:10]
 
-
-def is_finished(game):
-    """
-    API-NBA:
-        3 = Finished
-
-    API-Basketball:
-        FT / AOT
-    """
-
-    status = game.get("status", {})
-
-    if isinstance(status, dict):
-        short = status.get("short")
-        long_status = str(status.get("long", "")).upper()
-    else:
-        short = status
-        long_status = str(status).upper()
-
-    if str(short) in {"3", "FT", "AOT"}:
-        return True
-
-    if long_status in {
-        "FINISHED",
-        "FINISH",
-        "FT",
-        "AOT",
-        "AFTER OVERTIME"
-    }:
-        return True
-
-    return False
+        return value[:10]
 
 
 # =========================================================
 # NBA
 # =========================================================
 
-def get_nba_today():
+def get_nba_games_for_date():
 
-    print("\n🏀 NBA maçları alınıyor...")
+    print()
+    print("🏀 NBA maçları alınıyor...")
 
-    # Tarih filtresi bazı hesaplarda boş dönebildiği için
-    # sezonun maçlarını alıp Türkiye tarihine göre filtreliyoruz.
-    data = get_json(
-        f"{NBA_BASE}/games",
-        {
-            "league": "standard",
-            "season": SEASON
-        }
-    )
+    if not NBA_API_KEY:
 
-    games = data.get("response", [])
-
-    result = []
-
-    for game in games:
-
-        if game_date(game) != DATE:
-            continue
-
-        teams = game.get("teams", {})
-
-        home = teams.get("home", {})
-        away = (
-            teams.get("visitors")
-            or teams.get("away")
-            or {}
+        print(
+            "❌ BALLDONTLIE_API_KEY bulunamadı."
         )
 
-        if not home.get("id") or not away.get("id"):
-            continue
-
-        result.append({
-            "id": game.get("id"),
-            "league": "NBA",
-            "league_id": "standard",
-            "season": SEASON,
-            "home": {
-                "id": home.get("id"),
-                "name": home.get("name")
-            },
-            "away": {
-                "id": away.get("id"),
-                "name": away.get("name")
-            },
-            "raw": game
-        })
-
-    print(f"   📦 NBA: {len(result)} maç")
-
-    return result
-
-
-# =========================================================
-# EUROLEAGUE LIGESINI BUL
-# =========================================================
-
-def find_euroleague():
-
-    global EUROLEAGUE_ID
-
-    print("\n🌍 EuroLeague ligi aranıyor...")
-
-    data = get_json(
-        f"{BASKETBALL_BASE}/leagues"
-    )
-
-    leagues = data.get("response", [])
-
-    for league in leagues:
-
-        name = str(league.get("name", "")).strip().lower()
-
-        if name in {
-            "euroleague",
-            "euroleague basketball",
-            "euroleague - euroleague"
-        }:
-
-            EUROLEAGUE_ID = league.get("id")
-
-            print(
-                f"   ✅ EuroLeague bulundu: "
-                f"{league.get('name')} "
-                f"(ID: {EUROLEAGUE_ID})"
-            )
-
-            return EUROLEAGUE_ID
-
-    # Daha esnek arama
-    for league in leagues:
-
-        name = str(
-            league.get("name", "")
-        ).lower()
-
-        country = str(
-            league.get("country", {}).get("name", "")
-        ).lower()
-
-        if (
-            "euroleague" in name
-            and "women" not in name
-        ):
-            EUROLEAGUE_ID = league.get("id")
-
-            print(
-                f"   ✅ EuroLeague bulundu: "
-                f"{league.get('name')} "
-                f"(ID: {EUROLEAGUE_ID})"
-            )
-
-            return EUROLEAGUE_ID
-
-    print("   ❌ EuroLeague bulunamadı.")
-
-    return None
-
-
-# =========================================================
-# EUROLEGUE BUGÜN
-# =========================================================
-
-def get_euroleague_today():
-
-    league_id = find_euroleague()
-
-    if not league_id:
         return []
 
-    print("\n🏀 EuroLeague maçları alınıyor...")
-
     data = get_json(
-        f"{BASKETBALL_BASE}/games",
-        {
-            "league": league_id,
-            "season": SEASON
-        }
+        NBA_URL,
+        params={
+            "dates[]": DATE,
+            "per_page": 100
+        },
+        headers=HEADERS
     )
 
-    games = data.get("response", [])
+    games = data.get(
+        "data",
+        []
+    )
 
     result = []
 
     for game in games:
 
-        if game_date(game) != DATE:
+        home = game.get(
+            "home_team",
+            {}
+        )
+
+        away = game.get(
+            "visitor_team",
+            {}
+        )
+
+        if not home.get("id"):
             continue
 
-        teams = game.get("teams", {})
-
-        home = teams.get("home", {})
-        away = teams.get("away", {})
-
-        if not home.get("id") or not away.get("id"):
+        if not away.get("id"):
             continue
 
         result.append({
             "id": game.get("id"),
-            "league": "EuroLeague",
-            "league_id": league_id,
-            "season": SEASON,
+
+            "league": "NBA",
+
+            "league_id": "nba",
+
+            "season": game.get(
+                "season"
+            ),
+
             "home": {
                 "id": home.get("id"),
-                "name": home.get("name")
+                "name": home.get("full_name")
             },
+
             "away": {
                 "id": away.get("id"),
-                "name": away.get("name")
+                "name": away.get("full_name")
             },
+
             "raw": game
         })
 
     print(
-        f"   📦 EuroLeague: {len(result)} maç"
+        f"   📦 NBA: {len(result)} maç"
     )
 
     return result
@@ -347,263 +207,537 @@ def get_euroleague_today():
 # NBA MAÇ SKORU
 # =========================================================
 
-def extract_nba_score(game, team_id):
+def nba_score(game, team_id):
 
-    scores = game.get("scores", {})
-
-    home_team = (
-        game.get("teams", {})
-        .get("home", {})
+    home = game.get(
+        "home_team",
+        {}
     )
 
-    away_team = (
-        game.get("teams", {})
-        .get("visitors")
-        or game.get("teams", {}).get("away", {})
+    away = game.get(
+        "visitor_team",
+        {}
     )
 
-    home_score = (
-        scores.get("home", {})
-        if isinstance(scores.get("home"), dict)
-        else {}
+    home_score = game.get(
+        "home_team_score"
     )
 
-    away_score = (
-        scores.get("visitors")
-        or scores.get("away")
-        or {}
+    away_score = game.get(
+        "visitor_team_score"
     )
 
-    home_points = to_float(
-        home_score.get("points")
-    )
-
-    away_points = to_float(
-        away_score.get("points")
-    )
-
-    if home_points is None or away_points is None:
-        return None
-
-    if str(home_team.get("id")) == str(team_id):
-
-        return {
-            "team_id": team_id,
-            "home": True,
-            "for": home_points,
-            "against": away_points
-        }
-
-    if str(away_team.get("id")) == str(team_id):
-
-        return {
-            "team_id": team_id,
-            "home": False,
-            "for": away_points,
-            "against": home_points
-        }
-
-    return None
-
-
-# =========================================================
-# EUROLEGUE MAÇ SKORU
-# =========================================================
-
-def extract_basketball_score(game, team_id):
-
-    scores = game.get("scores", {})
-
-    teams = game.get("teams", {})
-
-    home_team = teams.get("home", {})
-    away_team = teams.get("away", {})
-
-    home_score = to_float(
-        scores.get("home")
-        if not isinstance(scores.get("home"), dict)
-        else scores.get("home", {}).get("total")
-    )
-
-    away_score = to_float(
-        scores.get("away")
-        if not isinstance(scores.get("away"), dict)
-        else scores.get("away", {}).get("total")
-    )
-
-    # Bazı cevaplarda points kullanılabilir
     if home_score is None:
-        obj = scores.get("home", {})
-        if isinstance(obj, dict):
-            home_score = to_float(
-                obj.get("points")
-                or obj.get("total")
-            )
+        return None
 
     if away_score is None:
-        obj = scores.get("away", {})
-        if isinstance(obj, dict):
-            away_score = to_float(
-                obj.get("points")
-                or obj.get("total")
-            )
-
-    if home_score is None or away_score is None:
         return None
 
-    if str(home_team.get("id")) == str(team_id):
+    try:
+
+        home_score = float(
+            home_score
+        )
+
+        away_score = float(
+            away_score
+        )
+
+    except:
+
+        return None
+
+    if str(
+        home.get("id")
+    ) == str(team_id):
 
         return {
-            "team_id": team_id,
             "home": True,
             "for": home_score,
-            "against": away_score
+            "against": away_score,
+            "date": parse_date(
+                game.get("date")
+            )
         }
 
-    if str(away_team.get("id")) == str(team_id):
+    if str(
+        away.get("id")
+    ) == str(team_id):
 
         return {
-            "team_id": team_id,
             "home": False,
             "for": away_score,
-            "against": home_score
+            "against": home_score,
+            "date": parse_date(
+                game.get("date")
+            )
         }
 
     return None
 
 
 # =========================================================
-# TAKIM SON 5 MAÇ
+# NBA TAKIM GEÇMİŞİ
 # =========================================================
 
-def get_team_history(team_id, league_type):
+def get_nba_team_history(
+    team_id
+):
 
-    if league_type == "NBA":
+    end_date = datetime.strptime(
+        DATE,
+        "%Y-%m-%d"
+    )
 
-        url = f"{NBA_BASE}/games"
+    start_date = (
+        end_date - timedelta(days=120)
+    )
 
-        params = {
-            "team": team_id,
-            "season": SEASON
-        }
+    data = get_json(
+        NBA_URL,
+        params={
+            "team_ids[]": team_id,
+            "start_date": start_date.strftime(
+                "%Y-%m-%d"
+            ),
+            "end_date": end_date.strftime(
+                "%Y-%m-%d"
+            ),
+            "per_page": 100
+        },
+        headers=HEADERS
+    )
 
-    else:
+    games = data.get(
+        "data",
+        []
+    )
 
-        url = f"{BASKETBALL_BASE}/games"
-
-        params = {
-            "team": team_id,
-            "league": EUROLEAGUE_ID,
-            "season": SEASON
-        }
-
-    data = get_json(url, params)
-
-    games = data.get("response", [])
-
-    completed = []
+    result = []
 
     for game in games:
 
-        if not is_finished(game):
+        score = nba_score(
+            game,
+            team_id
+        )
+
+        if not score:
             continue
 
-        if league_type == "NBA":
-            item = extract_nba_score(
-                game,
-                team_id
-            )
-        else:
-            item = extract_basketball_score(
-                game,
-                team_id
-            )
-
-        if not item:
+        # Henüz oynanmamış maçlar
+        if score["for"] == 0 and score["against"] == 0:
             continue
 
-        item["date"] = game_date(game)
+        result.append(score)
 
-        completed.append(item)
-
-    # Yeniden eskiye
-    completed.sort(
+    result.sort(
         key=lambda x: x.get("date") or "",
         reverse=True
     )
 
-    return completed
+    return result
 
 
 # =========================================================
-# SADECE İÇ / DIŞ SAHA
+# EUROLEAGUE SEZON MAÇLARI
 # =========================================================
 
-def get_last_5_home(team_id, league):
+def get_euroleague_games():
 
-    history = get_team_history(
-        team_id,
-        league
+    print()
+    print(
+        "🌍 EuroLeague maçları alınıyor..."
     )
 
+    url = (
+        f"{EUROLEAGUE_URL}"
+        f"/v2/competitions/E"
+        f"/seasons/{EUROLEAGUE_SEASON}"
+        f"/games"
+    )
+
+    data = get_json(url)
+
+    games = data.get(
+        "data",
+        []
+    )
+
+    print(
+        f"   📦 Sezon maçları: "
+        f"{len(games)}"
+    )
+
+    return games
+
+
+# =========================================================
+# EUROLEAGUE TAKIM ADI
+# =========================================================
+
+def euro_team_name(
+    team
+):
+
+    return (
+        team.get("name")
+        or team.get("clubName")
+        or team.get("nameShort")
+        or team.get("code")
+        or ""
+    )
+
+
+# =========================================================
+# EUROLEAGUE ID
+# =========================================================
+
+def euro_team_id(
+    team
+):
+
+    return (
+        team.get("clubCode")
+        or team.get("code")
+        or team.get("id")
+    )
+
+
+# =========================================================
+# EUROLEAGUE MAÇTAN TAKIM BİLGİSİ
+# =========================================================
+
+def euro_teams(game):
+
+    local = (
+        game.get("local")
+        or game.get("home")
+        or {}
+    )
+
+    road = (
+        game.get("road")
+        or game.get("away")
+        or {}
+    )
+
+    return local, road
+
+
+# =========================================================
+# EUROLEAGUE MAÇ TARİHİ
+# =========================================================
+
+def euro_game_date(
+    game
+):
+
+    for key in (
+        "date",
+        "gameDate",
+        "startDate",
+        "utcDate"
+    ):
+
+        value = game.get(key)
+
+        if value:
+
+            parsed = parse_date(
+                value
+            )
+
+            if parsed:
+                return parsed
+
+    return None
+
+
+# =========================================================
+# EUROLEAGUE SKOR
+# =========================================================
+
+def euro_score(
+    game,
+    team_id
+):
+
+    local, road = euro_teams(
+        game
+    )
+
+    local_id = str(
+        euro_team_id(local)
+    )
+
+    road_id = str(
+        euro_team_id(road)
+    )
+
+    target_id = str(
+        team_id
+    )
+
+    # Farklı payload şekillerini destekle
+    local_score = (
+        local.get("score")
+        or local.get("points")
+        or local.get("scoreA")
+    )
+
+    road_score = (
+        road.get("score")
+        or road.get("points")
+        or road.get("scoreB")
+    )
+
+    # Bazı cevaplarda skor doğrudan game içinde
+    if local_score is None:
+
+        local_score = (
+            game.get("localScore")
+            or game.get("homeScore")
+        )
+
+    if road_score is None:
+
+        road_score = (
+            game.get("roadScore")
+            or game.get("awayScore")
+        )
+
+    try:
+
+        local_score = float(
+            local_score
+        )
+
+        road_score = float(
+            road_score
+        )
+
+    except:
+
+        return None
+
+    if (
+        local_id == target_id
+    ):
+
+        return {
+            "home": True,
+            "for": local_score,
+            "against": road_score,
+            "date": euro_game_date(
+                game
+            )
+        }
+
+    if (
+        road_id == target_id
+    ):
+
+        return {
+            "home": False,
+            "for": road_score,
+            "against": local_score,
+            "date": euro_game_date(
+                game
+            )
+        }
+
+    return None
+
+
+# =========================================================
+# EUROLEAGUE TAKIM GEÇMİŞİ
+# =========================================================
+
+def get_euro_team_history(
+    team_id,
+    games
+):
+
+    result = []
+
+    for game in games:
+
+        item = euro_score(
+            game,
+            team_id
+        )
+
+        if not item:
+            continue
+
+        if not item.get("date"):
+            continue
+
+        # Bugünkü maç / gelecek maç
+        if item["date"] >= DATE:
+            continue
+
+        result.append(item)
+
+    result.sort(
+        key=lambda x: x.get("date") or "",
+        reverse=True
+    )
+
+    return result
+
+
+# =========================================================
+# SON 5 İÇ / DIŞ SAHA
+# =========================================================
+
+def last_5_home(
+    history
+):
+
     return [
-        x for x in history
+        x
+        for x in history
         if x["home"]
     ][:5]
 
 
-def get_last_5_away(team_id, league):
-
-    history = get_team_history(
-        team_id,
-        league
-    )
+def last_5_away(
+    history
+):
 
     return [
-        x for x in history
+        x
+        for x in history
         if not x["home"]
     ][:5]
 
 
 # =========================================================
-# ANALİZ
+# GÜVEN
 # =========================================================
 
-def analyse_game(game):
+def confidence_for(
+    games
+):
 
-    league = game["league"]
+    values = {
+        5: 85,
+        4: 80,
+        3: 75,
+        2: 65,
+        1: 55,
+        0: 0
+    }
 
-    home_id = game["home"]["id"]
-    away_id = game["away"]["id"]
+    return values.get(
+        games,
+        0
+    )
+
+
+# =========================================================
+# MAÇ ANALİZİ
+# =========================================================
+
+def analyse_game(
+    game,
+    euro_games=None
+):
+
+    league = game[
+        "league"
+    ]
+
+    home_id = game[
+        "home"
+    ]["id"]
+
+    away_id = game[
+        "away"
+    ]["id"]
 
     print(
-        f"\n   🔎 {game['home']['name']} "
-        f"- {game['away']['name']}"
+        f"\n   🔎 "
+        f"{game['home']['name']} "
+        f"- "
+        f"{game['away']['name']}"
     )
 
-    home_games = get_last_5_home(
-        home_id,
-        league
+    # -----------------------------------------------------
+    # NBA
+    # -----------------------------------------------------
+
+    if league == "NBA":
+
+        home_history = (
+            get_nba_team_history(
+                home_id
+            )
+        )
+
+        away_history = (
+            get_nba_team_history(
+                away_id
+            )
+        )
+
+    # -----------------------------------------------------
+    # EUROLEAGUE
+    # -----------------------------------------------------
+
+    else:
+
+        home_history = (
+            get_euro_team_history(
+                home_id,
+                euro_games
+            )
+        )
+
+        away_history = (
+            get_euro_team_history(
+                away_id,
+                euro_games
+            )
+        )
+
+    home_games = last_5_home(
+        home_history
     )
 
-    away_games = get_last_5_away(
-        away_id,
-        league
+    away_games = last_5_away(
+        away_history
     )
 
     print(
-        f"      🏠 Son iç saha: {len(home_games)}"
+        f"      🏠 Son iç saha: "
+        f"{len(home_games)}"
     )
 
     print(
-        f"      ✈️ Son dış saha: {len(away_games)}"
+        f"      ✈️ Son dış saha: "
+        f"{len(away_games)}"
     )
 
-    if not home_games or not away_games:
-
-        print("      ⚠️ Yeterli veri yok.")
-
+    if not home_games:
+        print(
+            "      ⚠️ Ev sahibi için "
+            "iç saha geçmişi yok."
+        )
         return None
+
+    if not away_games:
+        print(
+            "      ⚠️ Deplasman takımı için "
+            "dış saha geçmişi yok."
+        )
+        return None
+
+    # -----------------------------------------------------
+    # ORTALAMALAR
+    # -----------------------------------------------------
 
     home_for = mean(
         x["for"]
@@ -630,82 +764,115 @@ def analyse_game(game):
     # -----------------------------------------------------
 
     expected_home = (
-        home_for + away_against
+        home_for +
+        away_against
     ) / 2
 
     expected_away = (
-        away_for + home_against
+        away_for +
+        home_against
     ) / 2
 
     match_total = (
-        expected_home + expected_away
+        expected_home +
+        expected_away
     )
 
-    quarter_avg = match_total / 4
+    quarter_avg = (
+        match_total / 4
+    )
 
-    first_half = match_total / 2
+    first_half = (
+        match_total / 2
+    )
 
-    games_count = min(
+    sample = min(
         len(home_games),
         len(away_games)
     )
 
-    # -----------------------------------------------------
-    # GÜVEN
-    # -----------------------------------------------------
-
-    confidence_map = {
-        5: 85,
-        4: 80,
-        3: 75,
-        2: 65,
-        1: 55,
-        0: 0
-    }
-
-    confidence = confidence_map.get(
-        games_count,
-        0
+    confidence = confidence_for(
+        sample
     )
 
     print(
-        f"      📊 Beklenen skor: "
+        f"      📊 Beklenen: "
         f"{expected_home:.1f} - "
         f"{expected_away:.1f}"
     )
 
     print(
-        f"      📈 Toplam: {match_total:.1f}"
+        f"      📈 Toplam: "
+        f"{match_total:.1f}"
     )
 
     print(
-        f"      🎯 Güven: %{confidence}"
+        f"      🎯 Güven: "
+        f"%{confidence}"
     )
 
     return {
-        "id": game["id"],
-        "league": league,
-        "league_id": game["league_id"],
-        "season": SEASON,
 
-        "home": game["home"]["name"],
-        "away": game["away"]["name"],
+        "id": game.get("id"),
+
+        "league": league,
+
+        "league_id": game.get(
+            "league_id"
+        ),
+
+        "season": game.get(
+            "season"
+        ),
+
+        "home": game[
+            "home"
+        ]["name"],
+
+        "away": game[
+            "away"
+        ]["name"],
 
         "home_team_id": home_id,
+
         "away_team_id": away_id,
 
-        "games": games_count,
+        "games": sample,
 
-        "home_for_avg": round(home_for, 2),
-        "home_against_avg": round(home_against, 2),
+        "home_for_avg": round(
+            home_for,
+            2
+        ),
 
-        "away_for_avg": round(away_for, 2),
-        "away_against_avg": round(away_against, 2),
+        "home_against_avg": round(
+            home_against,
+            2
+        ),
 
-        "exp_home": round(expected_home, 2),
-        "exp_away": round(expected_away, 2),
+        "away_for_avg": round(
+            away_for,
+            2
+        ),
 
-        "match_total": round(match_total, 2),
+        "away_against_avg": round(
+            away_against,
+            2
+        ),
+
+        "exp_home": round(
+            expected_home,
+            2
+        ),
+
+        "exp_away": round(
+            expected_away,
+            2
+        ),
+
+        "match_total": round(
+            match_total,
+            2
+        ),
 
         "quarter_avg": round(
             quarter_avg,
@@ -717,15 +884,109 @@ def analyse_game(game):
             2
         ),
 
-        "q1": round(quarter_avg, 2),
-        "q2": round(quarter_avg, 2),
-        "q3": round(quarter_avg, 2),
-        "q4": round(quarter_avg, 2),
+        "q1": round(
+            quarter_avg,
+            2
+        ),
+
+        "q2": round(
+            quarter_avg,
+            2
+        ),
+
+        "q3": round(
+            quarter_avg,
+            2
+        ),
+
+        "q4": round(
+            quarter_avg,
+            2
+        ),
 
         "confidence": confidence,
 
         "date": DATE
     }
+
+
+# =========================================================
+# EUROLEAGUE BUGÜNÜN MAÇLARI
+# =========================================================
+
+def get_euroleague_today():
+
+    all_games = (
+        get_euroleague_games()
+    )
+
+    result = []
+
+    for game in all_games:
+
+        if (
+            euro_game_date(game)
+            != DATE
+        ):
+            continue
+
+        local, road = euro_teams(
+            game
+        )
+
+        local_id = euro_team_id(
+            local
+        )
+
+        road_id = euro_team_id(
+            road
+        )
+
+        if not local_id:
+            continue
+
+        if not road_id:
+            continue
+
+        result.append({
+
+            "id": game.get(
+                "gameCode"
+            ) or game.get(
+                "id"
+            ),
+
+            "league":
+                "EuroLeague",
+
+            "league_id": "E",
+
+            "season":
+                EUROLEAGUE_SEASON,
+
+            "home": {
+                "id": local_id,
+                "name": euro_team_name(
+                    local
+                )
+            },
+
+            "away": {
+                "id": road_id,
+                "name": euro_team_name(
+                    road
+                )
+            },
+
+            "raw": game
+        })
+
+    print(
+        f"   📦 EuroLeague: "
+        f"{len(result)} maç"
+    )
+
+    return result, all_games
 
 
 # =========================================================
@@ -735,22 +996,41 @@ def analyse_game(game):
 def main():
 
     print("=" * 55)
-    print("🏀 NBA + EUROLEAGUE BASKETBOL ANALİZİ")
+    print(
+        "🏀 NBA + EUROLEAGUE "
+        "BASKETBOL ANALİZİ"
+    )
     print("=" * 55)
 
-    print(f"📅 Tarih: {DATE}")
+    print(
+        f"📅 Tarih: {DATE}"
+    )
 
-    nba_games = get_nba_today()
+    # -----------------------------------------------------
+    # NBA
+    # -----------------------------------------------------
 
-    euroleague_games = get_euroleague_today()
+    nba_games = (
+        get_nba_games_for_date()
+    )
+
+    # -----------------------------------------------------
+    # EUROLEAGUE
+    # -----------------------------------------------------
+
+    euro_today, euro_all = (
+        get_euroleague_today()
+    )
 
     all_games = (
         nba_games +
-        euroleague_games
+        euro_today
     )
 
+    print()
     print(
-        f"\n🎯 Toplam maç: {len(all_games)}"
+        f"🎯 Toplam maç: "
+        f"{len(all_games)}"
     )
 
     results = []
@@ -767,19 +1047,22 @@ def main():
 
         try:
 
-            result = analyse_game(game)
+            result = analyse_game(
+                game,
+                euro_all
+            )
 
             if result:
-                results.append(result)
+
+                results.append(
+                    result
+                )
 
         except Exception as e:
 
             print(
-                f"      ❌ Analiz hatası: {e}"
+                f"      ❌ Hata: {e}"
             )
-
-        # API'yi gereksiz hızlandırmamak için
-        time.sleep(0.2)
 
     # -----------------------------------------------------
     # JSON
@@ -793,23 +1076,24 @@ def main():
         OUTPUT_FILE,
         "w",
         encoding="utf-8"
-    ) as f:
+    ) as file:
 
         json.dump(
             output,
-            f,
+            file,
             ensure_ascii=False,
             indent=2
         )
 
-    print("\n" + "=" * 55)
+    print()
+    print("=" * 55)
 
     print(
         f"✅ {len(results)} maç analiz edildi."
     )
 
     print(
-        f"📁 {OUTPUT_FILE} oluşturuldu."
+        f"📁 {OUTPUT_FILE}"
     )
 
     print("=" * 55)
