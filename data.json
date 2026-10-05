@@ -1,36 +1,8 @@
 {
   "source": "https://www.iddaa.com/euroleague-avrupa-basketbol-ligi",
   "league": "EuroLeague",
-  "updatedAt": "2026-10-05T21:34:54.914967+00:00",
+  "updatedAt": "2026-10-05T21:38:19.176775+00:00",
   "matches": [
-    {
-      "id": "2026-10-05_anadolu efes_as monaco",
-      "league": "EuroLeague",
-      "home": "Anadolu Efes",
-      "away": "AS Monaco",
-      "date": "2026-10-05",
-      "score": {
-        "home": null,
-        "away": null
-      },
-      "status": "scheduled",
-      "winner": null,
-      "source": "iddaa.com"
-    },
-    {
-      "id": "2026-10-05_zalgiris kaunas_fenerbahce beko",
-      "league": "EuroLeague",
-      "home": "Zalgiris Kaunas",
-      "away": "Fenerbahçe Beko",
-      "date": "2026-10-05",
-      "score": {
-        "home": null,
-        "away": null
-      },
-      "status": "live",
-      "winner": null,
-      "source": "iddaa.com"
-    },
     {
       "id": "2026-10-07_PARIS BASKETBALL_LDLC ASVEL",
       "league": "EuroLeague",
@@ -39,11 +11,11 @@
       "date": "2026-10-07",
       "time": "21:45",
       "score": {
-        "home": 19,
-        "away": 0
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Paris Basketball",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -54,26 +26,26 @@
       "date": "2026-10-08",
       "time": "19:00",
       "score": {
-        "home": 19,
-        "away": 0
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Dubai Basketball",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
-      "id": "2026-10-08_MACCABI RAPYD TEL AVIV_OLIMPIA MILANO",
+      "id": "2026-10-08_OLIMPIA MILANO_BAYERN MUNIH",
       "league": "EuroLeague",
-      "home": "Maccabi Rapyd Tel Aviv",
-      "away": "Olimpia Milano",
+      "home": "Olimpia Milano",
+      "away": "Bayern Münih",
       "date": "2026-10-08",
       "time": "19:00",
       "score": {
-        "home": 21,
-        "away": 0
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Maccabi Rapyd Tel Aviv",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -84,11 +56,11 @@
       "date": "2026-10-08",
       "time": "21:00",
       "score": {
-        "home": 21,
-        "away": 15
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Bayern Münih",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -99,11 +71,11 @@
       "date": "2026-10-08",
       "time": "21:15",
       "score": {
-        "home": 21,
-        "away": 30
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Fenerbahçe Beko",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -114,11 +86,11 @@
       "date": "2026-10-08",
       "time": "21:30",
       "score": {
-        "home": 21,
-        "away": 45
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Hapoel IBI Tel Aviv",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -129,11 +101,11 @@
       "date": "2026-10-08",
       "time": "21:45",
       "score": {
-        "home": 21,
-        "away": 15
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Real Madrid",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -144,11 +116,11 @@
       "date": "2026-10-09",
       "time": "21:15",
       "score": {
-        "home": 21,
-        "away": 30
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Anadolu Efes",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     },
     {
@@ -159,11 +131,11 @@
       "date": "2026-10-09",
       "time": "21:30",
       "score": {
-        "home": 21,
-        "away": 30
+        "home": null,
+        "away": null
       },
-      "status": "finished",
-      "winner": "Zalgiris Kaunas",
+      "status": "scheduled",
+      "winner": null,
       "source": "iddaa.com"
     }
   ]
