@@ -2,69 +2,195 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Basketbol Analiz Paneli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketbol Analiz Masası</title>
     <style>
-        body { background-color: #0b0e11; color: #fff; font-family: sans-serif; padding: 20px; }
-        .modal { background-color: #12161a; border: 1px solid #1e2329; border-radius: 8px; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
-        .card { background: #181d22; border: 1px solid #2b313a; padding: 15px; border-radius: 6px; text-align: center; }
-        .card-title { color: #848e9c; font-size: 11px; font-weight: bold; }
-        .card-val { font-size: 26px; font-weight: bold; margin: 5px 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
+        body { background-color: #0b0e11; color: #fff; padding: 20px; }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+        .page-title { color: #fff; font-size: 20px; margin-bottom: 20px; font-weight: bold; }
+
+        /* KART GRID YAPISI (2. EKRAN GÖRÜNTÜSÜ) */
+        .match-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .match-card {
+            background-color: #12161a;
+            border: 1px solid #1e2329;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .match-card:hover {
+            border-color: #38d39f;
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            color: #848e9c;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .teams-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .team-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            background-color: #181d22;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #2b313a;
+        }
+
+        .total-item { text-align: center; }
+        .total-item .label { color: #848e9c; font-size: 10px; font-weight: bold; }
+        .total-item .val { font-size: 18px; font-weight: bold; margin-top: 2px; }
         .highlight { color: #38d39f; }
+
+        /* MODAL / DETAY PANELİ (1. EKRAN GÖRÜNTÜSÜ) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; justify-content: center; align-items: center; padding: 20px;
+        }
+
+        .modal-content {
+            background-color: #12161a; border: 1px solid #1e2329;
+            border-radius: 8px; width: 100%; max-width: 800px; padding: 24px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; color: #848e9c;
+            font-size: 24px; cursor: pointer;
+        }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+        .box { background: #181d22; border: 1px solid #2b313a; padding: 12px; border-radius: 6px; text-align: center; }
+        .box-title { color: #848e9c; font-size: 11px; font-weight: bold; }
+        .box-val { font-size: 24px; font-weight: bold; margin: 4px 0; }
+        .section-title { color: #848e9c; font-size: 11px; font-weight: bold; margin: 20px 0 10px 0; }
     </style>
 </head>
 <body>
 
-<div class="modal" id="match-container">
-    <h2 id="league-title" style="color:#848e9c; font-size: 14px;">Yükleniyor...</h2>
-    <h1 id="teams-title" style="font-size: 20px; margin-bottom: 20px;"></h1>
+<div class="container">
+    <div class="page-title">Analiz edilen maçlar</div>
+    <!-- Maçların Dizildiği Grid -->
+    <div class="match-grid" id="match-grid"></div>
+</div>
 
-    <div class="grid">
-        <div class="card"><div class="card-title">1. PERİYOT</div><div class="card-val" id="q1">-</div></div>
-        <div class="card"><div class="card-title">2. PERİYOT</div><div class="card-val" id="q2">-</div></div>
-        <div class="card"><div class="card-title">İLK YARI</div><div class="card-val" id="iy">-</div></div>
-    </div>
-    <div class="grid">
-        <div class="card"><div class="card-title">3. PERİYOT</div><div class="card-val" id="q3">-</div></div>
-        <div class="card"><div class="card-title">4. PERİYOT</div><div class="card-val" id="q4">-</div></div>
-        <div class="card"><div class="card-title">MAÇ TOPLAMI</div><div class="card-val highlight" id="total">-</div></div>
-    </div>
+<!-- Tıklandığında Açılan Detay Modalı -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div style="color:#848e9c; font-size:12px; font-weight:bold;" id="m-league"></div>
+        <h2 style="margin: 8px 0 20px 0;" id="m-teams"></h2>
 
-    <h3 style="color:#848e9c; font-size: 12px; margin-top:20px;">TAKIM BAZLI TAHMİNLER</h3>
-    <div class="grid" style="margin-top:10px;">
-        <div class="card"><div class="card-title">EV SAHİBİ</div><div class="card-val" id="exp-home">-</div></div>
-        <div class="card"><div class="card-title">DEPLASMAN</div><div class="card-val" id="exp-away">-</div></div>
-        <div class="card"><div class="card-title">BEKLENEN TOPLAM</div><div class="card-val highlight" id="calc-total">-</div></div>
+        <div class="section-title">BASKETBOL MAÇ ANALİZİ</div>
+        <div class="grid-3">
+            <div class="box"><div class="box-title">1. PERİYOT</div><div class="box-val" id="m-q1"></div></div>
+            <div class="box"><div class="box-title">2. PERİYOT</div><div class="box-val" id="m-q2"></div></div>
+            <div class="box"><div class="box-title">İLK YARI</div><div class="box-val" id="m-iy"></div></div>
+        </div>
+        <div class="grid-3">
+            <div class="box"><div class="box-title">3. PERİYOT</div><div class="box-val" id="m-q3"></div></div>
+            <div class="box"><div class="box-title">4. PERİYOT</div><div class="box-val" id="m-q4"></div></div>
+            <div class="box"><div class="box-title">MAÇ TOPLAMI</div><div class="box-val highlight" id="m-total"></div></div>
+        </div>
+
+        <div class="section-title">TAKIM BAZLI TAHMİNLER</div>
+        <div class="grid-3">
+            <div class="box"><div class="box-title">EV SAHİBİ</div><div class="box-val" id="m-home"></div></div>
+            <div class="box"><div class="box-title">DEPLASMAN</div><div class="box-val" id="m-away"></div></div>
+            <div class="box"><div class="box-title">BEKLENEN TOPLAM</div><div class="box-val highlight" id="m-calc-total"></div></div>
+        </div>
     </div>
 </div>
 
 <script>
-    // JSON verisini çekip ekrana basan JavaScript fonksiyonu
-    async function loadMatchData() {
+    let matchesData = [];
+
+    async function loadMatches() {
         try {
-            const response = await fetch('data.json');
-            const data = await response.json();
-            const match = data[0]; // İlk maçı göster
-
-            document.getElementById('league-title').innerText = match.league;
-            document.getElementById('teams-title').innerText = `${match.home} vs ${match.away}`;
+            const res = await fetch('data.json');
+            matchesData = await res.json();
             
-            document.getElementById('q1').innerText = match.analysis.q1;
-            document.getElementById('q2').innerText = match.analysis.q2;
-            document.getElementById('q3').innerText = match.analysis.q3;
-            document.getElementById('q4').innerText = match.analysis.q4;
-            document.getElementById('iy').innerText = match.analysis.first_half;
-            document.getElementById('total').innerText = match.analysis.match_total;
+            const grid = document.getElementById('match-grid');
+            grid.innerHTML = '';
 
-            document.getElementById('exp-home').innerText = match.analysis.exp_home;
-            document.getElementById('exp-away').innerText = match.analysis.exp_away;
-            document.getElementById('calc-total').innerText = match.analysis.match_total;
-        } catch (error) {
-            console.error("Veri yüklenirken hata oluştu:", error);
+            matchesData.forEach((m, idx) => {
+                grid.innerHTML += `
+                    <div class="match-card" onclick="openModal(${idx})">
+                        <div class="card-header">
+                            <span>${m.league}</span>
+                        </div>
+                        <div class="teams-box">
+                            <div class="team-line"><span>${m.home}</span><span style="color:#848e9c">${m.analysis.exp_home}</span></div>
+                            <div class="team-line"><span>${m.away}</span><span style="color:#848e9c">${m.analysis.exp_away}</span></div>
+                        </div>
+                        <div class="totals-row">
+                            <div class="total-item">
+                                <div class="label">MAÇ TOPLAMI</div>
+                                <div class="val highlight">${m.analysis.match_total}</div>
+                            </div>
+                            <div class="total-item">
+                                <div class="label">İLK YARI</div>
+                                <div class="val">${m.analysis.first_half}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            console.error("data.json okunamadı:", e);
         }
     }
 
-    loadMatchData();
+    function openModal(index) {
+        const m = matchesData[index];
+        document.getElementById('m-league').innerText = m.league;
+        document.getElementById('m-teams').innerText = `${m.home} vs ${m.away}`;
+        document.getElementById('m-q1').innerText = m.analysis.q1;
+        document.getElementById('m-q2').innerText = m.analysis.q2;
+        document.getElementById('m-q3').innerText = m.analysis.q3;
+        document.getElementById('m-q4').innerText = m.analysis.q4;
+        document.getElementById('m-iy').innerText = m.analysis.first_half;
+        document.getElementById('m-total').innerText = m.analysis.match_total;
+        document.getElementById('m-home').innerText = m.analysis.exp_home;
+        document.getElementById('m-away').innerText = m.analysis.exp_away;
+        document.getElementById('m-calc-total').innerText = m.analysis.match_total;
+
+        document.getElementById('modal-overlay').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modal-overlay').style.display = 'none';
+    }
+
+    loadMatches();
 </script>
 </body>
 </html>
