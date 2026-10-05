@@ -1,108 +1,579 @@
 import requests
 import json
+import time
 from datetime import datetime
+from statistics import mean
+
+BASE = "https://www.sofascore.com/api/v1"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json",
 }
 
-def get_team_last_5_stats(team_id):
-    """
-    Takımın son 5 maçtaki periyot ve toplam skor performansını SofaScore API'den çeker.
-    """
-    url = f"https://api.sofascore.com/api/v1/team/{team_id}/events/last/0"
-    try:
-        res = requests.get(url, headers=HEADERS, timeout=5)
-        if res.status_code == 200:
-            events = res.json().get('events', [])[:5]
-            q1_list, q2_list, q3_list, q4_list, total_pts = [], [], [], [], []
-            
-            for event in events:
-                scores = event.get('homeScore', {}) if event.get('homeTeam', {}).get('id') == team_id else event.get('awayScore', {})
-                if 'period1' in scores:
-                    q1_list.append(scores.get('period1', 0))
-                    q2_list.append(scores.get('period2', 0))
-                    q3_list.append(scores.get('period3', 0))
-                    q4_list.append(scores.get('period4', 0))
-                    total_pts.append(scores.get('current', 0))
-            
-            if q1_list:
-                return [
-                    sum(q1_list)/len(q1_list),
-                    sum(q2_list)/len(q2_list),
-                    sum(q3_list)/len(q3_list),
-                    sum(q4_list)/len(q4_list)
-                ], sum(total_pts)/len(total_pts)
-    except Exception as e:
-        pass
-    
-    # Varsayılan genel basketbol ortalaması (sadece bağlantı koparsa devreye girer)
-    return [20.5, 20.0, 19.5, 20.0], 80.0
+SESSION = requests.Session()
+SESSION.headers.update(HEADERS)
 
-def calculate_match_analytics(home_q, away_q, home_pts, away_pts):
-    """Gerçek periyot ve toplam skor tahmin algoritması"""
-    q1 = round(home_q[0] + away_q[0], 1)
-    q2 = round(home_q[1] + away_q[1], 1)
-    q3 = round(home_q[3] + away_q[2], 1)
-    q4 = round(home_q[3] + away_q[3], 1)
-    
-    first_half = round(q1 + q2, 1)
-    exp_home = round(home_pts, 1)
-    exp_away = round(away_pts, 1)
-    match_total = round(exp_home + exp_away, 1)
+REQUEST_TIMEOUT = 10
+HISTORY_PAGES = 2
+MAX_MATCHES_PER_TEAM = 10
+
+
+def get_json(url):
+    try:
+        response = SESSION.get(url, timeout=REQUEST_TIMEOUT)
+
+        if response.status_code == 200:
+            return response.json()
+
+        print(f"API {response.status_code}: {url}")
+
+    except Exception as e:
+        print(f"API hatası: {e}")
+
+    return None
+
+
+def safe_mean(values, fallback=0):
+    values = [float(x) for x in values if x is not None]
+
+    if not values:
+        return fallback
+
+    return mean(values)
+
+
+def get_score_value(score, key):
+    value = score.get(key)
+
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    return None
+
+
+def get_team_score(event, team_id):
+    """
+    Takımın bu maçta attığı skor ve periyot skorlarını döndürür.
+    """
+
+    home_team = event.get("homeTeam", {})
+    away_team = event.get("awayTeam", {})
+
+    if home_team.get("id") == team_id:
+        score = event.get("homeScore", {})
+    elif away_team.get("id") == team_id:
+        score = event.get("awayScore", {})
+    else:
+        return None
+
+    current = (
+        get_score_value(score, "current")
+        or get_score_value(score, "display")
+    )
+
+    q1 = get_score_value(score, "period1")
+    q2 = get_score_value(score, "period2")
+    q3 = get_score_value(score, "period3")
+    q4 = get_score_value(score, "period4")
+
+    if current is None:
+        return None
+
+    if None in (q1, q2, q3, q4):
+        return None
 
     return {
-        "q1": q1, "q2": q2, "q3": q3, "q4": q4,
-        "first_half": first_half,
-        "match_total": match_total,
-        "exp_home": exp_home,
-        "exp_away": exp_away
+        "q1": q1,
+        "q2": q2,
+        "q3": q3,
+        "q4": q4,
+        "total": current,
     }
+
+
+def get_last_matches(team_id):
+    """
+    Takımın tamamlanmış son maçlarını getirir.
+    İlk 10 geçerli maç alınır.
+    """
+
+    matches = []
+
+    for page in range(HISTORY_PAGES):
+
+        url = f"{BASE}/team/{team_id}/events/last/{page}"
+
+        data = get_json(url)
+
+        if not data:
+            continue
+
+        events = data.get("events", [])
+
+        for event in events:
+
+            status = event.get("status", {})
+
+            # Sadece tamamlanmış maçlar
+            if status.get("type") != "finished":
+                continue
+
+            score = get_team_score(event, team_id)
+
+            if not score:
+                continue
+
+            home = event.get("homeTeam", {})
+            away = event.get("awayTeam", {})
+
+            is_home = home.get("id") == team_id
+
+            opponent_score = (
+                event.get("awayScore", {})
+                if is_home
+                else event.get("homeScore", {})
+            )
+
+            opponent_total = (
+                get_score_value(opponent_score, "current")
+                or get_score_value(opponent_score, "display")
+            )
+
+            if opponent_total is None:
+                continue
+
+            matches.append({
+                "home": is_home,
+                "team_total": score["total"],
+                "opponent_total": opponent_total,
+                "q1": score["q1"],
+                "q2": score["q2"],
+                "q3": score["q3"],
+                "q4": score["q4"],
+            })
+
+            if len(matches) >= MAX_MATCHES_PER_TEAM:
+                return matches
+
+        time.sleep(0.15)
+
+    return matches
+
+
+def calculate_team_stats(matches):
+    """
+    Takımın son maçlarından hücum + savunma + periyot
+    ortalamalarını hesaplar.
+    """
+
+    if not matches:
+        return None
+
+    home_matches = [m for m in matches if m["home"]]
+    away_matches = [m for m in matches if not m["home"]]
+
+    stats = {
+        "games": len(matches),
+
+        "points": safe_mean(
+            [m["team_total"] for m in matches],
+            80
+        ),
+
+        "allowed": safe_mean(
+            [m["opponent_total"] for m in matches],
+            80
+        ),
+
+        "q1": safe_mean([m["q1"] for m in matches], 20),
+        "q2": safe_mean([m["q2"] for m in matches], 20),
+        "q3": safe_mean([m["q3"] for m in matches], 20),
+        "q4": safe_mean([m["q4"] for m in matches], 20),
+    }
+
+    # Ev/deplasman performansı
+    stats["home_points"] = safe_mean(
+        [m["team_total"] for m in home_matches],
+        stats["points"]
+    )
+
+    stats["home_allowed"] = safe_mean(
+        [m["opponent_total"] for m in home_matches],
+        stats["allowed"]
+    )
+
+    stats["away_points"] = safe_mean(
+        [m["team_total"] for m in away_matches],
+        stats["points"]
+    )
+
+    stats["away_allowed"] = safe_mean(
+        [m["opponent_total"] for m in away_matches],
+        stats["allowed"]
+    )
+
+    return stats
+
+
+def weighted_recent_average(values):
+    """
+    Son maçlara daha fazla ağırlık verir.
+    """
+
+    if not values:
+        return 0
+
+    weights = list(range(1, len(values) + 1))
+
+    total_weight = sum(weights)
+
+    return sum(
+        value * weight
+        for value, weight in zip(values, weights)
+    ) / total_weight
+
+
+def calculate_period_prediction(home_stats, away_stats):
+    """
+    Hücum + rakip savunması üzerinden periyot tahmini.
+    """
+
+    # Her iki takımın genel hücum/savunma değerleri
+    home_attack = home_stats["points"]
+    away_attack = away_stats["points"]
+
+    home_defense = home_stats["allowed"]
+    away_defense = away_stats["allowed"]
+
+    # Ev/deplasman düzeltmesi
+    home_attack_adj = (
+        home_attack * 0.65
+        + home_stats["home_points"] * 0.35
+    )
+
+    away_attack_adj = (
+        away_attack * 0.65
+        + away_stats["away_points"] * 0.35
+    )
+
+    home_defense_adj = (
+        home_defense * 0.65
+        + home_stats["home_allowed"] * 0.35
+    )
+
+    away_defense_adj = (
+        away_defense * 0.65
+        + away_stats["away_allowed"] * 0.35
+    )
+
+    # Beklenen takım skorları
+    expected_home = (
+        home_attack_adj * 0.55
+        + away_defense_adj * 0.45
+    )
+
+    expected_away = (
+        away_attack_adj * 0.55
+        + home_defense_adj * 0.45
+    )
+
+    # Periyot bazında takım hücum oranları
+    home_q = [
+        home_stats["q1"],
+        home_stats["q2"],
+        home_stats["q3"],
+        home_stats["q4"],
+    ]
+
+    away_q = [
+        away_stats["q1"],
+        away_stats["q2"],
+        away_stats["q3"],
+        away_stats["q4"],
+    ]
+
+    home_q_total = sum(home_q)
+    away_q_total = sum(away_q)
+
+    if home_q_total <= 0:
+        home_q_total = 80
+
+    if away_q_total <= 0:
+        away_q_total = 80
+
+    home_ratio = expected_home / home_q_total
+    away_ratio = expected_away / away_q_total
+
+    home_periods = [
+        x * home_ratio for x in home_q
+    ]
+
+    away_periods = [
+        x * away_ratio for x in away_q
+    ]
+
+    q1 = home_periods[0] + away_periods[0]
+    q2 = home_periods[1] + away_periods[1]
+    q3 = home_periods[2] + away_periods[2]
+    q4 = home_periods[3] + away_periods[3]
+
+    first_half = q1 + q2
+
+    match_total = (
+        expected_home +
+        expected_away
+    )
+
+    return {
+        "q1": round(q1, 1),
+        "q2": round(q2, 1),
+        "q3": round(q3, 1),
+        "q4": round(q4, 1),
+
+        "first_half": round(first_half, 1),
+
+        "match_total": round(match_total, 1),
+
+        "exp_home": round(expected_home, 1),
+        "exp_away": round(expected_away, 1),
+    }
+
+
+def calculate_confidence(home_stats, away_stats):
+    """
+    Veri miktarı + iki takım arasındaki istatistik
+    tutarlılığına göre basit güven puanı.
+    """
+
+    games = min(
+        home_stats["games"],
+        away_stats["games"]
+    )
+
+    # 10 maça yaklaştıkça veri güveni yükselir.
+    data_score = min(games / 10, 1) * 60
+
+    # Hücum/savunma verileri mevcutsa ek güven.
+    quality_score = 40
+
+    return round(
+        min(100, data_score + quality_score),
+        1
+    )
+
 
 def run_scraper():
-    today_str = datetime.now().strftime("%Y-%m-%d")
-    print(f"[{today_str}] Tarihli maçlar ve TAKIM ÖZEL İSTATİSTİKLERİ çekiliyor...")
 
-    url = f"https://api.sofascore.com/api/v1/sport/basketball/scheduled-events/{today_str}"
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    print("=" * 60)
+    print("🏀 BASKETBOL GERÇEK VERİ ANALİZİ")
+    print("=" * 60)
+    print(f"📅 Tarih: {today}")
+
+    url = (
+        f"{BASE}/sport/basketball/"
+        f"scheduled-events/{today}"
+    )
+
+    data = get_json(url)
+
+    if not data:
+        print("❌ Günün maçları alınamadı.")
+        return
+
+    events = data.get("events", [])
+
+    print(f"🏀 Bulunan maç: {len(events)}")
+
     all_matches = []
 
-    try:
-        response = requests.get(url, headers=HEADERS, timeout=10)
-        if response.status_code == 200:
-            events = response.json().get('events', [])
-            
-            for idx, event in enumerate(events):
-                league_name = event.get('tournament', {}).get('name', 'BASKETBOL').upper()
-                time_str = datetime.fromtimestamp(event.get('startTimestamp', 0)).strftime('%H:%M')
-                
-                home_team = event.get('homeTeam', {})
-                away_team = event.get('awayTeam', {})
+    for index, event in enumerate(events):
 
-                # HER TAKIMIN KENDİ GERÇEK İSTATİSTİĞİNİ ÇEKİYORUZ
-                home_q_avg, home_pts_avg = get_team_last_5_stats(home_team.get('id'))
-                away_q_avg, away_pts_avg = get_team_last_5_stats(away_team.get('id'))
+        home_team = event.get("homeTeam", {})
+        away_team = event.get("awayTeam", {})
 
-                analysis = calculate_match_analytics(home_q_avg, away_q_avg, home_pts_avg, away_pts_avg)
+        home_id = home_team.get("id")
+        away_id = away_team.get("id")
 
-                all_matches.append({
-                    "id": f"m_{event.get('id', idx)}",
-                    "league": f"{league_name} {time_str}",
-                    "home": home_team.get('name', 'Ev Sahibi'),
-                    "away": away_team.get('name', 'Deplasman'),
-                    "analysis": analysis
-                })
-    except Exception as e:
-        print(f"Hata oluştu: {e}")
+        if not home_id or not away_id:
+            continue
 
-    # Çıktıyı data.json'a kaydet
-    output_data = {
-        today_str: all_matches
+        home_name = home_team.get(
+            "name",
+            "Ev Sahibi"
+        )
+
+        away_name = away_team.get(
+            "name",
+            "Deplasman"
+        )
+
+        league = (
+            event
+            .get("tournament", {})
+            .get("name", "BASKETBOL")
+            .upper()
+        )
+
+        timestamp = event.get(
+            "startTimestamp",
+            0
+        )
+
+        try:
+            time_str = datetime.fromtimestamp(
+                timestamp
+            ).strftime("%H:%M")
+        except Exception:
+            time_str = "--:--"
+
+        print(
+            f"\n[{index + 1}/{len(events)}] "
+            f"{home_name} - {away_name}"
+        )
+
+        # Ev sahibi geçmişi
+        home_matches = get_last_matches(home_id)
+
+        # Deplasman geçmişi
+        away_matches = get_last_matches(away_id)
+
+        home_stats = calculate_team_stats(
+            home_matches
+        )
+
+        away_stats = calculate_team_stats(
+            away_matches
+        )
+
+        # Veri bulunamazsa maçı tamamen silmek yerine
+        # düşük güvenle genel ortalama kullan.
+        if not home_stats:
+            home_stats = {
+                "games": 0,
+                "points": 80,
+                "allowed": 80,
+                "q1": 20,
+                "q2": 20,
+                "q3": 20,
+                "q4": 20,
+                "home_points": 80,
+                "home_allowed": 80,
+                "away_points": 80,
+                "away_allowed": 80,
+            }
+
+        if not away_stats:
+            away_stats = {
+                "games": 0,
+                "points": 80,
+                "allowed": 80,
+                "q1": 20,
+                "q2": 20,
+                "q3": 20,
+                "q4": 20,
+                "home_points": 80,
+                "home_allowed": 80,
+                "away_points": 80,
+                "away_allowed": 80,
+            }
+
+        analysis = calculate_period_prediction(
+            home_stats,
+            away_stats
+        )
+
+        confidence = calculate_confidence(
+            home_stats,
+            away_stats
+        )
+
+        analysis["confidence"] = confidence
+
+        analysis["home_games"] = home_stats["games"]
+        analysis["away_games"] = away_stats["games"]
+
+        all_matches.append({
+            "id": f"m_{event.get('id', index)}",
+
+            "league": f"{league} {time_str}",
+
+            "home": home_name,
+            "away": away_name,
+
+            "homeId": home_id,
+            "awayId": away_id,
+
+            "analysis": analysis,
+
+            "stats": {
+                "home": {
+                    "games": home_stats["games"],
+                    "points": round(
+                        home_stats["points"], 1
+                    ),
+                    "allowed": round(
+                        home_stats["allowed"], 1
+                    ),
+                },
+
+                "away": {
+                    "games": away_stats["games"],
+                    "points": round(
+                        away_stats["points"], 1
+                    ),
+                    "allowed": round(
+                        away_stats["allowed"], 1
+                    ),
+                }
+            }
+        })
+
+        print(
+            f"   📊 {analysis['exp_home']} - "
+            f"{analysis['exp_away']}"
+        )
+
+        print(
+            f"   🎯 Toplam: "
+            f"{analysis['match_total']}"
+        )
+
+        print(
+            f"   📈 Güven: "
+            f"%{confidence}"
+        )
+
+    output = {
+        today: all_matches
     }
 
-    with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(output_data, f, ensure_ascii=False, indent=4)
+    with open(
+        "data.json",
+        "w",
+        encoding="utf-8"
+    ) as file:
 
-    print(f"Tamamlandı! Toplam {len(all_matches)} maç için takımların GERÇEK verileriyle analiz üretildi.")
+        json.dump(
+            output,
+            file,
+            ensure_ascii=False,
+            indent=4
+        )
+
+    print("\n" + "=" * 60)
+    print(
+        f"✅ TAMAMLANDI: "
+        f"{len(all_matches)} maç"
+    )
+    print("=" * 60)
+
 
 if __name__ == "__main__":
     run_scraper()
