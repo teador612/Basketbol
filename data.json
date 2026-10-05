@@ -1,0 +1,34 @@
+[
+    {
+        "id": "m1",
+        "league": "EUROLEAGUE 21:05",
+        "home": "Maccabi Tel Aviv",
+        "away": "Besiktas",
+        "analysis": {
+            "q1": 41.3,
+            "q2": 42.3,
+            "q3": 40.9,
+            "q4": 39.2,
+            "first_half": 83.6,
+            "match_total": 163.7,
+            "exp_home": 89.7,
+            "exp_away": 74.0
+        }
+    },
+    {
+        "id": "m2",
+        "league": "EUROCUP 18:30",
+        "home": "Siauliai",
+        "away": "London Lions",
+        "analysis": {
+            "q1": 41.2,
+            "q2": 40.5,
+            "q3": 39.4,
+            "q4": 40.4,
+            "first_half": 81.7,
+            "match_total": 161.5,
+            "exp_home": 76.9,
+            "exp_away": 84.6
+        }
+    }
+]
