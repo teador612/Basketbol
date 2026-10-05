@@ -1,0 +1,34 @@
+name: Otomatik Basketbol Veri Kazıyıcı
+
+on:
+  schedule:
+    # Her saat başı çalışır
+    - cron: '0 * * * *'
+  workflow_dispatch: # İstediğinizde elle tetikleme butonu
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu Klonla
+        uses: actions/checkout@v3
+
+      - name: Python Kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Kütüphaneleri Yükle
+        run: |
+          pip install -r requirements.txt
+
+      - name: Kazıyıcıyı Çalıştır
+        run: python scraper.py
+
+      - name: Güncellenen data.json Dosyasını GitHub'a Kaydet
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Auto-update data.json" || exit 0
+          git push
