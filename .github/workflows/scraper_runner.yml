@@ -74,7 +74,13 @@ jobs:
                   if isinstance(matches, list):
                       print(f"📅 {date}: {len(matches)} maç")
           PY
-
+      - name: Debug dosyasını yükle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iddaa-euroleague-debug
+          path: iddaa-euroleague-debug.html
+          if-no-files-found: ignore
       - name: Değişiklikleri kaydet
         run: |
           git config user.name "github-actions[bot]"
