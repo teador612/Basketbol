@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Basketbol Analiz Paneli</title>
+    <style>
+        body { background-color: #0b0e11; color: #fff; font-family: sans-serif; padding: 20px; }
+        .modal { background-color: #12161a; border: 1px solid #1e2329; border-radius: 8px; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+        .card { background: #181d22; border: 1px solid #2b313a; padding: 15px; border-radius: 6px; text-align: center; }
+        .card-title { color: #848e9c; font-size: 11px; font-weight: bold; }
+        .card-val { font-size: 26px; font-weight: bold; margin: 5px 0; }
+        .highlight { color: #38d39f; }
+    </style>
+</head>
+<body>
+
+<div class="modal" id="match-container">
+    <h2 id="league-title" style="color:#848e9c; font-size: 14px;">Yükleniyor...</h2>
+    <h1 id="teams-title" style="font-size: 20px; margin-bottom: 20px;"></h1>
+
+    <div class="grid">
+        <div class="card"><div class="card-title">1. PERİYOT</div><div class="card-val" id="q1">-</div></div>
+        <div class="card"><div class="card-title">2. PERİYOT</div><div class="card-val" id="q2">-</div></div>
+        <div class="card"><div class="card-title">İLK YARI</div><div class="card-val" id="iy">-</div></div>
+    </div>
+    <div class="grid">
+        <div class="card"><div class="card-title">3. PERİYOT</div><div class="card-val" id="q3">-</div></div>
+        <div class="card"><div class="card-title">4. PERİYOT</div><div class="card-val" id="q4">-</div></div>
+        <div class="card"><div class="card-title">MAÇ TOPLAMI</div><div class="card-val highlight" id="total">-</div></div>
+    </div>
+
+    <h3 style="color:#848e9c; font-size: 12px; margin-top:20px;">TAKIM BAZLI TAHMİNLER</h3>
+    <div class="grid" style="margin-top:10px;">
+        <div class="card"><div class="card-title">EV SAHİBİ</div><div class="card-val" id="exp-home">-</div></div>
+        <div class="card"><div class="card-title">DEPLASMAN</div><div class="card-val" id="exp-away">-</div></div>
+        <div class="card"><div class="card-title">BEKLENEN TOPLAM</div><div class="card-val highlight" id="calc-total">-</div></div>
+    </div>
+</div>
+
+<script>
+    // JSON verisini çekip ekrana basan JavaScript fonksiyonu
+    async function loadMatchData() {
+        try {
+            const response = await fetch('data.json');
+            const data = await response.json();
+            const match = data[0]; // İlk maçı göster
+
+            document.getElementById('league-title').innerText = match.league;
+            document.getElementById('teams-title').innerText = `${match.home} vs ${match.away}`;
+            
+            document.getElementById('q1').innerText = match.analysis.q1;
+            document.getElementById('q2').innerText = match.analysis.q2;
+            document.getElementById('q3').innerText = match.analysis.q3;
+            document.getElementById('q4').innerText = match.analysis.q4;
+            document.getElementById('iy').innerText = match.analysis.first_half;
+            document.getElementById('total').innerText = match.analysis.match_total;
+
+            document.getElementById('exp-home').innerText = match.analysis.exp_home;
+            document.getElementById('exp-away').innerText = match.analysis.exp_away;
+            document.getElementById('calc-total').innerText = match.analysis.match_total;
+        } catch (error) {
+            console.error("Veri yüklenirken hata oluştu:", error);
+        }
+    }
+
+    loadMatchData();
+</script>
+</body>
+</html>
