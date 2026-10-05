@@ -30,5 +30,101 @@
             "exp_home": 76.9,
             "exp_away": 84.6
         }
+    },
+    {
+        "id": "m3",
+        "league": "EUROCUP 19:00",
+        "home": "Rigas Zelli",
+        "away": "Tortona",
+        "analysis": {
+            "q1": 40.5,
+            "q2": 42.1,
+            "q3": 41.5,
+            "q4": 41.6,
+            "first_half": 82.6,
+            "match_total": 165.7,
+            "exp_home": 88.2,
+            "exp_away": 77.5
+        }
+    },
+    {
+        "id": "m4",
+        "league": "VTB UNITED 18:00",
+        "home": "Saratov",
+        "away": "Uralmash Ekaterinburg",
+        "analysis": {
+            "q1": 37.7,
+            "q2": 39.2,
+            "q3": 37.6,
+            "q4": 38.3,
+            "first_half": 76.9,
+            "match_total": 152.8,
+            "exp_home": 74.9,
+            "exp_away": 77.9
+        }
+    },
+    {
+        "id": "m5",
+        "league": "VTB UNITED 19:00",
+        "home": "Unics Kazan",
+        "away": "Dynamo Vladivostok",
+        "analysis": {
+            "q1": 39.1,
+            "q2": 38.0,
+            "q3": 38.4,
+            "q4": 38.8,
+            "first_half": 77.1,
+            "match_total": 154.3,
+            "exp_home": 74.6,
+            "exp_away": 79.7
+        }
+    },
+    {
+        "id": "m6",
+        "league": "NBL 10:30",
+        "home": "New Zealand Breakers",
+        "away": "Cairns Taipans",
+        "analysis": {
+            "q1": 47.1,
+            "q2": 47.1,
+            "q3": 46.4,
+            "q4": 47.0,
+            "first_half": 94.2,
+            "match_total": 187.6,
+            "exp_home": 99.3,
+            "exp_away": 88.3
+        }
+    },
+    {
+        "id": "m7",
+        "league": "NBL 12:30",
+        "home": "Sydney",
+        "away": "Brisbane Bullets",
+        "analysis": {
+            "q1": 46.8,
+            "q2": 46.0,
+            "q3": 46.2,
+            "q4": 46.4,
+            "first_half": 92.8,
+            "match_total": 185.4,
+            "exp_home": 101.5,
+            "exp_away": 83.9
+        }
+    },
+    {
+        "id": "m8",
+        "league": "NBA W 03:30",
+        "home": "New York Liberty W",
+        "away": "Minnesota Lynx W",
+        "analysis": {
+            "q1": 41.0,
+            "q2": 40.9,
+            "q3": 40.9,
+            "q4": 40.8,
+            "first_half": 81.9,
+            "match_total": 163.6,
+            "exp_home": 79.5,
+            "exp_away": 84.1
+        }
     }
 ]
