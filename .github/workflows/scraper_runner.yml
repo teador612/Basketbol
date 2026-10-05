@@ -3,15 +3,20 @@ name: Basketbol Veri Güncelleme
 on:
   schedule:
     - cron: "*/30 * * * *"
+
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: basketbol-veri-guncelleme
+  cancel-in-progress: true
+
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Repository indir
@@ -21,26 +26,36 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
 
       - name: Gereksinimleri kur
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install requests
+          fi
 
-      - name: Basketbol verilerini güncelle
+      - name: Scraper çalıştır
         env:
-          BALLDONTLIE_API_KEY: ${{ secrets.BALLDONTLIE_API_KEY }}
           PYTHONUNBUFFERED: "1"
         run: |
-          echo "🏀 BASKETBOL VERİ GÜNCELLEME"
+          echo "========================================"
+          echo "🏀 BASKETBOL SCRAPER"
+          echo "========================================"
           date
+          echo ""
+
           python -u scraper.py
 
-      - name: Veri kontrolü
+      - name: Data kontrol
         run: |
+          echo "========================================"
+          echo "📦 DATA.JSON KONTROL"
+          echo "========================================"
+
           if [ ! -f data.json ]; then
-            echo "❌ data.json oluşturulmadı!"
+            echo "❌ data.json bulunamadı!"
             exit 1
           fi
 
@@ -49,14 +64,15 @@ jobs:
           python - <<'PY'
           import json
 
-          with open("data.json", encoding="utf-8") as f:
+          with open("data.json", "r", encoding="utf-8") as f:
               data = json.load(f)
 
-          if isinstance(data, list):
-              print(f"📊 Maç sayısı: {len(data)}")
-          elif isinstance(data, dict):
-              print("📊 JSON obje olarak oluşturuldu.")
-              print("🔑 Anahtarlar:", list(data.keys())[:20])
+          print("✅ JSON geçerli.")
+
+          if isinstance(data, dict):
+              for date, matches in data.items():
+                  if isinstance(matches, list):
+                      print(f"📅 {date}: {len(matches)} maç")
           PY
 
       - name: Değişiklikleri kaydet
