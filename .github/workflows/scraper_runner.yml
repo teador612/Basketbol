@@ -3,7 +3,6 @@ name: Basketbol Veri Güncelleme
 on:
   schedule:
     - cron: "*/30 * * * *"
-
   workflow_dispatch:
 
 permissions:
@@ -22,7 +21,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
+          cache: pip
 
       - name: Gereksinimleri kur
         run: |
@@ -34,25 +33,12 @@ jobs:
           BALLDONTLIE_API_KEY: ${{ secrets.BALLDONTLIE_API_KEY }}
           PYTHONUNBUFFERED: "1"
         run: |
-          echo "========================================"
           echo "🏀 BASKETBOL VERİ GÜNCELLEME"
-          echo "========================================"
           date
-          echo ""
-
           python -u scraper.py
-
-          echo ""
-          echo "========================================"
-          echo "✅ SCRAPER TAMAMLANDI"
-          echo "========================================"
 
       - name: Veri kontrolü
         run: |
-          echo "========================================"
-          echo "📦 DATA.JSON KONTROL"
-          echo "========================================"
-
           if [ ! -f data.json ]; then
             echo "❌ data.json oluşturulmadı!"
             exit 1
@@ -63,7 +49,7 @@ jobs:
           python - <<'PY'
           import json
 
-          with open("data.json", "r", encoding="utf-8") as f:
+          with open("data.json", encoding="utf-8") as f:
               data = json.load(f)
 
           if isinstance(data, list):
@@ -71,8 +57,6 @@ jobs:
           elif isinstance(data, dict):
               print("📊 JSON obje olarak oluşturuldu.")
               print("🔑 Anahtarlar:", list(data.keys())[:20])
-          else:
-              print("⚠️ Beklenmeyen JSON yapısı:", type(data))
           PY
 
       - name: Değişiklikleri kaydet
