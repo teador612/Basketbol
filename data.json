@@ -1,3 +1,228 @@
 {
-  "2026-10-05": []
+  "2026-10-05": [
+    {
+      "id": "as monaco__baskonia__2026-10-05",
+      "league": "EuroLeague",
+      "home": "AS Monaco",
+      "away": "Baskonia",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "anadolu efes__as monaco__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Anadolu Efes",
+      "away": "AS Monaco",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "anadolu efes__fenerbahce beko__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Anadolu Efes",
+      "away": "Fenerbahçe Beko",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "baskonia__bayern munih__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Baskonia",
+      "away": "Bayern Münih",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "bayern munih__dubai basketball__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Bayern Münih",
+      "away": "Dubai Basketball",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "dubai basketball__olimpia milano__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Dubai Basketball",
+      "away": "Olimpia Milano",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "fc barcelona__fenerbahce beko__2026-10-05",
+      "league": "EuroLeague",
+      "home": "FC Barcelona",
+      "away": "Fenerbahçe Beko",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "fenerbahce beko__hapoel ibi tel aviv__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Fenerbahçe Beko",
+      "away": "Hapoel IBI Tel Aviv",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "hapoel ibi tel aviv__kizilyildiz__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Hapoel IBI Tel Aviv",
+      "away": "Kızılyıldız",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "kizilyildiz__ldlc asvel__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Kızılyıldız",
+      "away": "LDLC ASVEL",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "ldlc asvel__maccabi rapyd tel aviv__2026-10-05",
+      "league": "EuroLeague",
+      "home": "LDLC ASVEL",
+      "away": "Maccabi Rapyd Tel Aviv",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "maccabi rapyd tel aviv__olympiakos__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Maccabi Rapyd Tel Aviv",
+      "away": "Olympiakos",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "olimpia milano__fc barcelona__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Olimpia Milano",
+      "away": "FC Barcelona",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "olympiakos__panathinaikos__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Olympiakos",
+      "away": "Panathinaikos",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "panathinaikos__paris basketball__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Panathinaikos",
+      "away": "Paris Basketball",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "paris basketball__partizan__2026-10-05",
+      "league": "EuroLeague",
+      "home": "Paris Basketball",
+      "away": "Partizan",
+      "date": "2026-10-05",
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "status": "scheduled",
+      "winner": null,
+      "source": "iddaa.com"
+    }
+  ]
 }
