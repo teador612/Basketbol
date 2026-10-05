@@ -21,25 +21,57 @@ TIMEZONE = "Europe/Istanbul"
 
 REQUEST_TIMEOUT = 20
 
-# EV SAHİBİ: SON 5 EV MAÇI
-# DEPLASMAN: SON 5 DEPLASMAN MAÇI
 LAST_HOME_AWAY_GAMES = 5
 
-# Günlük ücretsiz API kotasını korumak için
-MIN_REMAINING_REQUESTS = 5
-
-# API çağrıları arasında küçük bekleme
 REQUEST_DELAY = 0.25
+
+# API kotasını koru
+MIN_REMAINING_REQUESTS = 5
 
 
 # =========================================================
-# API KONTROLÜ
+# SADECE İSTEDİĞİMİZ LİGLER
+# =========================================================
+#
+# API-Basketball league ID'leri
+#
+# NBA          = 12
+# EuroLeague   = 120
+# Türkiye BSL  = 40
+#
+# Not:
+# API'deki ID farklılıklarını önlemek için aşağıdaki
+# isim kontrolü de ayrıca yapılmaktadır.
+#
+
+ALLOWED_LEAGUE_IDS = {
+    12,    # NBA
+    120,   # EuroLeague
+    40     # Türkiye BSL
+}
+
+
+ALLOWED_LEAGUE_NAMES = {
+    "NBA",
+    "Euroleague",
+    "EuroLeague",
+    "BSL",
+    "TBSL",
+    "Super Lig",
+    "Super Ligi"
+}
+
+
+# =========================================================
+# API KONTROL
 # =========================================================
 
 if not API_KEY:
+
     raise RuntimeError(
         "API_SPORTS_KEY bulunamadı. "
-        "GitHub Actions Secrets içine API_SPORTS_KEY ekleyin."
+        "GitHub Actions Secrets içine "
+        "API_SPORTS_KEY ekleyin."
     )
 
 
@@ -47,12 +79,19 @@ HEADERS = {
     "x-apisports-key": API_KEY
 }
 
+
 SESSION = requests.Session()
-SESSION.headers.update(HEADERS)
+
+SESSION.headers.update(
+    HEADERS
+)
+
 
 DAILY_REMAINING = None
 
-# Aynı takım için aynı gün tekrar API çağrısı yapmamak
+
+# Aynı takımın geçmişini aynı çalışma içinde
+# tekrar tekrar API'den çekmemek için
 TEAM_CACHE = {}
 
 
@@ -61,22 +100,27 @@ TEAM_CACHE = {}
 # =========================================================
 
 def now_tr():
+
     return datetime.now(
         ZoneInfo(TIMEZONE)
     )
 
 
 def get_today():
+
     return now_tr().strftime(
         "%Y-%m-%d"
     )
 
 
 # =========================================================
-# API İSTEĞİ
+# API
 # =========================================================
 
-def get_json(endpoint, params=None):
+def get_json(
+    endpoint,
+    params=None
+):
 
     global DAILY_REMAINING
 
@@ -90,7 +134,6 @@ def get_json(endpoint, params=None):
             timeout=REQUEST_TIMEOUT
         )
 
-        # Günlük kalan API hakkı
         remaining = response.headers.get(
             "x-ratelimit-requests-remaining"
         )
@@ -104,12 +147,13 @@ def get_json(endpoint, params=None):
                 )
 
                 print(
-                    f"   📊 Kalan günlük API hakkı: "
+                    f"   📊 Kalan API hakkı: "
                     f"{DAILY_REMAINING}"
                 )
 
             except Exception:
                 pass
+
 
         if response.status_code == 429:
 
@@ -117,23 +161,20 @@ def get_json(endpoint, params=None):
                 "   🛑 API rate limit: 429"
             )
 
-            time.sleep(10)
-
             return None
+
 
         if response.status_code != 200:
 
             print(
-                f"   ❌ HTTP {response.status_code}"
+                f"   ❌ HTTP "
+                f"{response.status_code}"
             )
 
             try:
 
                 print(
-                    json.dumps(
-                        response.json(),
-                        ensure_ascii=False
-                    )
+                    response.text[:500]
                 )
 
             except Exception:
@@ -141,25 +182,30 @@ def get_json(endpoint, params=None):
 
             return None
 
+
         return response.json()
+
 
     except requests.RequestException as e:
 
         print(
-            f"   ❌ API bağlantı hatası: {e}"
+            f"   ❌ API bağlantı hatası: "
+            f"{e}"
         )
 
         return None
 
 
 # =========================================================
-# KOTA KONTROLÜ
+# KOTA
 # =========================================================
 
 def can_make_request():
 
     if DAILY_REMAINING is None:
+
         return True
+
 
     if DAILY_REMAINING <= MIN_REMAINING_REQUESTS:
 
@@ -169,6 +215,7 @@ def can_make_request():
         )
 
         return False
+
 
     return True
 
@@ -180,7 +227,9 @@ def can_make_request():
 def load_existing_data():
 
     if not os.path.exists(DATA_FILE):
+
         return {}
+
 
     try:
 
@@ -192,15 +241,20 @@ def load_existing_data():
 
             data = json.load(f)
 
+
         if isinstance(data, dict):
+
             return data
 
+
         return {}
+
 
     except Exception as e:
 
         print(
-            f"⚠️ data.json okunamadı: {e}"
+            f"⚠️ data.json okunamadı: "
+            f"{e}"
         )
 
         return {}
@@ -212,7 +266,10 @@ def load_existing_data():
 
 def save_data(data):
 
-    temp_file = DATA_FILE + ".tmp"
+    temp_file = (
+        DATA_FILE + ".tmp"
+    )
+
 
     with open(
         temp_file,
@@ -227,6 +284,7 @@ def save_data(data):
             indent=2
         )
 
+
     os.replace(
         temp_file,
         DATA_FILE
@@ -234,27 +292,75 @@ def save_data(data):
 
 
 # =========================================================
+# LİG KONTROLÜ
+# =========================================================
+
+def is_allowed_league(
+    game
+):
+
+    league = game.get(
+        "league",
+        {}
+    )
+
+    league_id = league.get(
+        "id"
+    )
+
+    league_name = str(
+        league.get(
+            "name",
+            ""
+        )
+    ).strip()
+
+
+    # Önce ID kontrolü
+    if league_id in ALLOWED_LEAGUE_IDS:
+
+        return True
+
+
+    # İsim kontrolü
+    if league_name in ALLOWED_LEAGUE_NAMES:
+
+        return True
+
+
+    return False
+
+
+# =========================================================
 # TAKIM GEÇMİŞİ
 # =========================================================
 
-def get_team_games(team_id):
+def get_team_games(
+    team_id
+):
 
-    team_key = str(team_id)
+    team_key = str(
+        team_id
+    )
 
-    # Aynı takım daha önce çekildiyse
-    # API'ye tekrar gitme
+
     if team_key in TEAM_CACHE:
 
-        return TEAM_CACHE[team_key]
+        return TEAM_CACHE[
+            team_key
+        ]
+
 
     if not can_make_request():
 
         return []
 
+
     print(
-        f"   🔎 Takım geçmişi alınıyor: "
+        f"   🔎 Takım geçmişi: "
         f"{team_id}"
     )
+
 
     data = get_json(
         "games",
@@ -263,27 +369,37 @@ def get_team_games(team_id):
         }
     )
 
+
     if not data:
 
-        TEAM_CACHE[team_key] = []
+        TEAM_CACHE[
+            team_key
+        ] = []
 
         return []
+
 
     games = data.get(
         "response",
         []
     )
 
-    TEAM_CACHE[team_key] = games
+
+    TEAM_CACHE[
+        team_key
+    ] = games
+
 
     time.sleep(
         REQUEST_DELAY
     )
 
+
     print(
-        f"   📦 Takım için "
-        f"{len(games)} maç bulundu"
+        f"   📦 {len(games)} "
+        f"geçmiş maç bulundu"
     )
+
 
     return games
 
@@ -300,7 +416,9 @@ def get_last_home_games(
         team_id
     )
 
+
     result = []
+
 
     for game in games:
 
@@ -310,32 +428,39 @@ def get_last_home_games(
             .get("short")
         )
 
-        # Tamamlanmış maç
+
+        # Sadece tamamlanmış maçlar
         if status not in (
             "FT",
             "AOT"
         ):
+
             continue
+
 
         teams = game.get(
             "teams",
             {}
         )
 
+
         home = teams.get(
             "home",
             {}
         )
+
 
         away = teams.get(
             "away",
             {}
         )
 
+
         scores = game.get(
             "scores",
             {}
         )
+
 
         home_score = (
             scores
@@ -343,48 +468,60 @@ def get_last_home_games(
             .get("total")
         )
 
+
         away_score = (
             scores
             .get("away", {})
             .get("total")
         )
 
-        # Takım gerçekten ev sahibi mi?
+
+        # Takım ev sahibi olmalı
         if str(
             home.get("id")
         ) != str(team_id):
 
             continue
 
+
         if (
             home_score is None
             or away_score is None
         ):
+
             continue
+
 
         result.append({
 
-            "date": (
-                game
-                .get("date", {})
-                .get("start")
-            ),
+            "date":
+                game.get(
+                    "date",
+                    {}
+                ).get(
+                    "start"
+                ),
 
-            "points_for": float(
-                home_score
-            ),
+            "points_for":
+                float(
+                    home_score
+                ),
 
-            "points_against": float(
-                away_score
-            )
+            "points_against":
+                float(
+                    away_score
+                )
 
         })
 
-    # En yeni maçlar önce
+
+    # En yeni maçtan eskiye
     result.sort(
-        key=lambda x: x["date"] or "",
+        key=lambda x:
+            x["date"] or "",
         reverse=True
     )
+
 
     return result[
         :LAST_HOME_AWAY_GAMES
@@ -403,7 +540,9 @@ def get_last_away_games(
         team_id
     )
 
+
     result = []
+
 
     for game in games:
 
@@ -413,31 +552,38 @@ def get_last_away_games(
             .get("short")
         )
 
+
         if status not in (
             "FT",
             "AOT"
         ):
+
             continue
+
 
         teams = game.get(
             "teams",
             {}
         )
 
+
         home = teams.get(
             "home",
             {}
         )
+
 
         away = teams.get(
             "away",
             {}
         )
 
+
         scores = game.get(
             "scores",
             {}
         )
+
 
         home_score = (
             scores
@@ -445,47 +591,59 @@ def get_last_away_games(
             .get("total")
         )
 
+
         away_score = (
             scores
             .get("away", {})
             .get("total")
         )
 
-        # Takım gerçekten deplasmanda mı?
+
+        # Takım deplasman takımı olmalı
         if str(
             away.get("id")
         ) != str(team_id):
 
             continue
 
+
         if (
             home_score is None
             or away_score is None
         ):
+
             continue
+
 
         result.append({
 
-            "date": (
-                game
-                .get("date", {})
-                .get("start")
-            ),
+            "date":
+                game.get(
+                    "date",
+                    {}
+                ).get(
+                    "start"
+                ),
 
-            "points_for": float(
-                away_score
-            ),
+            "points_for":
+                float(
+                    away_score
+                ),
 
-            "points_against": float(
-                home_score
-            )
+            "points_against":
+                float(
+                    home_score
+                )
 
         })
 
+
     result.sort(
-        key=lambda x: x["date"] or "",
+        key=lambda x:
+            x["date"] or "",
         reverse=True
     )
+
 
     return result[
         :LAST_HOME_AWAY_GAMES
@@ -493,7 +651,7 @@ def get_last_away_games(
 
 
 # =========================================================
-# ORTALAMA HESAPLA
+# ORTALAMA
 # =========================================================
 
 def calculate_average(
@@ -508,15 +666,24 @@ def calculate_average(
             "games": 0
         }
 
+
     points_for = [
+
         game["points_for"]
+
         for game in games
+
     ]
 
+
     points_against = [
+
         game["points_against"]
+
         for game in games
+
     ]
+
 
     return {
 
@@ -530,11 +697,12 @@ def calculate_average(
 
         "games":
             len(games)
+
     }
 
 
 # =========================================================
-# TAHMİN HESAPLAMA
+# ANALİZ
 # =========================================================
 
 def calculate_analysis(
@@ -542,151 +710,158 @@ def calculate_analysis(
     away_stats
 ):
 
-    # Ev sahibinin evde attığı ortalama
+    # Ev sahibinin evde attığı
     home_attack = (
         home_stats["points_for"]
     )
 
-    # Ev sahibinin evde yediği ortalama
+
+    # Ev sahibinin evde yediği
     home_defense = (
         home_stats["points_against"]
     )
 
-    # Deplasmanın dışarıda attığı ortalama
+
+    # Deplasmanın deplasmanda attığı
     away_attack = (
         away_stats["points_for"]
     )
 
-    # Deplasmanın dışarıda yediği ortalama
+
+    # Deplasmanın deplasmanda yediği
     away_defense = (
         away_stats["points_against"]
     )
 
-    # -----------------------------------------------------
-    # BEKLENEN EV SKORU
-    # -----------------------------------------------------
 
+    # Beklenen ev sahibi sayısı
     expected_home = (
         home_attack
         + away_defense
     ) / 2
 
-    # -----------------------------------------------------
-    # BEKLENEN DEPLASMAN SKORU
-    # -----------------------------------------------------
 
+    # Beklenen deplasman sayısı
     expected_away = (
         away_attack
         + home_defense
     ) / 2
 
-    # -----------------------------------------------------
-    # MAÇ TOPLAMI
-    # -----------------------------------------------------
 
+    # Maç toplamı
     match_total = (
         expected_home
         + expected_away
     )
 
-    # -----------------------------------------------------
-    # ÇEYREK ORTALAMASI
-    # -----------------------------------------------------
 
+    # Çeyrek ortalaması
     quarter_average = (
         match_total / 4
     )
 
-    # -----------------------------------------------------
-    # İLK YARI
-    # -----------------------------------------------------
 
+    # İlk yarı
     first_half = (
         match_total / 2
     )
 
-    # -----------------------------------------------------
-    # KULLANILAN MAÇ SAYISI
-    # -----------------------------------------------------
 
+    # Kullanılan örneklem
     games_used = min(
         home_stats["games"],
         away_stats["games"]
     )
 
-    # -----------------------------------------------------
-    # GÜVEN
-    # -----------------------------------------------------
 
+    # Veri yeterliliğine göre
+    # güven seviyesi
     if games_used >= 5:
+
         confidence = 85.0
 
     elif games_used == 4:
+
         confidence = 80.0
 
     elif games_used == 3:
+
         confidence = 75.0
 
     elif games_used == 2:
+
         confidence = 65.0
 
     elif games_used == 1:
+
         confidence = 55.0
 
     else:
+
         confidence = 0.0
+
 
     return {
 
-        "q1": round(
-            quarter_average,
-            1
-        ),
+        "q1":
+            round(
+                quarter_average,
+                1
+            ),
 
-        "q2": round(
-            quarter_average,
-            1
-        ),
+        "q2":
+            round(
+                quarter_average,
+                1
+            ),
 
-        "q3": round(
-            quarter_average,
-            1
-        ),
+        "q3":
+            round(
+                quarter_average,
+                1
+            ),
 
-        "q4": round(
-            quarter_average,
-            1
-        ),
+        "q4":
+            round(
+                quarter_average,
+                1
+            ),
 
-        "first_half": round(
-            first_half,
-            1
-        ),
+        "first_half":
+            round(
+                first_half,
+                1
+            ),
 
-        "match_total": round(
-            match_total,
-            1
-        ),
+        "match_total":
+            round(
+                match_total,
+                1
+            ),
 
-        "exp_home": round(
-            expected_home,
-            1
-        ),
+        "exp_home":
+            round(
+                expected_home,
+                1
+            ),
 
-        "exp_away": round(
-            expected_away,
-            1
-        ),
+        "exp_away":
+            round(
+                expected_away,
+                1
+            ),
 
-        "games": games_used,
+        "games":
+            games_used,
 
-        "confidence": confidence
+        "confidence":
+            confidence
 
     }
 
 
 # =========================================================
-# TARİH / SAAT
+# SAAT
 # =========================================================
 
 def format_game_time(
@@ -699,8 +874,11 @@ def format_game_time(
         .get("start")
     )
 
+
     if not game_date:
+
         return "--:--"
+
 
     try:
 
@@ -711,13 +889,16 @@ def format_game_time(
             )
         )
 
+
         dt_tr = dt.astimezone(
             ZoneInfo(TIMEZONE)
         )
 
+
         return dt_tr.strftime(
             "%H:%M"
         )
+
 
     except Exception:
 
@@ -725,22 +906,23 @@ def format_game_time(
 
 
 # =========================================================
-# GÜNÜN MAÇLARI
+# BUGÜNÜN MAÇLARI
 # =========================================================
 
 def fetch_today_games():
 
     today = get_today()
 
+
     print("")
-    print("=" * 60)
-    print("🏀 BASKETBOL ANALİZ SCRAPER")
-    print("=" * 60)
+    print("=" * 65)
+    print("🏀 BASKETBOL ANALİZ SİSTEMİ")
+    print("=" * 65)
     print(
         f"📅 Tarih: {today}"
     )
     print(
-        "🌍 Ligler: TÜM BASKETBOL LİGLERİ"
+        "🏆 Ligler: NBA + EuroLeague + Türkiye BSL"
     )
     print(
         "🏠 Ev sahibi: Son 5 ev maçı"
@@ -748,10 +930,11 @@ def fetch_today_games():
     print(
         "✈️ Deplasman: Son 5 deplasman maçı"
     )
-    print("=" * 60)
+    print("=" * 65)
+
 
     # -----------------------------------------------------
-    # 1. GÜNÜN MAÇLARI
+    # BUGÜNÜN TÜM MAÇLARI
     # -----------------------------------------------------
 
     if not can_make_request():
@@ -762,6 +945,7 @@ def fetch_today_games():
 
         return
 
+
     data = get_json(
         "games",
         params={
@@ -769,6 +953,7 @@ def fetch_today_games():
             "timezone": TIMEZONE
         }
     )
+
 
     if not data:
 
@@ -778,37 +963,61 @@ def fetch_today_games():
 
         return
 
+
     all_games = data.get(
         "response",
         []
     )
 
+
     print(
-        f"📦 Bugün toplam "
-        f"{len(all_games)} maç bulundu."
+        f"📦 API toplam "
+        f"{len(all_games)} maç döndürdü."
     )
 
-    if not all_games:
-
-        print(
-            "ℹ️ Bugün maç bulunamadı."
-        )
-
-        return
 
     # -----------------------------------------------------
-    # 2. BAŞLAMAMIŞ MAÇLAR
+    # SADECE İSTEDİĞİMİZ LİGLER
+    # -----------------------------------------------------
+
+    selected_games = []
+
+
+    for game in all_games:
+
+        if not is_allowed_league(
+            game
+        ):
+
+            continue
+
+
+        selected_games.append(
+            game
+        )
+
+
+    print(
+        f"🎯 NBA + EuroLeague + BSL: "
+        f"{len(selected_games)} maç"
+    )
+
+
+    # -----------------------------------------------------
+    # SADECE ANALİZ EDİLEBİLECEK DURUMLAR
     # -----------------------------------------------------
 
     valid_games = []
 
-    for game in all_games:
+
+    for game in selected_games:
 
         status = (
             game
             .get("status", {})
             .get("short")
         )
+
 
         if status in (
             "NS",
@@ -824,23 +1033,28 @@ def fetch_today_games():
                 game
             )
 
+
     print(
-        f"🎯 Analiz edilecek maç: "
+        f"📊 Analiz edilecek maç: "
         f"{len(valid_games)}"
     )
+
 
     if not valid_games:
 
         print(
-            "ℹ️ Analiz edilecek maç yok."
+            "ℹ️ Bugün analiz edilecek "
+            "maç yok."
         )
 
         return
 
+
     analyzed_matches = []
 
+
     # -----------------------------------------------------
-    # 3. MAÇLAR
+    # MAÇLAR
     # -----------------------------------------------------
 
     for index, game in enumerate(
@@ -848,54 +1062,68 @@ def fetch_today_games():
         start=1
     ):
 
-        home = (
-            game
-            .get("teams", {})
-            .get("home", {})
+        teams = game.get(
+            "teams",
+            {}
         )
 
-        away = (
-            game
-            .get("teams", {})
-            .get("away", {})
+
+        home = teams.get(
+            "home",
+            {}
         )
+
+
+        away = teams.get(
+            "away",
+            {}
+        )
+
 
         home_id = home.get(
             "id"
         )
 
+
         away_id = away.get(
             "id"
         )
 
+
         if not home_id or not away_id:
 
             continue
+
 
         home_name = home.get(
             "name",
             "Ev Sahibi"
         )
 
+
         away_name = away.get(
             "name",
             "Deplasman"
         )
+
 
         league = game.get(
             "league",
             {}
         )
 
+
         league_name = league.get(
             "name",
-            "BASKETBOL"
+            "Basketbol"
         )
+
 
         country_name = league.get(
             "country",
             ""
         )
+
 
         print("")
         print(
@@ -903,10 +1131,11 @@ def fetch_today_games():
             f"{home_name} - {away_name}"
         )
 
+
         print(
-            f"   🏆 {country_name} "
-            f"{league_name}"
+            f"   🏆 {league_name}"
         )
+
 
         # -------------------------------------------------
         # EV SAHİBİNİN SON 5 EV MAÇI
@@ -916,10 +1145,12 @@ def fetch_today_games():
             home_id
         )
 
+
         print(
-            f"   🏠 {home_name}: "
-            f"{len(home_games)} ev maçı"
+            f"   🏠 Son 5 ev maçı: "
+            f"{len(home_games)}"
         )
+
 
         # -------------------------------------------------
         # DEPLASMANIN SON 5 DEPLASMAN MAÇI
@@ -929,41 +1160,58 @@ def fetch_today_games():
             away_id
         )
 
+
         print(
-            f"   ✈️ {away_name}: "
-            f"{len(away_games)} deplasman maçı"
+            f"   ✈️ Son 5 deplasman maçı: "
+            f"{len(away_games)}"
         )
 
-        # İki tarafın da hiç geçmişi yoksa
-        # sahte tahmin üretme
+
+        # İki tarafın da geçmişi
+        # yoksa tahmin üretme
         if (
             not home_games
             or not away_games
         ):
 
             print(
-                "   ⚠️ Yeterli ev/deplasman "
-                "geçmişi yok. Atlandı."
+                "   ⚠️ Yeterli veri yok."
             )
 
             continue
+
 
         home_stats = calculate_average(
             home_games
         )
 
+
         away_stats = calculate_average(
             away_games
         )
+
 
         analysis = calculate_analysis(
             home_stats,
             away_stats
         )
 
+
         time_str = format_game_time(
             game
         )
+
+
+        league_display = league_name
+
+
+        if country_name:
+
+            league_display = (
+                f"{country_name} - "
+                f"{league_name}"
+            )
+
 
         analyzed_matches.append({
 
@@ -974,10 +1222,7 @@ def fetch_today_games():
                 game.get("id"),
 
             "league":
-                (
-                    f"{country_name} - "
-                    f"{league_name}"
-                ).strip(" -"),
+                league_display,
 
             "time":
                 time_str,
@@ -999,54 +1244,62 @@ def fetch_today_games():
 
         })
 
+
         print(
-            f"   📈 Tahmin: "
+            f"   📈 Beklenen skor: "
             f"{analysis['exp_home']} - "
             f"{analysis['exp_away']}"
         )
 
+
         print(
-            f"   🔢 Toplam: "
+            f"   🔢 Maç toplamı: "
             f"{analysis['match_total']}"
         )
 
+
         print(
-            f"   📊 Kullanılan: "
+            f"   📊 Örneklem: "
             f"{analysis['games']} + "
-            f"{analysis['games']} maç"
+            f"{analysis['games']}"
         )
 
+
     # -----------------------------------------------------
-    # 4. KAYDET
+    # KAYDET
     # -----------------------------------------------------
 
     if not analyzed_matches:
 
         print("")
         print(
-            "⚠️ Hiçbir maç için yeterli "
-            "ev/deplasman verisi bulunamadı."
+            "⚠️ Analiz üretilebilen maç yok."
         )
 
         return
 
+
     existing_data = load_existing_data()
 
-    # Eski günler korunur
-    existing_data[today] = (
-        analyzed_matches
-    )
+
+    # Eski tarihler korunur
+    existing_data[
+        today
+    ] = analyzed_matches
+
 
     save_data(
         existing_data
     )
 
+
     print("")
-    print("=" * 60)
+    print("=" * 65)
     print(
         f"✅ {len(analyzed_matches)} maç "
         f"data.json'a kaydedildi."
     )
+
 
     if DAILY_REMAINING is not None:
 
@@ -1055,11 +1308,12 @@ def fetch_today_games():
             f"{DAILY_REMAINING}"
         )
 
-    print("=" * 60)
+
+    print("=" * 65)
 
 
 # =========================================================
-# BAŞLAT
+# ÇALIŞTIR
 # =========================================================
 
 if __name__ == "__main__":
