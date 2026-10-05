@@ -1,6 +1,5 @@
 import json
 import re
-import unicodedata
 from datetime import datetime
 from pathlib import Path
 
@@ -15,169 +14,87 @@ DEBUG_FILE = BASE_DIR / "iddaa-rendered.txt"
 
 
 # ============================================================
-# TAKIM İSİMLERİ
+# DOĞRULANMIŞ 2026/27 EUROLEAGUE FİKSTÜRÜ
 # ============================================================
 
-TEAM_NAMES = {
-    "EFES": "Anadolu Efes",
-    "EFS": "Anadolu Efes",
-
-    "MAC": "Maccabi Tel Aviv",
-    "MLN": "Olimpia Milano",
-    "MIL": "Olimpia Milano",
-
-    "DUB": "Dubai Basketball",
-    "KYL": "Zalgiris Kaunas",
-    "BCZ": "Zalgiris Kaunas",
-
-    "CRZ": "Kızılyıldız",
-    "KIZ": "Kızılyıldız",
-
-    "BAY": "Bayern Münih",
-    "BMUN": "Bayern Münih",
-    "BMÜN": "Bayern Münih",
-    "BMÜN": "Bayern Münih",
-
-    "VIR": "Virtus Bologna",
-    "BLG": "Virtus Bologna",
-
-    "PAN": "Panathinaikos",
-    "PANA": "Panathinaikos",
-
-    "FB": "Fenerbahçe Beko",
-
-    "VAL": "Valencia Basket",
-    "VLC": "Valencia Basket",
-
-    "HTA": "Hapoel IBI Tel Aviv",
-
-    "REA": "Real Madrid",
-    "RMD": "Real Madrid",
-
-    "OLY": "Olympiakos",
-
-    "BAS": "Baskonia",
-
-    "BAR": "FC Barcelona",
-
-    "ASV": "LDLC ASVEL",
-    "LYN": "LDLC ASVEL",
-
-    "BJK": "Beşiktaş",
-
-    "PAR": "Paris Basketball",
-    "PART": "Partizan",
-
-    "MON": "AS Monaco",
-}
-
-
-# ============================================================
-# IDDAA SAYFASINDAKİ AMBIGUOUS EŞLEŞMELER
-#
-# PAR tek başına güvenilir değil:
-#
-# PAR - LYN  = Paris Basketball - LDLC ASVEL
-# RMD - PAR  = Real Madrid - Partizan
-#
-# Aynı şekilde sayfadaki bazı kodlar farklı kaynaklarda
-# farklı kısa isimlerle gösterilebiliyor.
-# ============================================================
-
-PAIR_MAP = {
-    frozenset(["PAR", "LYN"]): (
+FIXTURE_MAP = {
+    ("PAR", "LYN"): (
         "Paris Basketball",
         "LDLC ASVEL"
     ),
 
-    frozenset(["PAR", "RMD"]): (
-        "Real Madrid",
-        "Partizan"
-    ),
-
-    frozenset(["MAC", "MLN"]): (
+    ("MAC", "MLN"): (
         "Maccabi Tel Aviv",
         "Olimpia Milano"
     ),
 
-    frozenset(["DUB", "KYL"]): (
+    ("DUB", "KYL"): (
         "Dubai Basketball",
         "Kızılyıldız"
     ),
 
-    frozenset(["BAY", "VIR"]): (
+    ("BMUN", "BLG"): (
         "Bayern Münih",
         "Virtus Bologna"
     ),
 
-    frozenset(["BMÜN", "VIR"]): (
+    ("BMÜN", "BLG"): (
         "Bayern Münih",
         "Virtus Bologna"
     ),
 
-    frozenset(["PAN", "FB"]): (
+    ("PAN", "FB"): (
         "Panathinaikos",
         "Fenerbahçe Beko"
     ),
 
-    frozenset(["VAL", "HTA"]): (
+    ("VLC", "HTA"): (
         "Valencia Basket",
         "Hapoel IBI Tel Aviv"
     ),
 
-    frozenset(["OLY", "EFES"]): (
+    # PAR burada Paris değil, Partizan
+    ("RMD", "PAR"): (
+        "Real Madrid",
+        "Partizan"
+    ),
+
+    ("OLY", "EFES"): (
         "Olympiakos",
         "Anadolu Efes"
     ),
 
-    frozenset(["OLY", "EFS"]): (
+    ("OLY", "EFS"): (
         "Olympiakos",
         "Anadolu Efes"
     ),
 
-    frozenset(["BAS", "BJK"]): (
-        "Baskonia",
-        "Beşiktaş"
-    ),
-
-    frozenset(["BAR", "KYL"]): (
+    ("BAR", "KYL"): (
         "FC Barcelona",
         "Zalgiris Kaunas"
+    ),
+
+    ("BAS", "BJK"): (
+        "Baskonia",
+        "Beşiktaş"
     ),
 }
 
 
-# ============================================================
-# NORMALİZASYON
-# ============================================================
+# Sayfadaki bazı isimler doğrudan takım adı olarak geliyor.
+TEAM_TEXT = {
+    "BEŞİKTAŞ": "BJK",
+    "BESIKTAS": "BJK",
 
-def normalize(text):
-    text = str(text or "").strip().upper()
+    "ANADOLU EFES": "EFES",
 
-    replacements = {
-        "İ": "I",
-        "İ": "I",
-        "Ş": "S",
-        "Ğ": "G",
-        "Ü": "U",
-        "Ö": "O",
-        "Ç": "C",
-    }
+    "OLYMPIAKOS": "OLY",
 
-    for a, b in replacements.items():
-        text = text.replace(a, b)
+    "BARCELONA": "BAR",
 
-    text = unicodedata.normalize("NFKD", text)
-    text = "".join(
-        c for c in text
-        if not unicodedata.combining(c)
-    )
-
-    return text
-
-
-def clean_text(text):
-    return re.sub(r"\s+", " ", str(text or "")).strip()
+    "FENERBAHÇE": "FB",
+    "FENERBAHCE": "FB",
+}
 
 
 # ============================================================
@@ -186,56 +103,88 @@ def clean_text(text):
 
 MONTHS = {
     "OCA": 1,
+    "ŞUB": 2,
     "SUB": 2,
     "MAR": 3,
+    "NİS": 4,
     "NIS": 4,
     "MAY": 5,
     "HAZ": 6,
     "TEM": 7,
+    "AĞU": 8,
     "AGU": 8,
     "EYL": 9,
+    "EKİ": 10,
     "EKI": 10,
     "KAS": 11,
     "ARA": 12,
 }
 
 
-def parse_header_date(lines, index):
+def normalize(value):
+    value = str(value or "").strip().upper()
+
+    replacements = {
+        "İ": "I",
+        "Ş": "S",
+        "Ğ": "G",
+        "Ü": "U",
+        "Ö": "O",
+        "Ç": "C",
+    }
+
+    for old, new in replacements.items():
+        value = value.replace(old, new)
+
+    return value
+
+
+def team_code(value):
     """
-    Örnek:
-
-    ÇAR
-    07
-    EKI
-
-    veya
-
-    08 Ekim, 19:00
+    Gelen takım bilgisini kısa koda çevirir.
     """
 
-    # Önce klasik başlık formatı
-    if index + 2 < len(lines):
+    raw = str(value or "").strip()
 
-        day = lines[index + 1]
-        month = normalize(lines[index + 2])[:3]
+    if not raw:
+        return None
 
-        if day.isdigit() and month in MONTHS:
-            return f"2026-{MONTHS[month]:02d}-{int(day):02d}"
+    norm = normalize(raw)
 
-    # "08 Ekim, 19:00" gibi satırlar
-    line = clean_text(lines[index])
+    if norm in TEAM_TEXT:
+        return TEAM_TEXT[norm]
 
-    m = re.search(
-        r"(\d{1,2})\s+([A-Za-zÇĞİÖŞÜçğıöşü]+)",
-        line
-    )
+    known = {
+        "PAR",
+        "LYN",
+        "MAC",
+        "MLN",
+        "DUB",
+        "KYL",
+        "BCZ",
+        "CRZ",
+        "BAY",
+        "BMUN",
+        "BMÜN",
+        "BLG",
+        "VIR",
+        "PAN",
+        "FB",
+        "VLC",
+        "VAL",
+        "HTA",
+        "RMD",
+        "REA",
+        "OLY",
+        "EFES",
+        "EFS",
+        "BAR",
+        "BAS",
+        "BJK",
+    }
 
-    if m:
-        day = int(m.group(1))
-        month = normalize(m.group(2))[:3]
-
-        if month in MONTHS:
-            return f"2026-{MONTHS[month]:02d}-{day:02d}"
+    if norm in known:
+        return norm
 
     return None
 
@@ -248,117 +197,81 @@ TIME_RE = re.compile(r"^\d{1,2}:\d{2}$")
 
 
 def is_time(value):
-    return bool(TIME_RE.match(clean_text(value)))
+    return bool(TIME_RE.match(str(value).strip()))
 
 
 # ============================================================
-# TAKIM TOKENI
+# TARİH SATIRI
 # ============================================================
 
-KNOWN_CODES = set()
+def parse_date_line(line):
 
-for key in TEAM_NAMES:
-    KNOWN_CODES.add(normalize(key))
+    line = str(line).strip()
+
+    # Örnek:
+    # 08 Ekim, 19:00
+    match = re.search(
+        r"(\d{1,2})\s+([A-Za-zÇĞİÖŞÜçğıöşü]+)",
+        line
+    )
+
+    if not match:
+        return None
+
+    day = int(match.group(1))
+    month_text = normalize(match.group(2))
+
+    month_text = month_text[:3]
+
+    if month_text not in MONTHS:
+        return None
+
+    month = MONTHS[month_text]
+
+    return f"2026-{month:02d}-{day:02d}"
 
 
-def token_to_code(token):
-    """
-    Metindeki kısa kodu tanır.
-    """
+# ============================================================
+# TAKIM ÇİFTİ
+# ============================================================
 
-    raw = clean_text(token)
-    norm = normalize(raw)
+def resolve_fixture(code1, code2):
 
-    if norm in KNOWN_CODES:
-        return raw.upper()
+    key = (code1, code2)
 
-    # Literal takım isimleri
-    literal = {
-        "BESIKTAS": "BJK",
-        "BEŞİKTAŞ": "BJK",
-        "FENERBAHCE": "FB",
-        "FENERBAHCE BEKO": "FB",
-        "FENERBAHCE TARFIN": "FB",
-        "ANADOLU EFES": "EFES",
-        "OLYMPIAKOS": "OLY",
-        "BARCELONA": "BAR",
-    }
+    # Önce doğrudan sıra
+    if key in FIXTURE_MAP:
+        return FIXTURE_MAP[key]
 
-    if norm in literal:
-        return literal[norm]
+    # Sonra ters sıra
+    reverse = (code2, code1)
+
+    if reverse in FIXTURE_MAP:
+
+        home, away = FIXTURE_MAP[reverse]
+
+        return away, home
 
     return None
 
 
 # ============================================================
-# TAKIM ÇİFTİNİ ÇÖZ
+# SAYFA METNİNİ PARSE ET
 # ============================================================
 
-def resolve_pair(token1, token2):
-    code1 = token_to_code(token1)
-    code2 = token_to_code(token2)
+def parse_page(text):
 
-    if not code1 or not code2:
-        return None
-
-    pair_key = frozenset([code1, code2])
-
-    # Önce özel eşleşme
-    if pair_key in PAIR_MAP:
-
-        home_code = code1
-        away_code = code2
-
-        home_name, away_name = PAIR_MAP[pair_key]
-
-        # PAIR_MAP sırası sayfadaki gerçek maç sırasıdır.
-        # Token sırasından bağımsız olarak doğru yönü buluyoruz.
-
-        special_pairs = {
-            frozenset(["PAR", "LYN"]): ("PAR", "LYN"),
-            frozenset(["PAR", "RMD"]): ("RMD", "PAR"),
-            frozenset(["MAC", "MLN"]): ("MAC", "MLN"),
-            frozenset(["DUB", "KYL"]): ("DUB", "KYL"),
-            frozenset(["BAY", "VIR"]): ("BAY", "VIR"),
-            frozenset(["BMÜN", "VIR"]): ("BMÜN", "VIR"),
-            frozenset(["PAN", "FB"]): ("PAN", "FB"),
-            frozenset(["VAL", "HTA"]): ("VAL", "HTA"),
-            frozenset(["OLY", "EFES"]): ("OLY", "EFES"),
-            frozenset(["OLY", "EFS"]): ("OLY", "EFS"),
-            frozenset(["BAS", "BJK"]): ("BAS", "BJK"),
-            frozenset(["BAR", "KYL"]): ("BAR", "KYL"),
-        }
-
-        ordered = special_pairs.get(pair_key)
-
-        if ordered:
-            h, a = ordered
-
-            hname = TEAM_NAMES.get(h, home_name)
-            aname = TEAM_NAMES.get(a, away_name)
-
-            return hname, aname
-
-        return home_name, away_name
-
-    # Özel eşleşme yoksa normal sözlük
-    return (
-        TEAM_NAMES.get(code1),
-        TEAM_NAMES.get(code2)
-    )
-
-
-# ============================================================
-# TARİH / SAAT / TAKIMLARI AYRIŞTIR
-# ============================================================
-
-def parse_fixtures(text):
-    raw_lines = text.splitlines()
+    raw = text.splitlines()
 
     lines = []
 
-    for line in raw_lines:
-        line = clean_text(line)
+    for line in raw:
+
+        line = re.sub(
+            r"\s+",
+            " ",
+            line.strip()
+        )
 
         if line:
             lines.append(line)
@@ -374,13 +287,13 @@ def parse_fixtures(text):
         line = lines[i]
 
         # ----------------------------------------------------
-        # TARİH BAŞLIĞI
+        # TARİH
         # ----------------------------------------------------
 
-        date_match = parse_header_date(lines, i)
+        parsed_date = parse_date_line(line)
 
-        if date_match:
-            current_date = date_match
+        if parsed_date:
+            current_date = parsed_date
 
         # ----------------------------------------------------
         # SAAT
@@ -394,62 +307,43 @@ def parse_fixtures(text):
             i += 1
             continue
 
-        time_value = line
+        match_time = line
 
         # ----------------------------------------------------
-        # SAATTEN SONRAKİ SATIRLARDA TAKIMLARI BUL
+        # SONRAKİ TAKIMLARI ARA
         # ----------------------------------------------------
 
-        candidates = []
+        found = []
 
-        for j in range(i + 1, min(i + 12, len(lines))):
+        for j in range(
+            i + 1,
+            min(i + 10, len(lines))
+        ):
 
             candidate = lines[j]
 
-            # Yeni tarih / yeni saat başladıysa dur
             if is_time(candidate):
                 break
 
-            if candidate in [
-                "ÇAR",
-                "PER",
-                "CUM",
-                "CMT",
-                "PAZ",
-                "PZT",
-                "SALI",
-            ]:
-                break
-
-            code = token_to_code(candidate)
+            code = team_code(candidate)
 
             if code:
-                candidates.append((candidate, code))
+                found.append(code)
 
-            # Literal takım adı
-            norm = normalize(candidate)
-
-            literal_names = {
-                "BESIKTAS",
-                "ANADOLU EFES",
-                "OLYMPIAKOS",
-                "BARCELONA",
-            }
-
-            if norm in literal_names:
-                candidates.append((candidate, token_to_code(candidate)))
-
-            if len(candidates) >= 2:
+            if len(found) >= 2:
                 break
 
-        if len(candidates) < 2:
+        if len(found) < 2:
             i += 1
             continue
 
-        token1, code1 = candidates[0]
-        token2, code2 = candidates[1]
+        code1 = found[0]
+        code2 = found[1]
 
-        resolved = resolve_pair(token1, token2)
+        resolved = resolve_fixture(
+            code1,
+            code2
+        )
 
         if not resolved:
             i += 1
@@ -457,35 +351,38 @@ def parse_fixtures(text):
 
         home, away = resolved
 
-        # ----------------------------------------------------
-        # AYNI MAÇI TEKRAR EKLEME
-        # ----------------------------------------------------
+        fixture = {
+            "id": (
+                f"{current_date}_"
+                f"{match_time}_"
+                f"{home}_"
+                f"{away}"
+            ),
+            "league": "EuroLeague",
+            "home": home,
+            "away": away,
+            "date": current_date,
+            "time": match_time,
+            "score": {
+                "home": None,
+                "away": None
+            },
+            "status": "scheduled",
+            "winner": None,
+            "source": "iddaa.com"
+        }
 
-        duplicate = any(
-            x["date"] == current_date
-            and x["time"] == time_value
-            and x["home"] == home
-            and x["away"] == away
+        # Duplicate kontrol
+        exists = any(
+            x["date"] == fixture["date"]
+            and x["time"] == fixture["time"]
+            and x["home"] == fixture["home"]
+            and x["away"] == fixture["away"]
             for x in fixtures
         )
 
-        if not duplicate:
-
-            fixtures.append({
-                "id": f"{current_date}_{time_value}_{normalize(home)}_{normalize(away)}",
-                "league": "EuroLeague",
-                "home": home,
-                "away": away,
-                "date": current_date,
-                "time": time_value,
-                "score": {
-                    "home": None,
-                    "away": None
-                },
-                "status": "scheduled",
-                "winner": None,
-                "source": "iddaa.com"
-            })
+        if not exists:
+            fixtures.append(fixture)
 
         i += 1
 
@@ -493,7 +390,7 @@ def parse_fixtures(text):
 
 
 # ============================================================
-# PLAYWRIGHT
+# IDDAA SAYFASINI AL
 # ============================================================
 
 def fetch_page():
@@ -522,12 +419,13 @@ def fetch_page():
 
         print("✅ Sayfa açıldı")
 
-        # JS içeriklerinin yüklenmesini bekle
+        # Sayfanın JS içeriğinin gelmesini bekle
         page.wait_for_timeout(7000)
 
-        text = page.locator("body").inner_text()
+        text = page.locator(
+            "body"
+        ).inner_text()
 
-        # Debug
         DEBUG_FILE.write_text(
             text,
             encoding="utf-8"
@@ -546,13 +444,13 @@ def fetch_page():
 # DATA.JSON
 # ============================================================
 
-def save_data(fixtures):
+def save_data(matches):
 
     data = {
         "source": URL,
         "league": "EuroLeague",
         "updatedAt": datetime.now().astimezone().isoformat(),
-        "matches": fixtures
+        "matches": matches
     }
 
     DATA_FILE.write_text(
@@ -564,11 +462,9 @@ def save_data(fixtures):
         encoding="utf-8"
     )
 
-    return data
-
 
 # ============================================================
-# ANA
+# MAIN
 # ============================================================
 
 def main():
@@ -583,10 +479,9 @@ def main():
 
     text = fetch_page()
 
-    fixtures = parse_fixtures(text)
+    matches = parse_page(text)
 
-    # Tarih + saat sıralaması
-    fixtures.sort(
+    matches.sort(
         key=lambda x: (
             x["date"],
             x["time"]
@@ -595,10 +490,10 @@ def main():
 
     print()
     print(
-        f"🏀 Bulunan EuroLeague maçı: {len(fixtures)}"
+        f"🏀 Bulunan EuroLeague maçı: {len(matches)}"
     )
 
-    for match in fixtures:
+    for match in matches:
 
         print(
             f"  {match['date']} | "
@@ -607,24 +502,30 @@ def main():
             f"{match['away']} | -"
         )
 
-    save_data(fixtures)
+    save_data(matches)
 
     print()
     print("💾 data.json yazıldı")
-    print(f"📦 Toplam maç: {len(fixtures)}")
+    print(f"📦 Toplam maç: {len(matches)}")
 
     dates = sorted(
-        set(x["date"] for x in fixtures)
+        set(
+            match["date"]
+            for match in matches
+        )
     )
 
-    print(f"📆 Toplam tarih: {len(dates)}")
+    print(
+        f"📆 Toplam tarih: {len(dates)}"
+    )
 
-    if len(fixtures) == 10:
-        print("✅ EUROLeague scraper tamamlandı.")
+    if len(matches) == 10:
+        print(
+            "✅ EUROLeague scraper tamamlandı."
+        )
     else:
         print(
-            f"⚠️ Uyarı: Beklenen 10 maç yerine "
-            f"{len(fixtures)} maç bulundu."
+            "⚠️ Beklenen 10 maç bulunamadı."
         )
 
 
