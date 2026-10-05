@@ -1,7 +1,7 @@
 {
   "source": "https://www.iddaa.com/euroleague-avrupa-basketbol-ligi",
   "league": "EuroLeague",
-  "updatedAt": "2026-10-05T21:29:52.813068+00:00",
+  "updatedAt": "2026-10-05T21:34:54.914967+00:00",
   "matches": [
     {
       "id": "2026-10-05_anadolu efes_as monaco",
@@ -29,6 +29,141 @@
       },
       "status": "live",
       "winner": null,
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-07_PARIS BASKETBALL_LDLC ASVEL",
+      "league": "EuroLeague",
+      "home": "Paris Basketball",
+      "away": "LDLC ASVEL",
+      "date": "2026-10-07",
+      "time": "21:45",
+      "score": {
+        "home": 19,
+        "away": 0
+      },
+      "status": "finished",
+      "winner": "Paris Basketball",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-08_DUBAI BASKETBALL_ZALGIRIS KAUNAS",
+      "league": "EuroLeague",
+      "home": "Dubai Basketball",
+      "away": "Zalgiris Kaunas",
+      "date": "2026-10-08",
+      "time": "19:00",
+      "score": {
+        "home": 19,
+        "away": 0
+      },
+      "status": "finished",
+      "winner": "Dubai Basketball",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-08_MACCABI RAPYD TEL AVIV_OLIMPIA MILANO",
+      "league": "EuroLeague",
+      "home": "Maccabi Rapyd Tel Aviv",
+      "away": "Olimpia Milano",
+      "date": "2026-10-08",
+      "time": "19:00",
+      "score": {
+        "home": 21,
+        "away": 0
+      },
+      "status": "finished",
+      "winner": "Maccabi Rapyd Tel Aviv",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-08_BAYERN MUNIH_VIRTUS BOLOGNA",
+      "league": "EuroLeague",
+      "home": "Bayern Münih",
+      "away": "Virtus Bologna",
+      "date": "2026-10-08",
+      "time": "21:00",
+      "score": {
+        "home": 21,
+        "away": 15
+      },
+      "status": "finished",
+      "winner": "Bayern Münih",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-08_PANATHINAIKOS_FENERBAHCE BEKO",
+      "league": "EuroLeague",
+      "home": "Panathinaikos",
+      "away": "Fenerbahçe Beko",
+      "date": "2026-10-08",
+      "time": "21:15",
+      "score": {
+        "home": 21,
+        "away": 30
+      },
+      "status": "finished",
+      "winner": "Fenerbahçe Beko",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-08_VALENCIA BASKET_HAPOEL IBI TEL AVIV",
+      "league": "EuroLeague",
+      "home": "Valencia Basket",
+      "away": "Hapoel IBI Tel Aviv",
+      "date": "2026-10-08",
+      "time": "21:30",
+      "score": {
+        "home": 21,
+        "away": 45
+      },
+      "status": "finished",
+      "winner": "Hapoel IBI Tel Aviv",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-08_REAL MADRID_PARIS BASKETBALL",
+      "league": "EuroLeague",
+      "home": "Real Madrid",
+      "away": "Paris Basketball",
+      "date": "2026-10-08",
+      "time": "21:45",
+      "score": {
+        "home": 21,
+        "away": 15
+      },
+      "status": "finished",
+      "winner": "Real Madrid",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-09_OLYMPIAKOS_ANADOLU EFES",
+      "league": "EuroLeague",
+      "home": "Olympiakos",
+      "away": "Anadolu Efes",
+      "date": "2026-10-09",
+      "time": "21:15",
+      "score": {
+        "home": 21,
+        "away": 30
+      },
+      "status": "finished",
+      "winner": "Anadolu Efes",
+      "source": "iddaa.com"
+    },
+    {
+      "id": "2026-10-09_FC BARCELONA_ZALGIRIS KAUNAS",
+      "league": "EuroLeague",
+      "home": "FC Barcelona",
+      "away": "Zalgiris Kaunas",
+      "date": "2026-10-09",
+      "time": "21:30",
+      "score": {
+        "home": 21,
+        "away": 30
+      },
+      "status": "finished",
+      "winner": "Zalgiris Kaunas",
       "source": "iddaa.com"
     }
   ]
