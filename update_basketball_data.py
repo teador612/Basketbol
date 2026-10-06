@@ -1,18 +1,14 @@
 import json
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-import pandas as pd
 import requests
-from nba_api.stats.endpoints import leaguegamelog
 
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
 OUTPUT = DATA_DIR / "basketball.json"
 
-NBA_SEASON = "2026-27"
 EUROLEAGUE_SEASON = "E2026"
 
 EUROLEAGUE_URL = (
@@ -25,113 +21,7 @@ def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
 
-def clean_value(value):
-    if pd.isna(value):
-        return None
-    if hasattr(value, "item"):
-        try:
-            return value.item()
-        except Exception:
-            pass
-    return value
-
-
-# =========================================================
-# NBA
-# =========================================================
-
-def get_nba_games():
-    print()
-    print("========================================")
-    print("🏀 NBA VERİLERİ")
-    print("========================================")
-
-    rows = []
-
-    for season_type in ["Regular Season", "Playoffs", "Pre Season"]:
-        print(f"📅 {NBA_SEASON} - {season_type}")
-
-        try:
-            result = leaguegamelog.LeagueGameLog(
-                counter=0,
-                direction="ASC",
-                league_id="00",
-                player_or_team_abbreviation="T",
-                season=NBA_SEASON,
-                season_type_all_star=season_type,
-                sorter="DATE",
-                timeout=60,
-            )
-
-            df = result.league_game_log.get_data_frame()
-
-            if df.empty:
-                print("   Veri yok.")
-                continue
-
-            # Her NBA maçı iki takım satırı olarak gelir.
-            for game_id, group in df.groupby("GAME_ID"):
-                group = group.copy()
-
-                if len(group) < 2:
-                    continue
-
-                home = group[
-                    group["MATCHUP"].astype(str).str.contains(" vs. ")
-                ]
-
-                away = group[
-                    group["MATCHUP"].astype(str).str.contains(" @ ")
-                ]
-
-                if home.empty or away.empty:
-                    continue
-
-                h = home.iloc[0]
-                a = away.iloc[0]
-
-                rows.append({
-                    "id": str(game_id),
-                    "league": "NBA",
-                    "season": NBA_SEASON,
-                    "stage": season_type,
-                    "date": str(h["GAME_DATE"]),
-                    "homeTeam": str(h["TEAM_NAME"]),
-                    "awayTeam": str(a["TEAM_NAME"]),
-                    "homeScore": int(h["PTS"]),
-                    "awayScore": int(a["PTS"]),
-                    "status": "finished",
-                    "source": "nba_api",
-                })
-
-            print(f"   ✓ {len(df)} takım kaydı işlendi.")
-
-        except Exception as e:
-            print(f"   ❌ NBA hatası: {e}")
-
-    # Aynı maçı tekrar etme
-    unique = {}
-
-    for game in rows:
-        unique[game["id"]] = game
-
-    rows = list(unique.values())
-
-    print(f"🏀 NBA toplam maç: {len(rows)}")
-
-    return rows
-
-
-# =========================================================
-# EUROLeague
-# =========================================================
-
 def find_value(obj, names):
-    """
-    API alan isimleri değişebildiği için
-    birkaç olası alan adını kontrol eder.
-    """
-
     if not isinstance(obj, dict):
         return None
 
@@ -141,10 +31,8 @@ def find_value(obj, names):
     }
 
     for name in names:
-        key = name.lower()
-
-        if key in lower:
-            return lower[key]
+        if name.lower() in lower:
+            return lower[name.lower()]
 
     return None
 
@@ -181,7 +69,6 @@ def get_euroleague_games():
         print(f"❌ EuroLeague API hatası: {e}")
         return []
 
-    # API genellikle data[] döndürüyor.
     if isinstance(data, dict):
         games = data.get("data", [])
 
@@ -266,18 +153,24 @@ def get_euroleague_games():
             ],
         )
 
-        # Bazı API cevaplarında takım bilgilerinin
-        # nesne içinde gelme ihtimaline karşı.
         if isinstance(home_team, dict):
             home_team = find_value(
                 home_team,
-                ["name", "teamName", "clubName"]
+                [
+                    "name",
+                    "teamName",
+                    "clubName",
+                ],
             )
 
         if isinstance(away_team, dict):
             away_team = find_value(
                 away_team,
-                ["name", "teamName", "clubName"]
+                [
+                    "name",
+                    "teamName",
+                    "clubName",
+                ],
             )
 
         if game_code is None:
@@ -285,23 +178,23 @@ def get_euroleague_games():
 
         status = "scheduled"
 
-        if (
-            home_score is not None
-            and away_score is not None
-        ):
-            try:
+        try:
+            if home_score is not None and away_score is not None:
                 home_score = int(home_score)
                 away_score = int(away_score)
                 status = "finished"
-            except Exception:
+            else:
                 home_score = None
                 away_score = None
+        except Exception:
+            home_score = None
+            away_score = None
 
         result.append({
             "id": f"EL-{game_code}",
             "gameCode": str(game_code),
             "league": "EuroLeague",
-            "season": EUROPEAN_SEASON if False else EUROPEAN_SEASON,
+            "season": EUROLEAGUE_SEASON,
             "date": date,
             "homeTeam": home_team,
             "awayTeam": away_team,
@@ -311,45 +204,39 @@ def get_euroleague_games():
             "source": "euroleague_api",
         })
 
-    # Yukarıdaki sezon değerini açık şekilde düzelt.
-    for game in result:
-        game["season"] = EUROLEAGUE_SEASON
-
     print(f"🌍 EuroLeague toplam maç: {len(result)}")
 
     return result
 
 
-# =========================================================
-# KAYDET
-# =========================================================
+def save_data(euroleague_games):
 
-def save_data(nba_games, euroleague_games):
+    DATA_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-    all_games = nba_games + euroleague_games
-
-    # ID bazında tekilleştir
     unique = {}
 
-    for game in all_games:
-        unique[
-            f"{game.get('league')}-{game.get('id')}"
-        ] = game
+    for game in euroleague_games:
+        key = game.get("id")
 
-    all_games = list(unique.values())
+        if key:
+            unique[key] = game
 
-    all_games.sort(
-        key=lambda x: str(x.get("date") or "")
+    games = list(unique.values())
+
+    games.sort(
+        key=lambda x: str(
+            x.get("date") or ""
+        )
     )
 
     output = {
         "updatedAt": now_iso(),
-        "nbaSeason": NBA_SEASON,
         "euroleagueSeason": EUROLEAGUE_SEASON,
-        "count": len(all_games),
-        "matches": all_games,
+        "count": len(games),
+        "matches": games,
     }
 
     OUTPUT.write_text(
@@ -366,34 +253,22 @@ def save_data(nba_games, euroleague_games):
     print("✅ VERİ KAYDEDİLDİ")
     print("========================================")
     print(f"📁 {OUTPUT}")
-    print(f"🏀 Toplam maç: {len(all_games)}")
-
-    nba_count = sum(
-        1 for x in all_games
-        if x.get("league") == "NBA"
-    )
-
-    euro_count = sum(
-        1 for x in all_games
-        if x.get("league") == "EuroLeague"
-    )
-
-    print(f"NBA: {nba_count}")
-    print(f"EuroLeague: {euro_count}")
+    print(f"🌍 EuroLeague: {len(games)}")
 
 
 def main():
+
     print("🏀 BASKETBOL VERİ GÜNCELLEYİCİ")
-    print(f"NBA: {NBA_SEASON}")
     print(f"EuroLeague: {EUROLEAGUE_SEASON}")
-
-    nba = get_nba_games()
-
-    time.sleep(2)
 
     euroleague = get_euroleague_games()
 
-    save_data(nba, euroleague)
+    if not euroleague:
+        raise RuntimeError(
+            "EuroLeague verisi alınamadı."
+        )
+
+    save_data(euroleague)
 
 
 if __name__ == "__main__":
