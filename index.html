@@ -2,279 +2,532 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
 
-  <title>Basketbol Tahmin Sistemi</title>
+  <title>Basketbol Tahmin</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    html {
+      background: #0b0f14;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f5f8;
-      color: #18202a;
+      padding: 0;
+      background: #0b0f14;
+      color: #e8edf3;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      font-size: 13px;
     }
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 22px 16px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    header p {
-      margin: 7px 0 0;
-      color: #cbd5e1;
-      font-size: 14px;
+    button,
+    input,
+    select {
+      font: inherit;
     }
 
     .container {
-      width: min(1100px, calc(100% - 24px));
-      margin: 20px auto 40px;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 10px;
     }
 
-    .stats {
+    /* HEADER */
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      margin-top: 2px;
+      color: #7f8a98;
+      font-size: 10px;
+    }
+
+    /* SUMMARY */
+
+    .summary {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 6px;
+      margin-bottom: 8px;
     }
 
-    .stat {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    .summary-card {
+      background: #121820;
+      border: 1px solid #202a35;
+      border-radius: 8px;
+      padding: 7px 5px;
       text-align: center;
     }
 
-    .stat-label {
-      color: #64748b;
-      font-size: 13px;
-      margin-bottom: 7px;
+    .summary-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
     }
 
-    .stat-value {
-      font-size: 25px;
+    .summary-label {
+      margin-top: 2px;
+      font-size: 9px;
+      color: #7f8a98;
+    }
+
+    /* FILTERS */
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 9px;
+    }
+
+    .filter {
+      min-width: 0;
+    }
+
+    .filter label {
+      display: block;
+      margin: 0 0 3px 2px;
+      color: #778392;
+      font-size: 9px;
       font-weight: 700;
     }
 
-    .filters {
-      background: white;
-      padding: 14px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    }
-
-    .filters-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    select,
-    input {
-      border: 1px solid #d5dbe3;
-      border-radius: 9px;
-      padding: 11px 12px;
-      background: white;
-      font-size: 14px;
+    .filter input,
+    .filter select {
+      width: 100%;
+      min-height: 34px;
+      padding: 6px 8px;
+      border: 1px solid #283441;
+      border-radius: 7px;
+      background: #111820;
+      color: #e8edf3;
       outline: none;
     }
 
-    .section-title {
-      font-size: 19px;
-      font-weight: 700;
-      margin: 20px 0 12px;
+    .filter input:focus,
+    .filter select:focus {
+      border-color: #526b84;
     }
 
-    .match-list {
-      display: grid;
-      gap: 12px;
+    /* DATE */
+
+    input[type="date"] {
+      color-scheme: dark;
     }
 
-    .match {
-      background: white;
-      border-radius: 15px;
-      padding: 17px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-    }
+    /* STATUS */
 
-    .match-top {
+    .status-line {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 13px;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 7px 1px;
+      color: #7f8a98;
+      font-size: 10px;
     }
 
-    .league {
-      font-size: 12px;
+    .status-count {
+      color: #aeb8c4;
       font-weight: 700;
-      color: #64748b;
-      text-transform: uppercase;
     }
 
-    .date {
-      color: #64748b;
-      font-size: 12px;
+    /* MATCH LIST */
+
+    .matches {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .match-card {
+      overflow: hidden;
+      border: 1px solid #202a35;
+      border-radius: 8px;
+      background: #11171e;
+      transition:
+        border-color 0.15s ease,
+        background 0.15s ease;
+    }
+
+    .match-card:hover {
+      border-color: #334353;
+    }
+
+    .match-head {
+      width: 100%;
+      min-height: 58px;
+      padding: 7px 9px;
+      display: grid;
+      grid-template-columns: 45px 1fr auto;
+      gap: 7px;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .match-time {
+      text-align: center;
+      color: #7d8996;
+      font-size: 9px;
+      line-height: 1.2;
+    }
+
+    .match-time strong {
+      display: block;
+      margin-bottom: 2px;
+      color: #aeb8c4;
+      font-size: 10px;
     }
 
     .teams {
-      font-size: 17px;
+      min-width: 0;
+    }
+
+    .team-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      line-height: 1.35;
+    }
+
+    .team-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #e9edf2;
+      font-size: 11px;
       font-weight: 700;
-      line-height: 1.5;
-      margin-bottom: 14px;
+    }
+
+    .score {
+      flex: 0 0 auto;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .score.empty {
+      color: #596574;
     }
 
     .prediction-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
+      min-width: 74px;
+      text-align: right;
     }
 
-    .prediction-item {
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 12px;
+    .prediction-market {
+      color: #737f8c;
+      font-size: 8px;
+      margin-bottom: 2px;
+    }
+
+    .prediction {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      padding: 3px 6px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .prediction.over {
+      background: #153626;
+      color: #65df9a;
+    }
+
+    .prediction.under {
+      background: #302c18;
+      color: #e3c55e;
+    }
+
+    .prediction.pending {
+      background: #202730;
+      color: #929dab;
+    }
+
+    .prediction.push {
+      background: #30281d;
+      color: #e0ad55;
+    }
+
+    .prediction.fail {
+      background: #361d22;
+      color: #ef7e89;
+    }
+
+    .prediction.success {
+      background: #153626;
+      color: #65df9a;
+    }
+
+    .expand-icon {
+      margin-left: 4px;
+      color: #566372;
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+
+    .match-card.open .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    /* DETAILS */
+
+    .details {
+      display: none;
+      padding: 0 9px 9px;
+      border-top: 1px solid #1d2630;
+      background: #0e141a;
+    }
+
+    .match-card.open .details {
+      display: block;
+    }
+
+    .detail-top {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin: 7px 0;
+    }
+
+    .detail-box {
+      padding: 6px;
+      border: 1px solid #202a35;
+      border-radius: 6px;
+      background: #121920;
       text-align: center;
     }
 
-    .prediction-label {
+    .detail-label {
+      color: #707c89;
+      font-size: 8px;
+      margin-bottom: 2px;
+    }
+
+    .detail-value {
+      color: #e8edf3;
       font-size: 11px;
-      color: #64748b;
-      margin-bottom: 5px;
+      font-weight: 800;
     }
 
-    .prediction-value {
-      font-size: 18px;
+    /* PERIODS */
+
+    .period-title {
+      margin: 8px 0 5px;
+      color: #9ca8b5;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .period-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .period-card {
+      min-width: 0;
+      padding: 6px 3px;
+      border: 1px solid #202a35;
+      border-radius: 6px;
+      background: #121920;
+      text-align: center;
+    }
+
+    .period-name {
+      color: #707c89;
+      font-size: 8px;
+      margin-bottom: 3px;
+    }
+
+    .period-line {
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .period-prediction {
+      margin-top: 2px;
+      color: #8f9aa7;
+      font-size: 8px;
       font-weight: 700;
     }
 
-    .over {
-      color: #087f5b;
+    /* HISTORY */
+
+    .history-row {
+      display: grid;
+      grid-template-columns: 1fr 48px 48px;
+      gap: 5px;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px solid #1a222b;
+      font-size: 9px;
     }
 
-    .under {
-      color: #b42318;
+    .history-row:last-child {
+      border-bottom: 0;
     }
 
-    .success {
-      border-left: 5px solid #16a34a;
+    .history-team {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #9aa5b1;
     }
 
-    .failed {
-      border-left: 5px solid #dc2626;
-    }
-
-    .push {
-      border-left: 5px solid #f59e0b;
-    }
-
-    .pending {
-      border-left: 5px solid #64748b;
-    }
-
-    .result {
-      margin-top: 12px;
-      padding-top: 11px;
-      border-top: 1px solid #e5e7eb;
-      font-size: 13px;
+    .history-score {
+      text-align: center;
+      color: #d7dde4;
       font-weight: 700;
     }
 
-    .result.success-text {
-      color: #15803d;
+    .history-total {
+      text-align: right;
+      color: #8a96a4;
     }
 
-    .result.failed-text {
-      color: #b91c1c;
-    }
-
-    .result.push-text {
-      color: #b45309;
-    }
-
-    .result.pending-text {
-      color: #64748b;
-    }
+    /* EMPTY */
 
     .empty {
-      background: white;
-      padding: 35px 20px;
-      border-radius: 14px;
+      padding: 25px 12px;
+      border: 1px solid #202a35;
+      border-radius: 8px;
+      background: #11171e;
       text-align: center;
-      color: #64748b;
+      color: #7d8996;
+      font-size: 11px;
     }
+
+    /* LOADING */
 
     .loading {
+      padding: 20px;
       text-align: center;
-      padding: 50px 20px;
-      color: #64748b;
+      color: #7d8996;
+      font-size: 11px;
     }
+
+    /* ERROR */
 
     .error {
-      background: #fee2e2;
-      color: #991b1b;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 20px;
+      padding: 12px;
+      border: 1px solid #4a252b;
+      border-radius: 8px;
+      background: #24151a;
+      color: #ef8c96;
+      font-size: 11px;
     }
 
-    footer {
-      text-align: center;
-      color: #94a3b8;
-      font-size: 12px;
-      padding: 20px;
-    }
+    /* MOBILE */
 
-    @media (max-width: 800px) {
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       .container {
-        width: min(100% - 16px, 1100px);
+        padding: 8px;
       }
 
-      header h1 {
-        font-size: 21px;
+      .summary {
+        gap: 4px;
       }
 
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+      .summary-card {
+        padding: 6px 3px;
       }
 
-      .stat {
-        padding: 14px 8px;
+      .summary-value {
+        font-size: 14px;
       }
 
-      .stat-value {
-        font-size: 21px;
+      .summary-label {
+        font-size: 8px;
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filter:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .match-head {
+        grid-template-columns: 39px 1fr auto;
+        padding: 6px 7px;
+      }
+
+      .team-name {
+        font-size: 10px;
+      }
+
+      .score {
+        font-size: 11px;
       }
 
       .prediction-box {
+        min-width: 68px;
+      }
+
+      .prediction {
+        min-width: 59px;
+        font-size: 9px;
+      }
+
+      .period-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .filters {
         grid-template-columns: 1fr;
       }
 
-      .match {
-        padding: 14px;
+      .filter:first-child {
+        grid-column: auto;
       }
 
-      .teams {
-        font-size: 16px;
+      .period-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
   </style>
@@ -282,90 +535,93 @@
 
 <body>
 
-<header>
-  <h1>🏀 Basketbol Tahmin Sistemi</h1>
-  <p>Ana tahmin: Maç Toplam Alt / Üst</p>
-</header>
+<div class="container">
 
-<main class="container">
+  <div class="header">
+    <div>
+      <div class="title">🏀 Basketbol Tahmin</div>
+      <div class="subtitle">Maç toplam Alt / Üst</div>
+    </div>
+  </div>
 
-  <section class="stats">
-
-    <div class="stat">
-      <div class="stat-label">Ana Başarı</div>
-      <div class="stat-value" id="successRate">-</div>
+  <div class="summary">
+    <div class="summary-card">
+      <div class="summary-value" id="successRate">-</div>
+      <div class="summary-label">Başarı</div>
     </div>
 
-    <div class="stat">
-      <div class="stat-label">Başarılı</div>
-      <div class="stat-value" id="successful">-</div>
+    <div class="summary-card">
+      <div class="summary-value" id="successful">-</div>
+      <div class="summary-label">Başarılı</div>
     </div>
 
-    <div class="stat">
-      <div class="stat-label">Başarısız</div>
-      <div class="stat-value" id="failed">-</div>
+    <div class="summary-card">
+      <div class="summary-value" id="failed">-</div>
+      <div class="summary-label">Başarısız</div>
     </div>
 
-    <div class="stat">
-      <div class="stat-label">Oynanan</div>
-      <div class="stat-value" id="completed">-</div>
+    <div class="summary-card">
+      <div class="summary-value" id="completed">-</div>
+      <div class="summary-label">Biten</div>
+    </div>
+  </div>
+
+  <div class="filters">
+
+    <div class="filter">
+      <label for="dateFilter">Tarih</label>
+      <input
+        type="date"
+        id="dateFilter"
+      >
     </div>
 
-  </section>
-
-  <section class="filters">
-
-    <div class="filters-row">
-
-      <select id="dateFilter">
-        <option value="all">Tüm tarihler</option>
-      </select>
-
+    <div class="filter">
+      <label for="leagueFilter">Lig</label>
       <select id="leagueFilter">
         <option value="all">Tüm ligler</option>
         <option value="NBA">NBA</option>
         <option value="EuroLeague">EuroLeague</option>
       </select>
-
-      <select id="statusFilter">
-        <option value="all">Tüm maçlar</option>
-        <option value="pending">Oynanmamış</option>
-        <option value="played">Oynanmış</option>
-        <option value="success">Başarılı</option>
-        <option value="failed">Başarısız</option>
-      </select>
-
     </div>
 
-  </section>
+    <div class="filter">
+      <label for="statusFilter">Durum</label>
+      <select id="statusFilter">
+        <option value="all">Tümü</option>
+        <option value="pending">Oynanmamış</option>
+        <option value="success">Başarılı</option>
+        <option value="failed">Başarısız</option>
+        <option value="push">Push</option>
+      </select>
+    </div>
 
-  <div class="section-title">
-    🏀 Maçlar
   </div>
 
-  <div id="loading" class="loading">
-    Veriler yükleniyor...
+  <div class="status-line">
+    <span id="dateTitle">Maçlar</span>
+    <span
+      class="status-count"
+      id="matchCount"
+    >
+      0 maç
+    </span>
   </div>
 
-  <div id="error"></div>
+  <div id="content">
+    <div class="loading">
+      Veriler yükleniyor...
+    </div>
+  </div>
 
-  <div id="matchList" class="match-list"></div>
-
-</main>
-
-<footer>
-  Basketbol Tahmin Sistemi
-</footer>
+</div>
 
 <script>
-  const PREDICTIONS_URL =
-    "predictions.json";
-
-  const RESULTS_URL =
-    "results.json";
+  const CACHE_KEY =
+    "?v=" + Date.now();
 
   let predictions = [];
-  let results = null;
+  let resultsMap = {};
 
   const dateFilter =
     document.getElementById("dateFilter");
@@ -376,662 +632,960 @@
   const statusFilter =
     document.getElementById("statusFilter");
 
-  const matchList =
-    document.getElementById("matchList");
+  const content =
+    document.getElementById("content");
 
-  const loading =
-    document.getElementById("loading");
+  const matchCount =
+    document.getElementById("matchCount");
 
-  const errorBox =
-    document.getElementById("error");
-
-
-  // ==========================================================
-  // VERİ YÜKLE
-  // ==========================================================
-
-  async function loadData() {
-
-    try {
-
-      loading.style.display = "block";
-      errorBox.innerHTML = "";
-
-      const cacheBust =
-        "?v=" + Date.now();
-
-      const [
-        predictionsResponse,
-        resultsResponse
-      ] = await Promise.all([
-
-        fetch(
-          PREDICTIONS_URL + cacheBust,
-          {
-            cache: "no-store"
-          }
-        ),
-
-        fetch(
-          RESULTS_URL + cacheBust,
-          {
-            cache: "no-store"
-          }
-        )
-
-      ]);
-
-      if (!predictionsResponse.ok) {
-        throw new Error(
-          "predictions.json yüklenemedi."
-        );
-      }
-
-      if (!resultsResponse.ok) {
-        throw new Error(
-          "results.json yüklenemedi."
-        );
-      }
-
-      const predictionData =
-        await predictionsResponse.json();
-
-      results =
-        await resultsResponse.json();
-
-      predictions =
-        predictionData.predictions || [];
-
-      loading.style.display = "none";
-
-      updateStats();
-
-      buildDateFilter();
-
-      renderMatches();
-
-    } catch (error) {
-
-      loading.style.display = "none";
-
-      errorBox.innerHTML = `
-        <div class="error">
-          ❌ Veri yüklenemedi.<br><br>
-          ${escapeHtml(error.message)}
-        </div>
-      `;
-    }
-  }
+  const dateTitle =
+    document.getElementById("dateTitle");
 
 
-  // ==========================================================
-  // İSTATİSTİK
-  // ==========================================================
-
-  function updateStats() {
-
-    const overall =
-      results?.statistics?.overall || {};
-
-    const rate =
-      overall.successRate;
-
-    document.getElementById(
-      "successRate"
-    ).textContent =
-      rate == null
-        ? "-"
-        : "%" + rate;
-
-    document.getElementById(
-      "successful"
-    ).textContent =
-      overall.successful ?? 0;
-
-    document.getElementById(
-      "failed"
-    ).textContent =
-      overall.failed ?? 0;
-
-    document.getElementById(
-      "completed"
-    ).textContent =
-      overall.completed ?? 0;
-  }
-
-
-  // ==========================================================
-  // TARİH FİLTRESİ
-  // ==========================================================
-
-  function buildDateFilter() {
-
-    const dates =
-      [...new Set(
-        predictions
-          .map(item => item.date)
-          .filter(Boolean)
-      )]
-      .sort();
-
-    dateFilter.innerHTML = `
-      <option value="all">
-        Tüm tarihler
-      </option>
-    `;
-
-    dates.forEach(date => {
-
-      const option =
-        document.createElement("option");
-
-      option.value = date;
-      option.textContent =
-        formatDate(date);
-
-      dateFilter.appendChild(option);
-    });
-
-    // Önce bugünün tarihini seç.
-    const today =
-      localDateString();
-
-    if (dates.includes(today)) {
-      dateFilter.value = today;
-    }
-  }
-
-
-  // ==========================================================
-  // MAÇLARI GÖSTER
-  // ==========================================================
-
-  function renderMatches() {
-
-    const selectedDate =
-      dateFilter.value;
-
-    const selectedLeague =
-      leagueFilter.value;
-
-    const selectedStatus =
-      statusFilter.value;
-
-    let filtered =
-      predictions.filter(item => {
-
-        if (
-          selectedDate !== "all" &&
-          item.date !== selectedDate
-        ) {
-          return false;
-        }
-
-        if (
-          selectedLeague !== "all" &&
-          normalizeLeague(item.league)
-            !== selectedLeague
-        ) {
-          return false;
-        }
-
-        const status =
-          getMatchStatus(item);
-
-        if (
-          selectedStatus !== "all" &&
-          status !== selectedStatus
-        ) {
-          return false;
-        }
-
-        return true;
-      });
-
-    filtered.sort((a, b) => {
-
-      const aTime =
-        new Date(
-          a.utcDate ||
-          a.date ||
-          0
-        ).getTime();
-
-      const bTime =
-        new Date(
-          b.utcDate ||
-          b.date ||
-          0
-        ).getTime();
-
-      return aTime - bTime;
-    });
-
-    if (!filtered.length) {
-
-      matchList.innerHTML = `
-        <div class="empty">
-          Bu filtrelere uygun maç bulunamadı.
-        </div>
-      `;
-
-      return;
+  function normalizeDate(value) {
+    if (!value) {
+      return "";
     }
 
-    matchList.innerHTML =
-      filtered
-        .map(renderMatch)
-        .join("");
-  }
-
-
-  // ==========================================================
-  // MAÇ KARTI
-  // ==========================================================
-
-  function renderMatch(item) {
-
-    const status =
-      getMatchStatus(item);
-
-    const statusClass =
-      status === "success"
-        ? "success"
-        : status === "failed"
-        ? "failed"
-        : status === "played"
-        ? "push"
-        : "pending";
-
-    const prediction =
-      item.prediction || "-";
-
-    const line =
-      item.line ?? "-";
-
-    const expected =
-      item.expectedTotal ?? "-";
-
-    const actualTotal =
-      getActualTotal(item);
-
-    const score =
-      getScore(item);
-
-    let resultHtml = "";
-
-    if (status === "success") {
-
-      resultHtml = `
-        <div class="result success-text">
-          ✅ Ana tahmin başarılı
-          · Gerçek toplam: ${actualTotal}
-        </div>
-      `;
-
-    } else if (status === "failed") {
-
-      resultHtml = `
-        <div class="result failed-text">
-          ❌ Ana tahmin başarısız
-          · Gerçek toplam: ${actualTotal}
-        </div>
-      `;
-
-    } else if (
-      item.played &&
-      actualTotal !== null
-    ) {
-
-      resultHtml = `
-        <div class="result push-text">
-          ⏸️ Push
-          · Gerçek toplam: ${actualTotal}
-        </div>
-      `;
-
-    } else {
-
-      resultHtml = `
-        <div class="result pending-text">
-          ⏳ Maç oynanmadı
-        </div>
-      `;
-    }
-
-    const predictionClass =
-      prediction === "Üst"
-        ? "over"
-        : prediction === "Alt"
-        ? "under"
-        : "";
-
-    return `
-      <article class="match ${statusClass}">
-
-        <div class="match-top">
-
-          <div class="league">
-            ${escapeHtml(
-              normalizeLeague(item.league)
-            )}
-          </div>
-
-          <div class="date">
-            ${formatDateTime(
-              item.utcDate ||
-              item.date
-            )}
-          </div>
-
-        </div>
-
-        <div class="teams">
-          ${escapeHtml(
-            item.home || "-"
-          )}
-          <br>
-          ${escapeHtml(
-            item.away || "-"
-          )}
-
-          ${score
-            ? `<br><span style="font-size:14px;color:#64748b">${score}</span>`
-            : ""
-          }
-        </div>
-
-        <div class="prediction-box">
-
-          <div class="prediction-item">
-
-            <div class="prediction-label">
-              ANA TAHMİN
-            </div>
-
-            <div class="prediction-value ${predictionClass}">
-              ${escapeHtml(
-                prediction
-              )}
-            </div>
-
-          </div>
-
-          <div class="prediction-item">
-
-            <div class="prediction-label">
-              BAREM
-            </div>
-
-            <div class="prediction-value">
-              ${line}
-            </div>
-
-          </div>
-
-          <div class="prediction-item">
-
-            <div class="prediction-label">
-              BEKLENEN TOPLAM
-            </div>
-
-            <div class="prediction-value">
-              ${expected}
-            </div>
-
-          </div>
-
-        </div>
-
-        ${resultHtml}
-
-      </article>
-    `;
-  }
-
-
-  // ==========================================================
-  // DURUM
-  // ==========================================================
-
-  function getMatchStatus(item) {
+    const text =
+      String(value).trim();
 
     if (
-      item.success === true
+      /^\d{4}-\d{2}-\d{2}$/.test(text)
+    ) {
+      return text;
+    }
+
+    const match =
+      text.match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+    if (match) {
+      return (
+        match[1] +
+        "-" +
+        match[2] +
+        "-" +
+        match[3]
+      );
+    }
+
+    return "";
+  }
+
+
+  function formatDate(date) {
+    if (!date) {
+      return "-";
+    }
+
+    const parts =
+      date.split("-");
+
+    if (parts.length !== 3) {
+      return date;
+    }
+
+    return (
+      parts[2] +
+      "." +
+      parts[1] +
+      "." +
+      parts[0]
+    );
+  }
+
+
+  function todayString() {
+    const now =
+      new Date();
+
+    const y =
+      now.getFullYear();
+
+    const m =
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0");
+
+    const d =
+      String(
+        now.getDate()
+      ).padStart(2, "0");
+
+    return (
+      y +
+      "-" +
+      m +
+      "-" +
+      d
+    );
+  }
+
+
+  function escapeHtml(value) {
+    return String(
+      value ?? ""
+    )
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+
+  function number(value) {
+    const n =
+      Number(value);
+
+    return Number.isFinite(n)
+      ? n
+      : null;
+  }
+
+
+  function resultForPrediction(p) {
+    const id =
+      String(
+        p.id ?? ""
+      );
+
+    if (
+      resultsMap[id]
+    ) {
+      return resultsMap[id];
+    }
+
+    return null;
+  }
+
+
+  function getStatus(p) {
+    const result =
+      resultForPrediction(p);
+
+    if (
+      result &&
+      result.status
+    ) {
+      return String(
+        result.status
+      ).toLowerCase();
+    }
+
+    if (
+      p.played !== true
+    ) {
+      return "pending";
+    }
+
+    if (
+      p.success === true
     ) {
       return "success";
     }
 
     if (
-      item.success === false
+      p.success === false
     ) {
       return "failed";
     }
 
     if (
-      item.played
+      p.result === "Push"
     ) {
-      return "played";
+      return "push";
+    }
+
+    const homeScore =
+      number(p.homeScore);
+
+    const awayScore =
+      number(p.awayScore);
+
+    const line =
+      number(p.line);
+
+    if (
+      homeScore !== null &&
+      awayScore !== null &&
+      line !== null
+    ) {
+      const total =
+        homeScore +
+        awayScore;
+
+      if (total === line) {
+        return "push";
+      }
+
+      const actual =
+        total > line
+          ? "üst"
+          : "alt";
+
+      const predicted =
+        String(
+          p.prediction ?? ""
+        ).toLowerCase();
+
+      return actual === predicted
+        ? "success"
+        : "failed";
     }
 
     return "pending";
   }
 
 
-  // ==========================================================
-  // GERÇEK TOPLAM
-  // ==========================================================
+  function statusText(status) {
+    if (status === "success") {
+      return "✓ Başarılı";
+    }
 
-  function getActualTotal(item) {
+    if (status === "failed") {
+      return "✕ Başarısız";
+    }
 
-    const home =
-      Number(item.homeScore);
+    if (status === "push") {
+      return "＝ Push";
+    }
 
-    const away =
-      Number(item.awayScore);
+    return "Bekliyor";
+  }
+
+
+  function predictionClass(
+    prediction,
+    status
+  ) {
+    if (
+      status === "success"
+    ) {
+      return "success";
+    }
 
     if (
-      !Number.isFinite(home) ||
-      !Number.isFinite(away)
+      status === "failed"
+    ) {
+      return "fail";
+    }
+
+    if (
+      status === "push"
+    ) {
+      return "push";
+    }
+
+    const text =
+      String(
+        prediction ?? ""
+      ).toLowerCase();
+
+    if (
+      text === "üst"
+    ) {
+      return "over";
+    }
+
+    if (
+      text === "alt"
+    ) {
+      return "under";
+    }
+
+    return "pending";
+  }
+
+
+  function predictionText(p) {
+    const prediction =
+      String(
+        p.prediction ?? ""
+      ).trim();
+
+    const line =
+      number(p.line);
+
+    if (!prediction) {
+      return "Tahmin yok";
+    }
+
+    if (line === null) {
+      return prediction;
+    }
+
+    return (
+      prediction +
+      " " +
+      line
+    );
+  }
+
+
+  function getPeriodData(
+    p,
+    key
+  ) {
+    const data =
+      p[key];
+
+    if (!data) {
+      return null;
+    }
+
+    if (
+      typeof data !== "object"
     ) {
       return null;
     }
 
-    return home + away;
+    return data;
   }
 
 
-  // ==========================================================
-  // SKOR
-  // ==========================================================
+  function getPeriodLine(
+    p,
+    key
+  ) {
+    const data =
+      getPeriodData(
+        p,
+        key
+      );
 
-  function getScore(item) {
+    if (!data) {
+      return null;
+    }
 
-    const home =
-      Number(item.homeScore);
+    return (
+      number(data.line) ??
+      number(data.barem)
+    );
+  }
 
-    const away =
-      Number(item.awayScore);
 
+  function getPeriodPrediction(
+    p,
+    key
+  ) {
+    const data =
+      getPeriodData(
+        p,
+        key
+      );
+
+    if (!data) {
+      return "";
+    }
+
+    return String(
+      data.prediction ??
+      data.result ??
+      ""
+    );
+  }
+
+
+  function periodCard(
+    title,
+    p,
+    key
+  ) {
+    const line =
+      getPeriodLine(
+        p,
+        key
+      );
+
+    const prediction =
+      getPeriodPrediction(
+        p,
+        key
+      );
+
+    return `
+      <div class="period-card">
+        <div class="period-name">
+          ${escapeHtml(title)}
+        </div>
+
+        <div class="period-line">
+          ${
+            line !== null
+              ? escapeHtml(line)
+              : "-"
+          }
+        </div>
+
+        <div class="period-prediction">
+          ${
+            prediction
+              ? escapeHtml(prediction)
+              : "-"
+          }
+        </div>
+      </div>
+    `;
+  }
+
+
+  function buildPeriodSection(p) {
+    const firstHalf =
+      p.firstHalfTotal ??
+      p.firstHalf ??
+      null;
+
+    const firstHalfLine =
+      typeof firstHalf === "object"
+        ? (
+            number(firstHalf.line) ??
+            number(firstHalf.barem)
+          )
+        : null;
+
+    const firstHalfPrediction =
+      typeof firstHalf === "object"
+        ? String(
+            firstHalf.prediction ??
+            firstHalf.result ??
+            ""
+          )
+        : "";
+
+    return `
+      <div class="period-title">
+        Periyot baremleri
+      </div>
+
+      <div class="period-grid">
+
+        <div class="period-card">
+          <div class="period-name">
+            Maç
+          </div>
+
+          <div class="period-line">
+            ${
+              number(p.line) !== null
+                ? escapeHtml(p.line)
+                : "-"
+            }
+          </div>
+
+          <div class="period-prediction">
+            ${escapeHtml(
+              p.prediction ?? "-"
+            )}
+          </div>
+        </div>
+
+        <div class="period-card">
+          <div class="period-name">
+            İY
+          </div>
+
+          <div class="period-line">
+            ${
+              firstHalfLine !== null
+                ? escapeHtml(
+                    firstHalfLine
+                  )
+                : "-"
+            }
+          </div>
+
+          <div class="period-prediction">
+            ${
+              firstHalfPrediction
+                ? escapeHtml(
+                    firstHalfPrediction
+                  )
+                : "-"
+            }
+          </div>
+        </div>
+
+        ${periodCard(
+          "Q1",
+          p,
+          "q1"
+        )}
+
+        ${periodCard(
+          "Q2",
+          p,
+          "q2"
+        )}
+
+        ${periodCard(
+          "Q3",
+          p,
+          "q3"
+        )}
+
+        ${periodCard(
+          "Q4",
+          p,
+          "q4"
+        )}
+
+      </div>
+    `;
+  }
+
+
+  function buildHistory(
+    title,
+    history
+  ) {
     if (
-      !Number.isFinite(home) ||
-      !Number.isFinite(away)
+      !Array.isArray(history) ||
+      history.length === 0
     ) {
       return "";
     }
 
-    return `${home} - ${away}`;
+    const rows =
+      history
+        .slice(0, 5)
+        .map(item => {
+
+          const scored =
+            number(item.scored);
+
+          const conceded =
+            number(item.conceded);
+
+          const total =
+            scored !== null &&
+            conceded !== null
+              ? scored + conceded
+              : null;
+
+          return `
+            <div class="history-row">
+
+              <div class="history-team">
+                ${escapeHtml(
+                  item.opponent ??
+                  "-"
+                )}
+              </div>
+
+              <div class="history-score">
+                ${
+                  scored !== null &&
+                  conceded !== null
+                    ? (
+                        scored +
+                        " - " +
+                        conceded
+                      )
+                    : "-"
+                }
+              </div>
+
+              <div class="history-total">
+                ${
+                  total !== null
+                    ? total
+                    : "-"
+                }
+              </div>
+
+            </div>
+          `;
+        })
+        .join("");
+
+    return `
+      <div class="period-title">
+        ${escapeHtml(title)}
+      </div>
+
+      ${rows}
+    `;
   }
 
 
-  // ==========================================================
-  // LİG
-  // ==========================================================
-
-  function normalizeLeague(league) {
-
-    const value =
-      String(league || "")
-        .toUpperCase();
-
-    if (
-      value === "NBA"
-    ) {
-      return "NBA";
-    }
-
-    if (
-      value === "E" ||
-      value === "E2026" ||
-      value === "EUROLEAGUE" ||
-      value === "EUROPE"
-    ) {
-      return "EuroLeague";
-    }
-
-    return league || "Diğer";
-  }
-
-
-  // ==========================================================
-  // TARİH
-  // ==========================================================
-
-  function localDateString() {
-
-    const now =
-      new Date();
-
-    const year =
-      now.getFullYear();
-
-    const month =
-      String(
-        now.getMonth() + 1
-      ).padStart(2, "0");
-
-    const day =
-      String(
-        now.getDate()
-      ).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  }
-
-
-  function formatDate(value) {
-
-    if (!value) {
-      return "-";
-    }
-
-    const date =
-      new Date(value);
-
-    if (
-      Number.isNaN(
-        date.getTime()
-      )
-    ) {
-      return value;
-    }
-
-    return date.toLocaleDateString(
-      "tr-TR",
-      {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      }
-    );
-  }
-
-
-  function formatDateTime(value) {
-
-    if (!value) {
-      return "-";
-    }
-
-    const date =
-      new Date(value);
-
-    if (
-      Number.isNaN(
-        date.getTime()
-      )
-    ) {
-      return value;
-    }
-
-    return date.toLocaleString(
-      "tr-TR",
-      {
-        day: "2-digit",
-        month: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
-  }
-
-
-  // ==========================================================
-  // HTML GÜVENLİĞİ
-  // ==========================================================
-
-  function escapeHtml(value) {
-
-    return String(value ?? "")
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
+  function buildDetails(p) {
+    const expected =
+      number(
+        p.expectedTotal
       );
+
+    const homeExpected =
+      number(
+        p.expectedHome
+      );
+
+    const awayExpected =
+      number(
+        p.expectedAway
+      );
+
+    const homeSample =
+      number(
+        p.homeSample
+      );
+
+    const awaySample =
+      number(
+        p.awaySample
+      );
+
+    return `
+      <div class="details">
+
+        <div class="detail-top">
+
+          <div class="detail-box">
+            <div class="detail-label">
+              Maç baremi
+            </div>
+            <div class="detail-value">
+              ${
+                number(p.line) !== null
+                  ? p.line
+                  : "-"
+              }
+            </div>
+          </div>
+
+          <div class="detail-box">
+            <div class="detail-label">
+              Beklenen
+            </div>
+            <div class="detail-value">
+              ${
+                expected !== null
+                  ? expected.toFixed(1)
+                  : "-"
+              }
+            </div>
+          </div>
+
+          <div class="detail-box">
+            <div class="detail-label">
+              Güven
+            </div>
+            <div class="detail-value">
+              ${
+                number(p.confidence) !== null
+                  ? "%" +
+                    Math.round(
+                      p.confidence
+                    )
+                  : "-"
+              }
+            </div>
+          </div>
+
+        </div>
+
+        <div class="detail-top">
+
+          <div class="detail-box">
+            <div class="detail-label">
+              Ev beklenen
+            </div>
+            <div class="detail-value">
+              ${
+                homeExpected !== null
+                  ? homeExpected.toFixed(1)
+                  : "-"
+              }
+            </div>
+          </div>
+
+          <div class="detail-box">
+            <div class="detail-label">
+              Deplasman beklenen
+            </div>
+            <div class="detail-value">
+              ${
+                awayExpected !== null
+                  ? awayExpected.toFixed(1)
+                  : "-"
+              }
+            </div>
+          </div>
+
+          <div class="detail-box">
+            <div class="detail-label">
+              Örneklem
+            </div>
+            <div class="detail-value">
+              ${
+                homeSample !== null
+                  ? homeSample
+                  : "-"
+              }
+              /
+              ${
+                awaySample !== null
+                  ? awaySample
+                  : "-"
+              }
+            </div>
+          </div>
+
+        </div>
+
+        ${buildPeriodSection(p)}
+
+        ${
+          buildHistory(
+            "Ev takımının son maçları",
+            p.homeLast5 ??
+            p.homeHistory
+          )
+        }
+
+        ${
+          buildHistory(
+            "Deplasman takımının son maçları",
+            p.awayLast5 ??
+            p.awayHistory
+          )
+        }
+
+      </div>
+    `;
   }
 
 
-  // ==========================================================
-  // FİLTRELER
-  // ==========================================================
+  function createMatchCard(p) {
+    const status =
+      getStatus(p);
 
-  dateFilter.addEventListener(
-    "change",
-    renderMatches
-  );
+    const date =
+      normalizeDate(
+        p.date ??
+        p.utcDate
+      );
 
-  leagueFilter.addEventListener(
-    "change",
-    renderMatches
-  );
+    const home =
+      p.home ??
+      p.homeTeam ??
+      "-";
 
-  statusFilter.addEventListener(
-    "change",
-    renderMatches
-  );
+    const away =
+      p.away ??
+      p.awayTeam ??
+      "-";
+
+    const homeScore =
+      number(
+        p.homeScore
+      );
+
+    const awayScore =
+      number(
+        p.awayScore
+      );
+
+    const hasScore =
+      homeScore !== null &&
+      awayScore !== null;
+
+    const predictionClassName =
+      predictionClass(
+        p.prediction,
+        status
+      );
+
+    const predictionLabel =
+      predictionText(p);
+
+    const statusLabel =
+      statusText(status);
+
+    const league =
+      p.league ??
+      "";
+
+    const time =
+      p.time ??
+      "";
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+    card.className =
+      "match-card";
+
+    card.dataset.id =
+      String(
+        p.id ?? ""
+      );
+
+    card.innerHTML = `
+      <div
+        class="match-head"
+        role="button"
+        tabindex="0"
+        aria-expanded="false"
+      >
+
+        <div class="match-time">
+          <strong>
+            ${
+              time
+                ? escapeHtml(time)
+                : "🏀"
+            }
+          </strong>
+          <span>
+            ${escapeHtml(
+              league
+            )}
+          </span>
+        </div>
+
+        <div class="teams">
+
+          <div class="team-row">
+            <span class="team-name">
+              ${escapeHtml(home)}
+            </span>
+
+            <span
+              class="score ${
+                hasScore
+                  ? ""
+                  : "empty"
+              }"
+            >
+              ${
+                hasScore
+                  ? homeScore
+                  : "-"
+              }
+            </span>
+          </div>
+
+          <div class="team-row">
+            <span class="team-name">
+              ${escapeHtml(away)}
+            </span>
+
+            <span
+              class="score ${
+                hasScore
+                  ? ""
+                  : "empty"
+              }"
+            >
+              ${
+                hasScore
+                  ? awayScore
+                  : "-"
+              }
+            </span>
+          </div>
+
+        </div>
+
+        <div class="prediction-box">
+
+          <div class="prediction-market">
+            ${escapeHtml(
+              statusLabel
+            )}
+          </div>
+
+          <div
+            class="prediction ${predictionClassName}"
+          >
+            ${escapeHtml(
+              predictionLabel
+            )}
+          </div>
+
+          <span class="expand-icon">
+            ▼
+          </span>
+
+        </div>
+
+      </div>
+
+      ${buildDetails(p)}
+    `;
+
+    const head =
+      card.querySelector(
+        ".match-head"
+      );
+
+    function toggle() {
+      const open =
+        card.classList.toggle(
+          "open"
+        );
+
+      head.setAttribute(
+        "aria-expanded",
+        open
+          ? "true"
+          : "false"
+      );
+    }
+
+    head.addEventListener(
+      "click",
+      toggle
+    );
+
+    head.addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+          event.preventDefault();
+          toggle();
+        }
+      }
+    );
+
+    return card;
+  }
 
 
-  // ==========================================================
-  // BAŞLAT
-  // ==========================================================
+  function getAvailableDates() {
+    return [
+      ...new Set(
+        predictions
+          .map(p =>
+            normalizeDate(
+              p.date ??
+              p.utcDate
+            )
+          )
+          .filter(Boolean)
+      )
+    ].sort();
+  }
 
-  loadData();
-</script>
 
-</body>
-</html>
+  function setDefaultDate() {
+    const dates =
+      getAvailableDates();
+
+    if (dates.length === 0) {
+      return;
+    }
+
+    const today =
+      todayString();
+
+    if (
+     
