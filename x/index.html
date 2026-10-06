@@ -2,175 +2,135 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <title>X Temizleyici</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X Yanıt Temizleyici</title>
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       padding: 24px 16px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #000;
       color: #fff;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
     }
-
-    .box {
+    .container {
       max-width: 520px;
-      margin: 0 auto;
+      margin: auto;
     }
-
     h1 {
       font-size: 26px;
-      margin: 0 0 10px;
+      margin-bottom: 8px;
     }
-
     p {
       color: #aaa;
       line-height: 1.5;
     }
-
     .card {
       background: #16181c;
-      border-radius: 16px;
-      padding: 18px;
-      margin-top: 16px;
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 18px;
     }
-
+    .account {
+      color: #1d9bf0;
+      font-weight: 700;
+    }
+    .query {
+      background: #08090a;
+      border-radius: 10px;
+      padding: 14px;
+      margin: 14px 0;
+      color: #5ecbff;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 15px;
+    }
     button {
       width: 100%;
       border: 0;
       border-radius: 999px;
-      padding: 14px 18px;
+      padding: 15px;
+      margin-top: 10px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 10px;
     }
-
     .primary {
       background: #1d9bf0;
-      color: #fff;
+      color: white;
     }
-
     .secondary {
       background: #2f3336;
-      color: #fff;
+      color: white;
     }
-
-    code {
-      display: block;
-      background: #0b0d0f;
-      padding: 12px;
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-      color: #8bd5ff;
+    .info {
+      color: #8fd3ff;
     }
-
     .warning {
       color: #ffd166;
     }
-
-    .ok {
-      color: #5ee58a;
-    }
-
-    ol {
-      padding-left: 22px;
-      line-height: 1.7;
-    }
   </style>
 </head>
-
 <body>
-
-<div class="box">
-
+<div class="container">
   <h1>🧹 X Yanıt Temizleyici</h1>
-
-  <p>
-    <strong>@PikaBey99</strong> hesabına yazdığın yanıtları
-    bulmak için kullanılır.
-  </p>
-
   <div class="card">
-
-    <h3>iPhone'da kullanım</h3>
-
-    <ol>
-      <li>Aşağıdaki arama bağlantısını Safari'de aç.</li>
-      <li>X hesabına giriş yap.</li>
-      <li>Sonuçlarda kendi @PikaBey99 yanıtlarını kontrol et.</li>
-      <li>Yanlışlıkla başka postları silmemek için silme işlemini X üzerinden onayla.</li>
-    </ol>
-
+    <p>
+      <span class="account">@mruldz</span>
+      tarafından
+      <span class="account">@PikaBey99</span>
+      hesabına yazılan postları bul.
+    </p>
+    <div class="query">
+      from:mruldz to:PikaBey99
+    </div>
     <button
       class="primary"
       onclick="openSearch()">
-      X'te @PikaBey99 Yanıtlarımı Aç
+      X'te Tweetleri Bul
     </button>
-
-  </div>
-
-  <div class="card">
-
-    <h3>Arama sorgusu</h3>
-
-    <code>from:me to:PikaBey99</code>
-
     <button
       class="secondary"
       onclick="copyQuery()">
-      Sorguyu Kopyala
+      Arama Sorgusunu Kopyala
     </button>
-
   </div>
-
   <div class="card">
-
+    <p class="info">
+      Arama yalnızca <strong>@mruldz</strong> tarafından
+      <strong>@PikaBey99</strong>'a gönderilen sonuçları hedefler.
+    </p>
     <p class="warning">
-      ⚠️ X API kullanılmaz. Şifre veya oturum çerezin
-      bu sayfaya gönderilmez.
+      ⚠️ Silme işlemi X'in kendi menüsünden yapılır.
     </p>
-
-    <p class="ok">
-      ✓ Ücretsizdir.
-    </p>
-
   </div>
-
 </div>
-
 <script>
+const QUERY = "from:mruldz to:PikaBey99";
 function openSearch() {
-  const query = "from:me to:PikaBey99";
-
   const url =
     "https://x.com/search?q=" +
-    encodeURIComponent(query) +
+    encodeURIComponent(QUERY) +
     "&src=typed_query&f=live";
-
   window.location.href = url;
 }
-
 async function copyQuery() {
-  const query = "from:me to:PikaBey99";
-
   try {
-    await navigator.clipboard.writeText(query);
-
+    await navigator.clipboard.writeText(QUERY);
     alert("Arama sorgusu kopyalandı.");
-  } catch {
-    alert(query);
+  } catch (error) {
+    prompt(
+      "Sorguyu kopyala:",
+      QUERY
+    );
   }
 }
 </script>
-
 </body>
 </html>
