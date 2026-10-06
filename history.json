@@ -1,288 +1,291 @@
 {
-  "source": "https://arsiv.mackolik.com",
-  "season": "2026/2027",
+  "source": "https://www.iddaa.com",
+  "league": "EuroLeague",
+  "updatedAt": "2026-10-06T04:39:01.804788Z",
   "lastN": 5,
-  "updatedAt": "2026-10-06T04:03:40.110269+00:00",
-  "matches": [],
+  "matches": [
+    {
+      "date": "2026-10-06",
+      "home": "Anadolu Efes",
+      "away": "Fenerbahçe Beko",
+      "homeScore": 7,
+      "awayScore": 38
+    },
+    {
+      "date": "2026-10-06",
+      "home": "Anadolu Efes",
+      "away": "Baskonia",
+      "homeScore": 21,
+      "awayScore": 45
+    },
+    {
+      "date": "2026-10-06",
+      "home": "Anadolu Efes",
+      "away": "Baskonia",
+      "homeScore": 19,
+      "awayScore": 0
+    },
+    {
+      "date": "2026-10-06",
+      "home": "Anadolu Efes",
+      "away": "Baskonia",
+      "homeScore": 21,
+      "awayScore": 0
+    },
+    {
+      "date": "2026-10-06",
+      "home": "Anadolu Efes",
+      "away": "Baskonia",
+      "homeScore": 21,
+      "awayScore": 15
+    },
+    {
+      "date": "2026-10-06",
+      "home": "Anadolu Efes",
+      "away": "Baskonia",
+      "homeScore": 21,
+      "awayScore": 30
+    }
+  ],
   "teamStats": {
     "Anadolu Efes": {
       "home": {
-        "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "games": 5,
+        "scored": 17.8,
+        "conceded": 19.6
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Baskonia": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
-        "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "games": 5,
+        "scored": 18.0,
+        "conceded": 20.6
       }
     },
     "Bayern Münih": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Beşiktaş": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Dubai Basketball": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "FC Barcelona": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Fenerbahçe Beko": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
-        "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "games": 1,
+        "scored": 38.0,
+        "conceded": 7.0
       }
     },
     "Hapoel IBI Tel Aviv": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Kızılyıldız": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "LDLC ASVEL": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Maccabi Tel Aviv": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Olimpia Milano": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Olympiakos": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Panathinaikos": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Paris Basketball": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Partizan": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Real Madrid": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Valencia Basket": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Virtus Bologna": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     },
     "Zalgiris Kaunas": {
       "home": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       },
       "away": {
         "games": 0,
-        "scored": null,
-        "conceded": null,
-        "matches": []
+        "scored": 0,
+        "conceded": 0
       }
     }
   }
