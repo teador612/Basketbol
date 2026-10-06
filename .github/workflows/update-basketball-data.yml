@@ -1,4 +1,4 @@
-name: Basketbol veri 
+name: Basketbol veri güncelleme
 
 on:
   workflow_dispatch:
