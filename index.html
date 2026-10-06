@@ -55,6 +55,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 10px;
       margin-bottom: 10px;
     }
 
@@ -69,6 +70,39 @@
       margin-top: 2px;
       color: #7f8a98;
       font-size: 10px;
+    }
+
+    /* ======================================================
+       MACKOLIK BUTONU
+    ====================================================== */
+
+    .mackolik-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid #283441;
+      border-radius: 7px;
+      background: #121820;
+      color: #e8edf3;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .mackolik-btn:hover {
+      background: #1a232d;
+      border-color: #3a4a5b;
+    }
+
+    .mackolik-btn:active {
+      transform: scale(0.97);
     }
 
     /* ======================================================
@@ -524,6 +558,10 @@
         padding: 8px;
       }
 
+      .header {
+        gap: 7px;
+      }
+
       .summary {
         gap: 4px;
       }
@@ -573,6 +611,11 @@
       .period-grid {
         grid-template-columns: repeat(5, 1fr);
       }
+
+      .mackolik-btn {
+        padding: 6px 8px;
+        font-size: 9px;
+      }
     }
 
     @media (max-width: 360px) {
@@ -592,6 +635,11 @@
       .period-grid {
         grid-template-columns: repeat(3, 1fr);
       }
+
+      .mackolik-btn {
+        padding: 6px 7px;
+        font-size: 8px;
+      }
     }
   </style>
 </head>
@@ -601,6 +649,7 @@
 <div class="container">
 
   <div class="header">
+
     <div>
       <div class="title">
         🏀 Basketbol Tahmin
@@ -610,6 +659,15 @@
         Maç Toplam Alt / Üst + 1X2
       </div>
     </div>
+
+    <!-- MACKOLIK -->
+    <a
+      href="https://teador612.github.io/mackolik1/"
+      class="mackolik-btn"
+    >
+      ⚽ Mackolik
+    </a>
+
   </div>
 
 
