@@ -11,13 +11,24 @@ from playwright.sync_api import sync_playwright
 # AYARLAR
 # ============================================================
 
-STANDING_URL = "https://arsiv.mackolik.com/Basketball/Standing/Default.aspx?id=1644"
-
 DATA_FILE = Path("data.json")
 HISTORY_FILE = Path("history.json")
 
+MACKOLIK_BASE = "https://arsiv.mackolik.com"
+
 SEASON = "2026/2027"
+
 LAST_N = 5
+
+
+# ============================================================
+# TAKIMLAR
+# Mackolik takım ID'leri
+# ============================================================
+
+TEAM_IDS = {
+    "Anadolu Efes": 44,
+}
 
 
 # ============================================================
@@ -108,12 +119,8 @@ def load_fixture_teams():
         print("❌ data.json bulunamadı")
         return []
 
-    try:
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except Exception as e:
-        print(f"❌ data.json okunamadı: {e}")
-        return []
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
     teams = set()
 
@@ -132,71 +139,31 @@ def load_fixture_teams():
 
 
 # ============================================================
-# MACKOLIK TAKIM LİNKLERİNİ BUL
+# TAKIM SAYFASI
 # ============================================================
 
-def get_team_urls(page):
+def team_url(team):
 
-    print("\n🔎 Mackolik EuroLeague takım sayfaları aranıyor...")
+    team_id = TEAM_IDS.get(team)
 
-    try:
-        page.goto(
-            STANDING_URL,
-            wait_until="domcontentloaded",
-            timeout=60000
-        )
+    if not team_id:
+        return None
 
-        page.wait_for_timeout(3000)
-
-    except Exception as e:
-
-        print(f"❌ Mackolik puan durumu açılamadı: {e}")
-
-        return {}
-
-    links = page.locator("a")
-
-    result = {}
-
-    for i in range(links.count()):
-
-        try:
-
-            a = links.nth(i)
-
-            text = a.inner_text().strip()
-            href = a.get_attribute("href")
-
-            if not text or not href:
-                continue
-
-            if "/Basketbol-Takim/" not in href:
-                continue
-
-            team = normalize_team(text)
-
-            if team not in result:
-
-                if href.startswith("/"):
-                    href = "https://arsiv.mackolik.com" + href
-
-                result[team] = href
-
-        except Exception:
-            continue
-
-    print(f"✅ Bulunan takım sayfası: {len(result)}")
-
-    return result
+    return (
+        f"{MACKOLIK_BASE}"
+        f"/Basketbol-Takim/{team_id}"
+    )
 
 
 # ============================================================
-# TAKIM MAÇLARINI PARSE ET
+# TAKIM MAÇLARINI AL
 # ============================================================
 
 def parse_team_matches(page, team, url):
 
     print(f"\n🏀 {team}")
+
+    print(f"   🌐 {url}")
 
     try:
 
@@ -206,7 +173,7 @@ def parse_team_matches(page, team, url):
             timeout=60000
         )
 
-        page.wait_for_timeout(1500)
+        page.wait_for_timeout(2500)
 
         text = page.locator("body").inner_text()
 
@@ -224,138 +191,146 @@ def parse_team_matches(page, team, url):
 
     matches = []
 
-    # --------------------------------------------------------
-    # EUROLeague bölümünü bul
-    # --------------------------------------------------------
-
-    start = None
+    in_euroleague = False
 
     for i, line in enumerate(lines):
 
         low = line.lower()
 
-        if "euroleague" in low and "normal sezon" in low:
+        # ----------------------------------------------------
+        # EuroLeague başlangıcı
+        # ----------------------------------------------------
 
-            start = i
+        if "euroleague" in low:
 
-            break
+            in_euroleague = True
 
-    if start is None:
-
-        # Bazı sayfalarda sadece EuroLeague yazabilir.
-        for i, line in enumerate(lines):
-
-            if "euroleague" in line.lower():
-
-                start = i
-
-                break
-
-    if start is None:
-
-        print("   ⚠️ EuroLeague bölümü bulunamadı")
-
-        return []
-
-    # --------------------------------------------------------
-    # Bir sonraki lig başladığında dur
-    # --------------------------------------------------------
-
-    end = len(lines)
-
-    stop_words = [
-        "ACB Ligi",
-        "İspanya",
-        "Türkiye",
-        "Fransa",
-        "Almanya",
-        "İtalya",
-        "Yunanistan",
-        "İsrail",
-        "Almanya"
-    ]
-
-    for i in range(start + 1, len(lines)):
-
-        line = lines[i]
-
-        if any(word.lower() in line.lower() for word in stop_words):
-
-            end = i
-
-            break
-
-    euro_lines = lines[start:end]
-
-    # --------------------------------------------------------
-    # Örnek satırlar:
-    #
-    # 24.09.2026 | MS | BC Dubai | 78-77 | Real Madrid
-    #
-    # veya:
-    #
-    # 27.09.2026 | MS | Real Madrid | 89-87 | Unicaja
-    # --------------------------------------------------------
-
-    date_re = re.compile(
-        r"^\d{2}\.\d{2}\.\d{4}"
-    )
-
-    score_re = re.compile(
-        r"^\d{1,3}-\d{1,3}$"
-    )
-
-    for line in euro_lines:
-
-        if not date_re.match(line):
             continue
 
-        parts = [
-            p.strip()
-            for p in re.split(r"\s*\|\s*", line)
-            if p.strip()
+        if not in_euroleague:
+            continue
+
+        # ----------------------------------------------------
+        # Başka lig bölümü
+        # ----------------------------------------------------
+
+        if (
+            "türkiye sigorta" in low
+            or "bsl" in low
+            or "basketbol süper ligi" in low
+            or "acb ligi" in low
+        ):
+            continue
+
+        # ----------------------------------------------------
+        # Tarih satırı
+        # ----------------------------------------------------
+
+        date_match = re.match(
+            r"^(\d{1,2}\.\d{1,2}\.\d{4})",
+            line
+        )
+
+        if not date_match:
+            continue
+
+        date_raw = date_match.group(1)
+
+        # ----------------------------------------------------
+        # Skor ara
+        #
+        # Örnek:
+        #
+        # 24.09.2026 | Image | MS | Barcelona | 89-82 |
+        # Image | Anadolu Efes | IY 45-44
+        # ----------------------------------------------------
+
+        score_match = re.search(
+            r"\b(\d{1,3})-(\d{1,3})\b",
+            line
+        )
+
+        if not score_match:
+            continue
+
+        home_score = int(score_match.group(1))
+        away_score = int(score_match.group(2))
+
+        before_score = line[:score_match.start()]
+        after_score = line[score_match.end():]
+
+        # ----------------------------------------------------
+        # | parçalarına ayır
+        # ----------------------------------------------------
+
+        before_parts = [
+            x.strip()
+            for x in before_score.split("|")
+            if x.strip()
         ]
 
-        if len(parts) < 4:
-            continue
+        after_parts = [
+            x.strip()
+            for x in after_score.split("|")
+            if x.strip()
+        ]
 
-        date_raw = parts[0]
+        # ----------------------------------------------------
+        # Takım isimlerini bul
+        # ----------------------------------------------------
 
-        score_index = None
+        home = None
+        away = None
 
-        for i, part in enumerate(parts):
+        # Skordan önceki son anlamlı takım
+        for part in reversed(before_parts):
 
-            if score_re.match(part):
+            clean = part.strip()
 
-                score_index = i
+            if (
+                clean
+                and clean.lower() not in {
+                    "image",
+                    "ms",
+                    "v"
+                }
+                and not re.match(
+                    r"^\d+$",
+                    clean
+                )
+            ):
+
+                home = normalize_team(clean)
 
                 break
 
-        if score_index is None:
+        # Skordan sonraki ilk anlamlı takım
+        for part in after_parts:
+
+            clean = part.strip()
+
+            if (
+                clean
+                and clean.lower() not in {
+                    "image",
+                    "iy",
+                    "ms"
+                }
+                and not clean.startswith("IY")
+            ):
+
+                away = normalize_team(clean)
+
+                break
+
+        if not home or not away:
             continue
 
-        if score_index < 2:
-            continue
-
-        if score_index + 1 >= len(parts):
-            continue
+        # ----------------------------------------------------
+        # Tarih
+        # ----------------------------------------------------
 
         try:
-
-            home = normalize_team(
-                parts[score_index - 1]
-            )
-
-            score = parts[score_index]
-
-            away = normalize_team(
-                parts[score_index + 1]
-            )
-
-            home_score, away_score = map(
-                int,
-                score.split("-")
-            )
 
             date_obj = datetime.strptime(
                 date_raw,
@@ -371,7 +346,10 @@ def parse_team_matches(page, team, url):
 
         current = normalize_team(team)
 
-        if current != home and current != away:
+        if (
+            current != home
+            and current != away
+        ):
             continue
 
         matches.append({
@@ -382,9 +360,9 @@ def parse_team_matches(page, team, url):
             "awayScore": away_score
         })
 
-    # --------------------------------------------------------
-    # Aynı maçı tekrar alma
-    # --------------------------------------------------------
+    # ========================================================
+    # TEKRARLARI TEMİZLE
+    # ========================================================
 
     unique = {}
 
@@ -406,28 +384,39 @@ def parse_team_matches(page, team, url):
     )
 
     print(
-        f"   ✅ Tamamlanan EuroLeague maçı: {len(matches)}"
+        f"   ✅ Bulunan tamamlanmış maç: {len(matches)}"
     )
+
+    # Son maçları göster
+    for match in matches[:5]:
+
+        print(
+            f"      {match['date']} | "
+            f"{match['home']} "
+            f"{match['homeScore']}-"
+            f"{match['awayScore']} "
+            f"{match['away']}"
+        )
 
     return matches
 
 
 # ============================================================
-# TAKIM SON 5 İÇ SAHA / DEPLASMAN İSTATİSTİĞİ
+# SON 5 İÇ SAHA / DEPLASMAN
 # ============================================================
 
-def calculate_team_stats(history, team):
+def calculate_stats(history, team):
 
     team = normalize_team(team)
 
     home_games = [
         m for m in history
-        if normalize_team(m.get("home")) == team
+        if normalize_team(m["home"]) == team
     ]
 
     away_games = [
         m for m in history
-        if normalize_team(m.get("away")) == team
+        if normalize_team(m["away"]) == team
     ]
 
     home_games.sort(
@@ -443,10 +432,6 @@ def calculate_team_stats(history, team):
     home_games = home_games[:LAST_N]
     away_games = away_games[:LAST_N]
 
-    # --------------------------------------------------------
-    # İÇ SAHA
-    # --------------------------------------------------------
-
     home_for = [
         m["homeScore"]
         for m in home_games
@@ -456,10 +441,6 @@ def calculate_team_stats(history, team):
         m["awayScore"]
         for m in home_games
     ]
-
-    # --------------------------------------------------------
-    # DEPLASMAN
-    # --------------------------------------------------------
 
     away_for = [
         m["awayScore"]
@@ -471,7 +452,7 @@ def calculate_team_stats(history, team):
         for m in away_games
     ]
 
-    def average(values):
+    def avg(values):
 
         if not values:
             return None
@@ -484,15 +465,15 @@ def calculate_team_stats(history, team):
     return {
         "home": {
             "games": len(home_games),
-            "scored": average(home_for),
-            "conceded": average(home_against),
+            "scored": avg(home_for),
+            "conceded": avg(home_against),
             "matches": home_games
         },
 
         "away": {
             "games": len(away_games),
-            "scored": average(away_for),
-            "conceded": average(away_against),
+            "scored": avg(away_for),
+            "conceded": avg(away_against),
             "matches": away_games
         }
     }
@@ -512,14 +493,12 @@ def main():
 
     if not teams:
 
-        print(
-            "❌ data.json içinde takım bulunamadı"
-        )
+        print("❌ data.json içinde takım bulunamadı")
 
         return
 
     print(
-        f"\n📦 Fikstürde bulunan takım: {len(teams)}"
+        f"📦 Fikstürde bulunan takım: {len(teams)}"
     )
 
     all_matches = {}
@@ -532,33 +511,15 @@ def main():
 
         page = browser.new_page()
 
-        team_urls = get_team_urls(page)
-
-        # ----------------------------------------------------
-        # HER TAKIMI ÇEK
-        # ----------------------------------------------------
-
         for team in teams:
 
-            url = team_urls.get(team)
-
-            # Alias kontrolü
-            if not url:
-
-                normalized_target = normalize_team(team)
-
-                for source_name, source_url in team_urls.items():
-
-                    if normalize_team(source_name) == normalized_target:
-
-                        url = source_url
-
-                        break
+            url = team_url(team)
 
             if not url:
 
                 print(
-                    f"\n⚠️ {team} için Mackolik sayfası bulunamadı"
+                    f"\n⚠️ {team} için "
+                    f"Mackolik ID tanımlı değil"
                 )
 
                 continue
@@ -584,7 +545,7 @@ def main():
         browser.close()
 
     # ========================================================
-    # GEÇMİŞİ SIRALA
+    # GEÇMİŞ
     # ========================================================
 
     history = list(
@@ -607,7 +568,7 @@ def main():
 
     for team in teams:
 
-        team_stats[team] = calculate_team_stats(
+        team_stats[team] = calculate_stats(
             history,
             team
         )
@@ -617,12 +578,12 @@ def main():
     # ========================================================
 
     output = {
-        "source": STANDING_URL,
+        "source": MACKOLIK_BASE,
         "season": SEASON,
+        "lastN": LAST_N,
         "updatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "lastN": LAST_N,
         "matches": history,
         "teamStats": team_stats
     }
@@ -660,10 +621,6 @@ def main():
         f"💾 Dosya: {HISTORY_FILE}"
     )
 
-    # ========================================================
-    # TAKIM BAZLI KONTROL
-    # ========================================================
-
     print("\n📋 SON 5 İÇ SAHA / DEPLASMAN")
 
     for team in teams:
@@ -676,44 +633,46 @@ def main():
         print(f"\n🏀 {team}")
 
         print(
-            f"   🏠 İç saha: {home['games']} maç"
+            f"   🏠 İç saha: "
+            f"{home['games']} maç"
         )
 
         if home["games"]:
 
             print(
-                f"      Attı: {home['scored']}"
+                f"      Attı: "
+                f"{home['scored']}"
             )
 
             print(
-                f"      Yedi: {home['conceded']}"
+                f"      Yedi: "
+                f"{home['conceded']}"
             )
 
         else:
 
-            print(
-                "      Veri yok"
-            )
+            print("      Veri yok")
 
         print(
-            f"   ✈️ Deplasman: {away['games']} maç"
+            f"   ✈️ Deplasman: "
+            f"{away['games']} maç"
         )
 
         if away["games"]:
 
             print(
-                f"      Attı: {away['scored']}"
+                f"      Attı: "
+                f"{away['scored']}"
             )
 
             print(
-                f"      Yedi: {away['conceded']}"
+                f"      Yedi: "
+                f"{away['conceded']}"
             )
 
         else:
 
-            print(
-                "      Veri yok"
-            )
+            print("      Veri yok")
 
     print("\n✅ Geçmiş veri oluşturuldu.")
 
