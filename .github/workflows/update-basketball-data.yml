@@ -1,4 +1,4 @@
-name: Basketbol Veri Güncelleme
+name: Basketbol Veri ve Tahmin Güncelleme
 
 on:
   workflow_dispatch:
@@ -14,97 +14,135 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # ========================================
+      # REPO
+      # ========================================
+
       - name: 📥 Repo indir
         uses: actions/checkout@v4
+
+      # ========================================
+      # PYTHON
+      # ========================================
 
       - name: 🐍 Python kur
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+      # ========================================
+      # PAKETLER
+      # ========================================
+
       - name: 📦 Paketleri kur
         run: |
           python -m pip install --upgrade pip
           pip install requests
 
+      # ========================================
+      # BASKETBOL VERİLERİ
+      # ========================================
+
       - name: 🏀 Basketbol verilerini güncelle
         run: |
           python update_basketball_data.py
 
-      - name: 🔎 Veri kontrolü
+      # ========================================
+      # TAHMİNLER
+      # ========================================
+
+      - name: 🎯 Tahminleri oluştur
+        run: |
+          python predictions.py
+
+      # ========================================
+      # VERİ KONTROL
+      # ========================================
+
+      - name: 🔎 Sonuçları kontrol et
         run: |
           python - <<'PY'
           import json
+          from pathlib import Path
 
-          with open("data/basketball.json", encoding="utf-8") as f:
-              data = json.load(f)
+          basketball_file = Path("data/basketball.json")
+          predictions_file = Path("predictions.json")
 
-          matches = data.get("matches", [])
+          print("=" * 60)
+          print("🏀 BASKETBOL VERİ KONTROL")
+          print("=" * 60)
 
-          print("========================================")
-          print("🏀 BASKETBOL DATA KONTROL")
-          print("========================================")
+          if basketball_file.exists():
+              with open(basketball_file, encoding="utf-8") as f:
+                  data = json.load(f)
 
-          print("Güncelleme:", data.get("updatedAt"))
-          print("Toplam maç:", data.get("total"))
-          print("NBA:", data.get("nba"))
-          print("NBA oynanan:", data.get("nbaFinished"))
-          print("EuroLeague:", data.get("euroleague"))
-          print("EuroLeague oynanan:", data.get("euroleagueFinished"))
+              print("✅ basketball.json bulundu")
+              print("Toplam maç:", data.get("total"))
+              print("NBA:", data.get("nba"))
+              print("NBA oynanan:", data.get("nbaFinished"))
+              print("EuroLeague:", data.get("euroleague"))
+              print("EuroLeague oynanan:", data.get("euroleagueFinished"))
+          else:
+              print("❌ basketball.json bulunamadı")
+              raise SystemExit(1)
 
           print()
-          print("========================================")
-          print("🔎 SON 5 VERİ KONTROLÜ")
-          print("========================================")
+          print("=" * 60)
+          print("🎯 TAHMİN KONTROL")
+          print("=" * 60)
 
-          checked = 0
+          if predictions_file.exists():
+              with open(predictions_file, encoding="utf-8") as f:
+                  predictions = json.load(f)
 
-          for match in matches:
-              home_last5 = match.get("homeLast5", [])
-              away_last5 = match.get("awayLast5", [])
+              items = predictions.get("predictions", [])
 
-              if home_last5 or away_last5:
-                  print()
+              print("✅ predictions.json bulundu")
+              print("Toplam tahmin:", len(items))
+
+              main_predictions = [
+                  x for x in items
+                  if x.get("prediction")
+              ]
+
+              print(
+                  "Ana tahmin sayısı:",
+                  len(main_predictions)
+              )
+
+              print()
+
+              for item in main_predictions[:10]:
                   print(
-                      f'{match.get("league")} | '
-                      f'{match.get("homeTeam")} - {match.get("awayTeam")}'
+                      f'{item.get("home")} - '
+                      f'{item.get("away")} | '
+                      f'Tahmin: {item.get("prediction")} | '
+                      f'Güven: %{item.get("confidence")}'
                   )
 
-                  print("Ev son 5:")
-                  for x in home_last5:
-                      print(
-                          f'  {x.get("date")} | '
-                          f'{x.get("scored")}-{x.get("conceded")} | '
-                          f'{x.get("opponent")}'
-                      )
-
-                  print("Deplasman son 5:")
-                  for x in away_last5:
-                      print(
-                          f'  {x.get("date")} | '
-                          f'{x.get("scored")}-{x.get("conceded")} | '
-                          f'{x.get("opponent")}'
-                      )
-
-                  checked += 1
-
-                  if checked >= 5:
-                      break
+          else:
+              print("❌ predictions.json bulunamadı")
+              raise SystemExit(1)
 
           print()
-          print("Kontrol edilen maç:", checked)
+          print("✅ VERİ + TAHMİN KONTROLÜ TAMAM")
           PY
+
+      # ========================================
+      # GIT
+      # ========================================
 
       - name: 💾 Değişiklikleri kaydet
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add data/basketball.json
+          git add data/basketball.json predictions.json
 
           if git diff --cached --quiet; then
-            echo "Yeni veri yok."
+            echo "ℹ️ Yeni değişiklik yok."
           else
-            git commit -m "Basketbol verileri güncellendi"
+            git commit -m "Basketbol verileri ve tahminler güncellendi"
             git push
           fi
