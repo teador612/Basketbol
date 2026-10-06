@@ -1,3 +1,41 @@
+name: Basketbol Veri ve Tahmin Güncelleme
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: 📥 Repo indir
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 📦 Paketleri kur
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: 🏀 Basketbol verilerini güncelle
+        run: |
+          python update_basketball_data.py
+
+      - name: 🎯 Tahminleri oluştur
+        run: |
+          python predictions.py
+
       - name: 🔎 Sonuçları kontrol et
         run: |
           python - <<'PY'
@@ -15,7 +53,7 @@
               print("❌ basketball.json bulunamadı")
               raise SystemExit(1)
 
-          with open(basketball_file, encoding="utf-8") as f:
+          with basketball_file.open(encoding="utf-8") as f:
               data = json.load(f)
 
           print("Toplam maç:", data.get("total"))
@@ -33,7 +71,7 @@
               print("❌ predictions.json bulunamadı")
               raise SystemExit(1)
 
-          with open(predictions_file, encoding="utf-8") as f:
+          with predictions_file.open(encoding="utf-8") as f:
               prediction_data = json.load(f)
 
           predictions = prediction_data.get("predictions", [])
@@ -62,19 +100,19 @@
               else:
                   incomplete += 1
 
-                  eksik = []
+                  missing = []
 
                   if home_sample < 5:
-                      eksik.append(f"Ev {home_sample}/5")
+                      missing.append(f"Ev {home_sample}/5")
 
                   if away_sample < 5:
-                      eksik.append(f"Dep {away_sample}/5")
+                      missing.append(f"Dep {away_sample}/5")
 
                   incomplete_matches.append({
-                      "date": item.get("date"),
-                      "home": item.get("home"),
-                      "away": item.get("away"),
-                      "details": ", ".join(eksik)
+                      "date": item.get("date", ""),
+                      "home": item.get("home", ""),
+                      "away": item.get("away", ""),
+                      "missing": ", ".join(missing)
                   })
 
               if item.get("prediction"):
@@ -96,33 +134,38 @@
               print("✅ Tüm maçlarda iki taraf da 5/5.")
           else:
               for i, item in enumerate(incomplete_matches, 1):
-
                   print(
                       f"{i}. {item['home']} - {item['away']}"
                   )
-
-                  print(
-                      f"   📅 {item['date']}"
-                  )
-
-                  print(
-                      f"   ❌ {item['details']}"
-                  )
+                  print(f"   📅 {item['date']}")
+                  print(f"   ❌ {item['missing']}")
 
           print()
           print("=" * 60)
-          print("📊 EKSİK VERİ ÖZETİ")
+          print("📊 ÖZET")
           print("=" * 60)
 
-          print("Toplam eksik maç:", incomplete)
-          print("Tam 5/5 maç:", both_5)
+          print("Tam 5/5:", both_5)
+          print("Eksik:", incomplete)
 
           if predictions:
-              percentage = both_5 / len(predictions) * 100
-              print(
-                  f"5/5 oranı: %{percentage:.1f}"
-              )
+              rate = both_5 / len(predictions) * 100
+              print(f"5/5 oranı: %{rate:.1f}")
 
           print()
           print("✅ VERİ + TAHMİN KONTROLÜ TAMAM")
           PY
+
+      - name: 💾 Değişiklikleri kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/basketball.json predictions.json
+
+          if git diff --cached --quiet; then
+            echo "ℹ️ Yeni değişiklik yok."
+          else
+            git commit -m "Basketbol verileri ve tahminler güncellendi"
+            git push
+          fi
