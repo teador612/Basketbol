@@ -91,7 +91,6 @@ TEAM_ALIASES = {
 
     "hapoelibitelaviv": "hapoeltelaviv",
     "hapoeltelaviv": "hapoeltelaviv",
-    "hapoel": "hapoeltelaviv",
 
     "zalgiriskaunas": "zalgiris",
     "zalgiris": "zalgiris",
@@ -127,10 +126,8 @@ TEAM_ALIASES = {
     # NBA
     "losangeleslakers": "losangeleslakers",
     "lalakers": "losangeleslakers",
-
     "losangelesclippers": "losangelesclippers",
     "laclippers": "losangelesclippers",
-
     "goldenstatewarriors": "goldenstatewarriors",
     "oklahomacitythunder": "oklahomacitythunder",
     "sanantoniospurs": "sanantoniospurs",
@@ -163,7 +160,7 @@ TEAM_ALIASES = {
 
 
 # ============================================================
-# TAKIM NORMALİZASYONU
+# NORMALİZASYON
 # ============================================================
 
 def normalize_team_name(name):
@@ -220,7 +217,7 @@ def normalize_team_name(name):
 
 
 # ============================================================
-# GENEL YARDIMCILAR
+# YARDIMCILAR
 # ============================================================
 
 def now_iso():
@@ -268,12 +265,10 @@ def parse_date(value):
             dt = dt.replace(
                 tzinfo=timezone.utc
             )
-        else:
-            dt = dt.astimezone(
-                timezone.utc
-            )
 
-        return dt
+        return dt.astimezone(
+            timezone.utc
+        )
 
     except Exception:
         pass
@@ -322,7 +317,7 @@ def get_euroleague_games():
 
     print()
     print("=" * 60)
-    print("🌍 EUROLEAGUE VERİLERİ")
+    print("🌍 EUROLEAGUE")
     print("=" * 60)
 
     all_matches = []
@@ -335,7 +330,7 @@ def get_euroleague_games():
         )
 
         print(
-            f"\n📅 Sezon: {season}"
+            f"\n📅 {season}"
         )
 
         try:
@@ -345,17 +340,13 @@ def get_euroleague_games():
                 timeout=60
             )
 
-            print(
-                f"   HTTP: {response.status_code}"
-            )
-
             response.raise_for_status()
 
             data = response.json()
 
         except Exception as e:
             print(
-                f"   ❌ Hata: {e}"
+                f"❌ {season}: {e}"
             )
             continue
 
@@ -363,6 +354,7 @@ def get_euroleague_games():
             games = data
 
         elif isinstance(data, dict):
+
             games = data.get(
                 "data"
             )
@@ -385,16 +377,10 @@ def get_euroleague_games():
             games = []
 
         print(
-            f"   📦 Maç: {len(games)}"
+            f"   Maç: {len(games)}"
         )
 
         for game in games:
-
-            if not isinstance(
-                game,
-                dict
-            ):
-                continue
 
             local = (
                 game.get("local")
@@ -430,10 +416,7 @@ def get_euroleague_games():
                 )
             )
 
-            if not home_team:
-                continue
-
-            if not away_team:
+            if not home_team or not away_team:
                 continue
 
             played = bool(
@@ -526,25 +509,24 @@ def get_euroleague_games():
         )
     )
 
-    finished = sum(
-        1
-        for match in matches
-        if match.get("played")
+    print(
+        f"✅ Toplam: {len(matches)}"
     )
 
     print(
-        f"\n✅ EuroLeague toplam: {len(matches)}"
-    )
-
-    print(
-        f"🏁 EuroLeague oynanan: {finished}"
+        "🏁 Oynanan:",
+        sum(
+            1
+            for x in matches
+            if x.get("played")
+        )
     )
 
     return matches
 
 
 # ============================================================
-# NBA TEK GÜN
+# NBA
 # ============================================================
 
 def get_nba_day(date_value):
@@ -561,27 +543,22 @@ def get_nba_day(date_value):
                 "limit": 100,
             },
             headers=HEADERS,
-            timeout=30,
+            timeout=30
         )
 
         response.raise_for_status()
 
         data = response.json()
 
-    except Exception as e:
-        print(
-            f"   ❌ {date_text}: {e}"
-        )
+    except Exception:
         return []
-
-    events = (
-        data.get("events")
-        or []
-    )
 
     matches = []
 
-    for event in events:
+    for event in (
+        data.get("events")
+        or []
+    ):
 
         competitions = (
             event.get(
@@ -593,10 +570,8 @@ def get_nba_day(date_value):
         if not competitions:
             continue
 
-        competition = competitions[0]
-
         competitors = (
-            competition.get(
+            competitions[0].get(
                 "competitors"
             )
             or []
@@ -622,9 +597,7 @@ def get_nba_day(date_value):
                     or team.get(
                         "shortDisplayName"
                     )
-                    or team.get(
-                        "name"
-                    )
+                    or team.get("name")
                 ),
                 "score": safe_int(
                     competitor.get(
@@ -633,23 +606,17 @@ def get_nba_day(date_value):
                 ),
             }
 
-            side = competitor.get(
+            if competitor.get(
                 "homeAway"
-            )
-
-            if side == "home":
+            ) == "home":
                 home = item
 
-            elif side == "away":
+            elif competitor.get(
+                "homeAway"
+            ) == "away":
                 away = item
 
         if not home or not away:
-            continue
-
-        if not home.get("name"):
-            continue
-
-        if not away.get("name"):
             continue
 
         status = (
@@ -662,32 +629,28 @@ def get_nba_day(date_value):
             or {}
         )
 
-        state = str(
-            status_type.get(
-                "state"
-            )
-            or ""
-        ).lower()
-
-        completed = bool(
+        played = bool(
             status_type.get(
                 "completed"
             )
-        )
-
-        played = (
-            completed
-            or state == "post"
+        ) or (
+            str(
+                status_type.get(
+                    "state"
+                )
+                or ""
+            ).lower()
+            == "post"
         )
 
         home_score = (
-            home.get("score")
+            home["score"]
             if played
             else None
         )
 
         away_score = (
-            away.get("score")
+            away["score"]
             if played
             else None
         )
@@ -708,9 +671,7 @@ def get_nba_day(date_value):
             "league": "NBA",
             "season": "2026-27",
             "date": event.get("date"),
-            "utcDate": event.get(
-                "date"
-            ),
+            "utcDate": event.get("date"),
             "round": None,
             "homeTeam": home["name"],
             "awayTeam": away["name"],
@@ -727,15 +688,11 @@ def get_nba_day(date_value):
     return matches
 
 
-# ============================================================
-# NBA TARİH ARALIĞI
-# ============================================================
-
 def get_nba_games():
 
     print()
     print("=" * 60)
-    print("🏀 NBA VERİLERİ")
+    print("🏀 NBA")
     print("=" * 60)
 
     today = datetime.now(
@@ -757,7 +714,7 @@ def get_nba_games():
     )
 
     print(
-        f"📅 Aralık: {start} → {end}"
+        f"📅 {start} → {end}"
     )
 
     all_matches = []
@@ -766,16 +723,14 @@ def get_nba_games():
 
     while current <= end:
 
-        games = get_nba_day(
-            datetime.combine(
-                current,
-                datetime.min.time(),
-                tzinfo=timezone.utc
-            )
-        )
-
         all_matches.extend(
-            games
+            get_nba_day(
+                datetime.combine(
+                    current,
+                    datetime.min.time(),
+                    tzinfo=timezone.utc
+                )
+            )
         )
 
         current += timedelta(
@@ -786,19 +741,16 @@ def get_nba_games():
 
     for match in all_matches:
 
-        game_id = match.get(
-            "id"
-        )
-
-        if game_id:
-            key = str(game_id)
-
-        else:
-            key = (
-                f'{match.get("date")}:'
-                f'{normalize_team_name(match.get("homeTeam"))}:'
-                f'{normalize_team_name(match.get("awayTeam"))}'
+        key = (
+            str(
+                match.get("id")
             )
+            if match.get("id")
+            else
+            f'{match.get("date")}:'
+            f'{normalize_team_name(match.get("homeTeam"))}:'
+            f'{normalize_team_name(match.get("awayTeam"))}'
+        )
 
         unique[key] = match
 
@@ -812,25 +764,24 @@ def get_nba_games():
         )
     )
 
-    finished = sum(
-        1
-        for match in matches
-        if match.get("played")
+    print(
+        f"✅ Toplam: {len(matches)}"
     )
 
     print(
-        f"\n🏀 NBA toplam: {len(matches)}"
-    )
-
-    print(
-        f"🏁 NBA oynanan: {finished}"
+        "🏁 Oynanan:",
+        sum(
+            1
+            for x in matches
+            if x.get("played")
+        )
     )
 
     return matches
 
 
 # ============================================================
-# SON 5 EV
+# SON 5
 # ============================================================
 
 def last_five_home(
@@ -846,7 +797,7 @@ def last_five_home(
     if not target:
         return []
 
-    normalized_team = normalize_team_name(
+    normalized = normalize_team_name(
         team
     )
 
@@ -856,7 +807,7 @@ def last_five_home(
 
         if normalize_team_name(
             match.get("homeTeam")
-        ) != normalized_team:
+        ) != normalized:
             continue
 
         if not match.get("played"):
@@ -868,14 +819,11 @@ def last_five_home(
         if match.get("awayScore") is None:
             continue
 
-        match_date = match_datetime(
+        game_date = match_datetime(
             match
         )
 
-        if not match_date:
-            continue
-
-        if match_date >= target:
+        if not game_date or game_date >= target:
             continue
 
         previous.append(
@@ -894,24 +842,20 @@ def last_five_home(
 
     return [
         {
-            "date": match.get("date"),
-            "opponent": match.get(
+            "date": x.get("date"),
+            "opponent": x.get(
                 "awayTeam"
             ),
-            "scored": match.get(
+            "scored": x.get(
                 "homeScore"
             ),
-            "conceded": match.get(
+            "conceded": x.get(
                 "awayScore"
             ),
         }
-        for match in previous[:5]
+        for x in previous[:5]
     ]
 
-
-# ============================================================
-# SON 5 DEPLASMAN
-# ============================================================
 
 def last_five_away(
     matches,
@@ -926,7 +870,7 @@ def last_five_away(
     if not target:
         return []
 
-    normalized_team = normalize_team_name(
+    normalized = normalize_team_name(
         team
     )
 
@@ -936,7 +880,7 @@ def last_five_away(
 
         if normalize_team_name(
             match.get("awayTeam")
-        ) != normalized_team:
+        ) != normalized:
             continue
 
         if not match.get("played"):
@@ -948,14 +892,11 @@ def last_five_away(
         if match.get("awayScore") is None:
             continue
 
-        match_date = match_datetime(
+        game_date = match_datetime(
             match
         )
 
-        if not match_date:
-            continue
-
-        if match_date >= target:
+        if not game_date or game_date >= target:
             continue
 
         previous.append(
@@ -974,82 +915,74 @@ def last_five_away(
 
     return [
         {
-            "date": match.get("date"),
-            "opponent": match.get(
+            "date": x.get("date"),
+            "opponent": x.get(
                 "homeTeam"
             ),
-            "scored": match.get(
+            "scored": x.get(
                 "awayScore"
             ),
-            "conceded": match.get(
+            "conceded": x.get(
                 "homeScore"
             ),
         }
-        for match in previous[:5]
+        for x in previous[:5]
     ]
 
-
-# ============================================================
-# SON 5 VERİLERİNİ EKLE
-# ============================================================
 
 def add_last_five(matches):
 
-    print()
-    print("=" * 60)
-    print("📊 SON 5 VERİLER HESAPLANIYOR")
-    print("=" * 60)
-
     finished = [
-        match
-        for match in matches
+        x
+        for x in matches
         if (
-            match.get("played")
-            and match.get("homeScore") is not None
-            and match.get("awayScore") is not None
+            x.get("played")
+            and x.get("homeScore") is not None
+            and x.get("awayScore") is not None
         )
     ]
 
+    print()
     print(
-        f"🏁 Kullanılabilir geçmiş maç: "
-        f"{len(finished)}"
+        f"📊 Geçmiş maç sayısı: {len(finished)}"
     )
 
     for match in matches:
 
-        match["homeLast5"] = (
-            last_five_home(
-                finished,
-                match.get("homeTeam"),
-                match.get("date")
-            )
+        match["homeLast5"] = last_five_home(
+            finished,
+            match.get("homeTeam"),
+            match.get("date")
         )
 
-        match["awayLast5"] = (
-            last_five_away(
-                finished,
-                match.get("awayTeam"),
-                match.get("date")
-            )
+        match["awayLast5"] = last_five_away(
+            finished,
+            match.get("awayTeam"),
+            match.get("date")
         )
 
     return matches
 
 
 # ============================================================
-# EKSİK MAÇLARI DETAYLI GÖSTER
+# EKSİK MAÇ TEŞHİSİ
 # ============================================================
 
-def print_missing_matches(matches):
-
-    print()
-    print("=" * 70)
-    print("🔎 EKSİK SON 5 DETAYLI KONTROL")
-    print("=" * 70)
+def diagnose_missing(matches):
 
     now = datetime.now(
         timezone.utc
     )
+
+    finished = [
+        x
+        for x in matches
+        if (
+            x.get("played")
+            and x.get("homeScore") is not None
+            and x.get("awayScore") is not None
+        )
+    ]
 
     missing = []
 
@@ -1058,27 +991,20 @@ def print_missing_matches(matches):
         if match.get("played"):
             continue
 
-        match_date = match_datetime(
+        game_date = match_datetime(
             match
         )
 
-        if not match_date:
-            continue
-
-        if match_date < now:
+        if not game_date or game_date < now:
             continue
 
         home_last5 = (
-            match.get(
-                "homeLast5"
-            )
+            match.get("homeLast5")
             or []
         )
 
         away_last5 = (
-            match.get(
-                "awayLast5"
-            )
+            match.get("awayLast5")
             or []
         )
 
@@ -1088,30 +1014,31 @@ def print_missing_matches(matches):
         ):
             continue
 
-        missing.append({
-            "date": match_date,
-            "match": match,
-            "home": home_last5,
-            "away": away_last5,
-        })
+        missing.append(
+            match
+        )
 
     missing.sort(
-        key=lambda x: x["date"]
+        key=lambda x: match_datetime(x)
     )
+
+    print()
+    print("=" * 75)
+    print("🔎 5/5 OLMAYAN MAÇLAR")
+    print("=" * 75)
 
     print(
-        f"\n⚠️ Eksik maç: {len(missing)}"
+        f"Toplam: {len(missing)}"
     )
 
-    for index, item in enumerate(
+    for index, match in enumerate(
         missing,
         1
     ):
 
-        match = item["match"]
-
-        home_last5 = item["home"]
-        away_last5 = item["away"]
+        game_date = match_datetime(
+            match
+        )
 
         home_name = match.get(
             "homeTeam"
@@ -1121,80 +1048,108 @@ def print_missing_matches(matches):
             "awayTeam"
         )
 
-        print()
-        print("-" * 70)
-
-        print(
-            f"{index}. "
-            f"{match.get('league')}"
+        home_key = normalize_team_name(
+            home_name
         )
 
+        away_key = normalize_team_name(
+            away_name
+        )
+
+        # Kaynakta bulunan tüm ev maçları
+        home_history = []
+
+        # Kaynakta bulunan tüm deplasman maçları
+        away_history = []
+
+        for game in finished:
+
+            game_date_history = match_datetime(
+                game
+            )
+
+            if not game_date_history:
+                continue
+
+            if game_date_history >= game_date:
+                continue
+
+            if normalize_team_name(
+                game.get("homeTeam")
+            ) == home_key:
+
+                home_history.append(
+                    game
+                )
+
+            if normalize_team_name(
+                game.get("awayTeam")
+            ) == away_key:
+
+                away_history.append(
+                    game
+                )
+
+        home_history.sort(
+            key=lambda x: match_datetime(x),
+            reverse=True
+        )
+
+        away_history.sort(
+            key=lambda x: match_datetime(x),
+            reverse=True
+        )
+
+        home_used = (
+            match.get("homeLast5")
+            or []
+        )
+
+        away_used = (
+            match.get("awayLast5")
+            or []
+        )
+
+        print()
         print(
-            f"   🏀 {home_name} - {away_name}"
+            f"{index}. "
+            f"{home_name} - {away_name}"
         )
 
         print(
             f"   📅 {match.get('date')}"
         )
 
-        print(
-            f"   🏠 EV: "
-            f"{len(home_last5)}/5"
-        )
-
-        print(
-            f"      Normalized: "
-            f"{normalize_team_name(home_name)}"
-        )
-
-        if home_last5:
-
-            for game in home_last5:
-
-                print(
-                    f"      {game.get('date')} | "
-                    f"{game.get('scored')}-"
-                    f"{game.get('conceded')} | "
-                    f"{game.get('opponent')}"
-                )
-
-        else:
+        if len(home_used) < 5:
 
             print(
-                "      ❌ Geçmiş ev maçı yok"
+                f"   🏠 EV "
+                f"{len(home_used)}/5 "
+                f"| Kaynak: "
+                f"{len(home_history)}"
             )
 
-        print(
-            f"   ✈️ DEP: "
-            f"{len(away_last5)}/5"
-        )
+            print(
+                f"      Anahtar: {home_key}"
+            )
 
-        print(
-            f"      Normalized: "
-            f"{normalize_team_name(away_name)}"
-        )
-
-        if away_last5:
-
-            for game in away_last5:
-
-                print(
-                    f"      {game.get('date')} | "
-                    f"{game.get('scored')}-"
-                    f"{game.get('conceded')} | "
-                    f"{game.get('opponent')}"
-                )
-
-        else:
+        if len(away_used) < 5:
 
             print(
-                "      ❌ Geçmiş deplasman maçı yok"
+                f"   ✈️ DEP "
+                f"{len(away_used)}/5 "
+                f"| Kaynak: "
+                f"{len(away_history)}"
+            )
+
+            print(
+                f"      Anahtar: {away_key}"
             )
 
     print()
-    print("=" * 70)
-    print("🔎 EKSİK MAÇ ANALİZİ TAMAMLANDI")
-    print("=" * 70)
+    print("=" * 75)
+    print("📊 TEŞHİS TAMAMLANDI")
+    print("=" * 75)
 
 
 # ============================================================
@@ -1204,9 +1159,9 @@ def print_missing_matches(matches):
 def print_summary(matches):
 
     upcoming = [
-        match
-        for match in matches
-        if not match.get("played")
+        x
+        for x in matches
+        if not x.get("played")
     ]
 
     full = 0
@@ -1215,16 +1170,12 @@ def print_summary(matches):
     for match in upcoming:
 
         home_count = len(
-            match.get(
-                "homeLast5"
-            )
+            match.get("homeLast5")
             or []
         )
 
         away_count = len(
-            match.get(
-                "awayLast5"
-            )
+            match.get("awayLast5")
             or []
         )
 
@@ -1236,10 +1187,7 @@ def print_summary(matches):
         else:
             incomplete += 1
 
-    total = (
-        full
-        + incomplete
-    )
+    total = full + incomplete
 
     rate = (
         full / total * 100
@@ -1273,17 +1221,13 @@ def main():
 
     print()
     print("=" * 60)
-    print("🏀 NBA + EUROLEAGUE BASKETBOL VERİ SİSTEMİ")
+    print("🏀 NBA + EUROLEAGUE BASKETBOL ANALİZİ")
     print("=" * 60)
 
     DATA_DIR.mkdir(
         parents=True,
         exist_ok=True
     )
-
-    # --------------------------------------------------------
-    # VERİLER
-    # --------------------------------------------------------
 
     euroleague = (
         get_euroleague_games()
@@ -1299,7 +1243,7 @@ def main():
     )
 
     # --------------------------------------------------------
-    # DUPLICATE TEMİZLE
+    # DUPLICATE
     # --------------------------------------------------------
 
     unique = {}
@@ -1336,10 +1280,6 @@ def main():
         unique.values()
     )
 
-    # --------------------------------------------------------
-    # TARİH SIRASI
-    # --------------------------------------------------------
-
     matches.sort(
         key=lambda x: date_key(
             x.get("date")
@@ -1355,10 +1295,10 @@ def main():
     )
 
     # --------------------------------------------------------
-    # EKSİKLERİ GÖSTER
+    # TEŞHİS
     # --------------------------------------------------------
 
-    print_missing_matches(
+    diagnose_missing(
         matches
     )
 
@@ -1376,36 +1316,35 @@ def main():
 
     output = {
         "updatedAt": now_iso(),
-
         "total": len(matches),
 
         "nba": sum(
             1
-            for match in matches
-            if match.get("league") == "NBA"
+            for x in matches
+            if x.get("league") == "NBA"
         ),
 
         "nbaFinished": sum(
             1
-            for match in matches
+            for x in matches
             if (
-                match.get("league") == "NBA"
-                and match.get("played")
+                x.get("league") == "NBA"
+                and x.get("played")
             )
         ),
 
         "euroleague": sum(
             1
-            for match in matches
-            if match.get("league") == "EuroLeague"
+            for x in matches
+            if x.get("league") == "EuroLeague"
         ),
 
         "euroleagueFinished": sum(
             1
-            for match in matches
+            for x in matches
             if (
-                match.get("league") == "EuroLeague"
-                and match.get("played")
+                x.get("league") == "EuroLeague"
+                and x.get("played")
             )
         ),
 
@@ -1426,15 +1365,11 @@ def main():
 
     print()
     print("=" * 60)
-    print("✅ VERİ GÜNCELLENDİ")
+    print("✅ VERİ + TEŞHİS TAMAMLANDI")
     print("=" * 60)
 
     print(
         f"📁 {OUTPUT}"
-    )
-
-    print(
-        f"📦 Toplam maç: {len(matches)}"
     )
 
 
