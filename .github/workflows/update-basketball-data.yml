@@ -15,50 +15,26 @@ jobs:
 
     steps:
 
-      # ========================================
-      # REPO
-      # ========================================
-
       - name: 📥 Repo indir
         uses: actions/checkout@v4
-
-      # ========================================
-      # PYTHON
-      # ========================================
 
       - name: 🐍 Python kur
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # ========================================
-      # PAKETLER
-      # ========================================
-
       - name: 📦 Paketleri kur
         run: |
           python -m pip install --upgrade pip
           pip install requests
 
-      # ========================================
-      # BASKETBOL VERİLERİ
-      # ========================================
-
       - name: 🏀 Basketbol verilerini güncelle
         run: |
           python update_basketball_data.py
 
-      # ========================================
-      # TAHMİNLER
-      # ========================================
-
       - name: 🎯 Tahminleri oluştur
         run: |
           python predictions.py
-
-      # ========================================
-      # VERİ KONTROL
-      # ========================================
 
       - name: 🔎 Sonuçları kontrol et
         run: |
@@ -73,65 +49,73 @@ jobs:
           print("🏀 BASKETBOL VERİ KONTROL")
           print("=" * 60)
 
-          if basketball_file.exists():
-              with open(basketball_file, encoding="utf-8") as f:
-                  data = json.load(f)
-
-              print("✅ basketball.json bulundu")
-              print("Toplam maç:", data.get("total"))
-              print("NBA:", data.get("nba"))
-              print("NBA oynanan:", data.get("nbaFinished"))
-              print("EuroLeague:", data.get("euroleague"))
-              print("EuroLeague oynanan:", data.get("euroleagueFinished"))
-          else:
+          if not basketball_file.exists():
               print("❌ basketball.json bulunamadı")
               raise SystemExit(1)
+
+          with open(basketball_file, encoding="utf-8") as f:
+              data = json.load(f)
+
+          print("Toplam maç:", data.get("total"))
+          print("NBA:", data.get("nba"))
+          print("NBA oynanan:", data.get("nbaFinished"))
+          print("EuroLeague:", data.get("euroleague"))
+          print("EuroLeague oynanan:", data.get("euroleagueFinished"))
 
           print()
           print("=" * 60)
           print("🎯 TAHMİN KONTROL")
           print("=" * 60)
 
-          if predictions_file.exists():
-              with open(predictions_file, encoding="utf-8") as f:
-                  predictions = json.load(f)
-
-              items = predictions.get("predictions", [])
-
-              print("✅ predictions.json bulundu")
-              print("Toplam tahmin:", len(items))
-
-              main_predictions = [
-                  x for x in items
-                  if x.get("prediction")
-              ]
-
-              print(
-                  "Ana tahmin sayısı:",
-                  len(main_predictions)
-              )
-
-              print()
-
-              for item in main_predictions[:10]:
-                  print(
-                      f'{item.get("home")} - '
-                      f'{item.get("away")} | '
-                      f'Tahmin: {item.get("prediction")} | '
-                      f'Güven: %{item.get("confidence")}'
-                  )
-
-          else:
+          if not predictions_file.exists():
               print("❌ predictions.json bulunamadı")
               raise SystemExit(1)
+
+          with open(predictions_file, encoding="utf-8") as f:
+              prediction_data = json.load(f)
+
+          predictions = prediction_data.get("predictions", [])
+
+          home_5 = 0
+          away_5 = 0
+          both_5 = 0
+          incomplete = 0
+          main_predictions = 0
+
+          for item in predictions:
+
+              home_sample = len(
+                  item.get("homeLast5", [])
+              )
+
+              away_sample = len(
+                  item.get("awayLast5", [])
+              )
+
+              if home_sample == 5:
+                  home_5 += 1
+
+              if away_sample == 5:
+                  away_5 += 1
+
+              if home_sample == 5 and away_sample == 5:
+                  both_5 += 1
+              else:
+                  incomplete += 1
+
+              if item.get("prediction"):
+                  main_predictions += 1
+
+          print("Toplam gelecek maç:", len(predictions))
+          print("🏠 Ev 5/5:", home_5)
+          print("✈️ Deplasman 5/5:", away_5)
+          print("✅ İki taraf 5/5:", both_5)
+          print("⚠️ Eksik Son 5:", incomplete)
+          print("🎯 Ana tahmin:", main_predictions)
 
           print()
           print("✅ VERİ + TAHMİN KONTROLÜ TAMAM")
           PY
-
-      # ========================================
-      # GIT
-      # ========================================
 
       - name: 💾 Değişiklikleri kaydet
         run: |
