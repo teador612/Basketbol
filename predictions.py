@@ -1,161 +1,86 @@
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
-DATA_FILE = Path("data.json")
-HISTORY_FILE = Path("history.json")
-PREDICTIONS_FILE = Path("predictions.json")
+
+# =========================================================
+# DOSYALAR
+# =========================================================
+
+BASE_DIR = Path(__file__).resolve().parent
+
+DATA_FILE = BASE_DIR / "data" / "basketball.json"
+PREDICTIONS_FILE = BASE_DIR / "predictions.json"
 
 LAST_N = 5
 
 
 # =========================================================
-# YARDIMCI
-# =========================================================
-
-def normalize(name):
-    if not name:
-        return ""
-
-    name = name.lower().strip()
-
-    replacements = {
-        "fenerbahce": "fenerbahçe",
-        "fenerbahçe tarfin": "fenerbahçe beko",
-        "fenerbahce tarfin": "fenerbahçe beko",
-        "fenerbahçe": "fenerbahçe beko",
-
-        "barcelona": "fc barcelona",
-
-        "valencia": "valencia basket",
-
-        "baskonia vitoria-gasteiz": "baskonia",
-
-        "lyon-villeurbanne": "ldlc asvel",
-        "asvel": "ldlc asvel",
-
-        "crvena zvezda": "kızılyıldız",
-        "cr. zvezda": "kızılyıldız",
-
-        "bayern munich": "bayern münih",
-        "bayern münchen": "bayern münih",
-
-        "besiktas": "beşiktaş",
-
-        "zal": "zalgiris kaunas",
-        "zalgiris": "zalgiris kaunas",
-
-        "olympiacos": "olympiakos",
-
-        "real madrid": "real madrid",
-
-        "partizan mozart bet": "partizan",
-        "kk partizan": "partizan",
-
-        "dubai": "dubai basketball",
-
-        "maccabi rapyd tel aviv": "maccabi tel aviv",
-
-        "panathinaikos aktor": "panathinaikos",
-
-        "hapoel tel aviv": "hapoel ibi tel aviv",
-    }
-
-    return replacements.get(name, name)
-
-
-# =========================================================
-# DOSYALARI OKU
+# JSON OKU
 # =========================================================
 
 def load_json(path):
+
     if not path.exists():
-        print(f"❌ {path} bulunamadı")
+        print(f"❌ Dosya bulunamadı: {path}")
         return None
 
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    except Exception as e:
+        print(f"❌ JSON okunamadı: {path}")
+        print(e)
+        return None
 
 
 # =========================================================
-# TAKIMIN SON 5 İÇ SAHA MAÇI
+# SON 5 VERİSİNİ AL
 # =========================================================
 
-def get_home_last5(history, team):
+def get_last5(match, key):
 
-    team = normalize(team)
+    games = match.get(key) or []
 
-    matches = []
+    valid = []
 
-    for match in history:
+    for game in games:
 
-        if normalize(match.get("home")) != team:
+        scored = game.get("scored")
+        conceded = game.get("conceded")
+
+        if scored is None or conceded is None:
             continue
 
-        home_score = match.get("homeScore")
-        away_score = match.get("awayScore")
-
-        if home_score is None or away_score is None:
+        try:
+            scored = float(scored)
+            conceded = float(conceded)
+        except (TypeError, ValueError):
             continue
 
-        matches.append({
-            "date": match.get("date"),
-            "opponent": match.get("away"),
-            "scored": home_score,
-            "conceded": away_score
+        valid.append({
+            "date": game.get("date"),
+            "opponent": game.get("opponent"),
+            "scored": scored,
+            "conceded": conceded
         })
 
-    matches.sort(
-        key=lambda x: x["date"] or "",
+    valid.sort(
+        key=lambda x: x.get("date") or "",
         reverse=True
     )
 
-    return matches[:LAST_N]
-
-
-# =========================================================
-# TAKIMIN SON 5 DEPLASMAN MAÇI
-# =========================================================
-
-def get_away_last5(history, team):
-
-    team = normalize(team)
-
-    matches = []
-
-    for match in history:
-
-        if normalize(match.get("away")) != team:
-            continue
-
-        home_score = match.get("homeScore")
-        away_score = match.get("awayScore")
-
-        if home_score is None or away_score is None:
-            continue
-
-        matches.append({
-            "date": match.get("date"),
-            "opponent": match.get("home"),
-            "scored": away_score,
-            "conceded": home_score
-        })
-
-    matches.sort(
-        key=lambda x: x["date"] or "",
-        reverse=True
-    )
-
-    return matches[:LAST_N]
+    return valid[:LAST_N]
 
 
 # =========================================================
 # ORTALAMA
 # =========================================================
 
-def averages(matches):
+def averages(games):
 
-    if not matches:
+    if not games:
         return {
             "sample": 0,
             "scored": None,
@@ -163,16 +88,16 @@ def averages(matches):
         }
 
     scored = sum(
-        x["scored"]
-        for x in matches
+        game["scored"]
+        for game in games
     )
 
     conceded = sum(
-        x["conceded"]
-        for x in matches
+        game["conceded"]
+        for game in games
     )
 
-    count = len(matches)
+    count = len(games)
 
     return {
         "sample": count,
@@ -187,12 +112,22 @@ def averages(matches):
 
 def calculate_expected(home_avg, away_avg):
 
-    if (
-        home_avg["scored"] is None
-        or home_avg["conceded"] is None
-        or away_avg["scored"] is None
-        or away_avg["conceded"] is None
-    ):
+    if home_avg["sample"] == 0:
+        return None, None
+
+    if away_avg["sample"] == 0:
+        return None, None
+
+    if home_avg["scored"] is None:
+        return None, None
+
+    if home_avg["conceded"] is None:
+        return None, None
+
+    if away_avg["scored"] is None:
+        return None, None
+
+    if away_avg["conceded"] is None:
         return None, None
 
     expected_home = (
@@ -217,29 +152,37 @@ def calculate_expected(home_avg, away_avg):
 # ANA TAHMİN
 # =========================================================
 
-def calculate_prediction(expected_home, expected_away):
+def calculate_prediction(
+    expected_home,
+    expected_away
+):
 
-    if expected_home is None or expected_away is None:
+    if expected_home is None:
+        return None, None
+
+    if expected_away is None:
         return None, None
 
     difference = abs(
         expected_home - expected_away
     )
 
-    # Kazanan taraf
     if expected_home > expected_away:
         prediction = "1"
+
     elif expected_away > expected_home:
         prediction = "2"
+
     else:
         prediction = None
 
-    # Basit güven yüzdesi
-    #
+    if prediction is None:
+        return None, 50.0
+
     # Fark arttıkça güven artar.
-    # 10 sayı veya üzeri fark %90'a yaklaşır.
-    #
-    confidence = 50 + (difference * 4)
+    confidence = 50 + (
+        difference * 4
+    )
 
     confidence = min(
         95,
@@ -255,46 +198,149 @@ def calculate_prediction(expected_home, expected_away):
 
 
 # =========================================================
+# MAÇ TARİHİ
+# =========================================================
+
+def parse_date(value):
+
+    if not value:
+        return None
+
+    try:
+
+        text = str(value).strip()
+
+        if text.endswith("Z"):
+            text = (
+                text[:-1]
+                + "+00:00"
+            )
+
+        dt = datetime.fromisoformat(text)
+
+        if dt.tzinfo is None:
+            dt = dt.replace(
+                tzinfo=timezone.utc
+            )
+        else:
+            dt = dt.astimezone(
+                timezone.utc
+            )
+
+        return dt
+
+    except Exception:
+        return None
+
+
+# =========================================================
+# GELECEK MAÇ FİLTRESİ
+# =========================================================
+
+def is_upcoming(match):
+
+    if match.get("played"):
+        return False
+
+    match_date = parse_date(
+        match.get("date")
+    )
+
+    if match_date is None:
+        return True
+
+    return match_date >= datetime.now(
+        timezone.utc
+    )
+
+
+# =========================================================
 # ANA
 # =========================================================
 
 def main():
 
-    print("=" * 65)
-    print("🏀 EUROLEAGUE TAHMİN MOTORU")
-    print("=" * 65)
+    print("=" * 70)
+    print("🏀 NBA + EUROLEAGUE TAHMİN MOTORU")
+    print("=" * 70)
 
-    data = load_json(DATA_FILE)
-    history_data = load_json(HISTORY_FILE)
+    data = load_json(
+        DATA_FILE
+    )
 
-    if not data or not history_data:
+    if not data:
         return
 
-    fixtures = data.get("matches", [])
-    history = history_data.get("matches", [])
+    matches = data.get(
+        "matches",
+        []
+    )
 
-    print(f"\n📅 Gelecek/güncel maç: {len(fixtures)}")
-    print(f"📚 Geçmiş maç: {len(history)}")
+    print()
+    print(
+        f"📦 Toplam veri: {len(matches)}"
+    )
+
+    # -----------------------------------------------------
+    # SADECE OYNANMAMIŞ MAÇLAR
+    # -----------------------------------------------------
+
+    fixtures = [
+        match
+        for match in matches
+        if is_upcoming(match)
+    ]
+
+    fixtures.sort(
+        key=lambda match:
+        parse_date(
+            match.get("date")
+        ) or datetime.max.replace(
+            tzinfo=timezone.utc
+        )
+    )
+
+    print(
+        f"📅 Güncel/gelecek maç: "
+        f"{len(fixtures)}"
+    )
 
     predictions = []
 
+    # =====================================================
+    # MAÇLAR
+    # =====================================================
+
     for match in fixtures:
 
-        home = match.get("home")
-        away = match.get("away")
+        home = match.get(
+            "homeTeam"
+        )
+
+        away = match.get(
+            "awayTeam"
+        )
 
         if not home or not away:
             continue
 
-        home_last5 = get_home_last5(
-            history,
-            home
+        # -------------------------------------------------
+        # SON 5
+        # -------------------------------------------------
+
+        home_last5 = get_last5(
+            match,
+            "homeLast5"
         )
 
-        away_last5 = get_away_last5(
-            history,
-            away
+        away_last5 = get_last5(
+            match,
+            "awayLast5"
         )
+
+        # -------------------------------------------------
+        # ORTALAMA
+        # -------------------------------------------------
 
         home_avg = averages(
             home_last5
@@ -304,143 +350,213 @@ def main():
             away_last5
         )
 
-        expected_home, expected_away = calculate_expected(
-            home_avg,
-            away_avg
+        # -------------------------------------------------
+        # BEKLENEN SKOR
+        # -------------------------------------------------
+
+        expected_home, expected_away = (
+            calculate_expected(
+                home_avg,
+                away_avg
+            )
         )
 
-        prediction, confidence = calculate_prediction(
-            expected_home,
-            expected_away
+        # -------------------------------------------------
+        # TAHMİN
+        # -------------------------------------------------
+
+        prediction, confidence = (
+            calculate_prediction(
+                expected_home,
+                expected_away
+            )
         )
+
+        # -------------------------------------------------
+        # KAYIT
+        # -------------------------------------------------
 
         record = {
+
             "id": match.get("id"),
 
-            "date": match.get("date"),
-            "time": match.get("time"),
+            "league": match.get(
+                "league"
+            ),
+
+            "date": match.get(
+                "date"
+            ),
 
             "home": home,
+
             "away": away,
 
-            "home_last5_home": home_last5,
-            "away_last5_away": away_last5,
+            "homeLast5": home_last5,
 
-            "home_average": home_avg,
-            "away_average": away_avg,
+            "awayLast5": away_last5,
 
-            "expected_score": {
+            "homeAverage": home_avg,
+
+            "awayAverage": away_avg,
+
+            "expectedScore": {
                 "home": expected_home,
                 "away": expected_away
             },
 
             "prediction": prediction,
+
             "confidence": confidence,
 
             "result": None,
+
             "correct": None
         }
 
-        predictions.append(record)
+        predictions.append(
+            record
+        )
 
-        # -------------------------------------------------
-        # EKRANA YAZ
-        # -------------------------------------------------
+        # =================================================
+        # EKRAN
+        # =================================================
 
-        print("\n" + "-" * 65)
+        print()
+        print("-" * 70)
 
         print(
             f"🏀 {home} - {away}"
         )
 
         print(
-            f"\n🏠 {home} SON 5 İÇ SAHA"
+            f"📅 {match.get('date')}"
+        )
+
+        print()
+        print(
+            f"🏠 {home} SON 5 İÇ SAHA "
+            f"({home_avg['sample']}/5)"
         )
 
         for game in home_last5:
+
             print(
-                f"   {game['date']} | "
-                f"{game['scored']}-{game['conceded']} | "
-                f"{game['opponent']}"
+                f"   {game.get('date')} | "
+                f"{game.get('scored')}-"
+                f"{game.get('conceded')} | "
+                f"{game.get('opponent')}"
             )
 
         print(
-            f"   Attı: {home_avg['scored']}"
+            f"   Attı : {home_avg['scored']}"
         )
 
         print(
-            f"   Yedi: {home_avg['conceded']}"
+            f"   Yedi : {home_avg['conceded']}"
         )
 
+        print()
+
         print(
-            f"\n✈️ {away} SON 5 DEPLASMAN"
+            f"✈️ {away} SON 5 DEPLASMAN "
+            f"({away_avg['sample']}/5)"
         )
 
         for game in away_last5:
+
             print(
-                f"   {game['date']} | "
-                f"{game['scored']}-{game['conceded']} | "
-                f"{game['opponent']}"
+                f"   {game.get('date')} | "
+                f"{game.get('scored')}-"
+                f"{game.get('conceded')} | "
+                f"{game.get('opponent')}"
             )
 
         print(
-            f"   Attı: {away_avg['scored']}"
+            f"   Attı : {away_avg['scored']}"
         )
 
         print(
-            f"   Yedi: {away_avg['conceded']}"
+            f"   Yedi : {away_avg['conceded']}"
+        )
+
+        print()
+
+        print("📊 BEKLENEN SAYI")
+
+        print(
+            f"   {home}: "
+            f"{expected_home}"
         )
 
         print(
-            f"\n📊 Beklenen sayı:"
-        )
-
-        print(
-            f"   {home}: {expected_home}"
-        )
-
-        print(
-            f"   {away}: {expected_away}"
+            f"   {away}: "
+            f"{expected_away}"
         )
 
         if prediction:
 
+            print()
+
             print(
-                f"\n🎯 ANA TAHMİN: {prediction}"
+                f"🎯 ANA TAHMİN: "
+                f"{prediction}"
             )
 
             print(
-                f"📈 Güven: %{confidence}"
+                f"📈 GÜVEN: "
+                f"%{confidence}"
             )
 
         else:
 
+            print()
             print(
-                "\n⚠️ Tahmin üretilemedi"
+                "⚠️ Tahmin üretilemedi"
             )
 
     # =====================================================
-    # KAYDET
+    # JSON
     # =====================================================
 
     output = {
-        "source": "history.json",
-        "updatedAt": datetime.utcnow().isoformat() + "Z",
+
+        "source":
+            "data/basketball.json",
+
+        "updatedAt":
+            datetime.now(
+                timezone.utc
+            ).isoformat(),
+
         "method": {
-            "homeSample": "Son 5 iç saha",
-            "awaySample": "Son 5 deplasman",
+
+            "homeSample":
+                "basketball.json homeLast5",
+
+            "awaySample":
+                "basketball.json awayLast5",
 
             "expectedHome":
-                "(Ev iç saha attığı + Deplasman deplasman yediği) / 2",
+                "(Ev iç saha attığı + "
+                "Deplasman deplasman yediği) / 2",
 
             "expectedAway":
-                "(Deplasman deplasman attığı + Ev iç saha yediği) / 2",
+                "(Deplasman deplasman attığı + "
+                "Ev iç saha yediği) / 2",
 
             "prediction":
-                "Beklenen sayı yüksek olan takım"
+                "Beklenen sayı yüksek olan takım",
+
+            "confidence":
+                "50 + fark x 4, maksimum %95"
         },
 
-        "predictions": predictions
+        "total":
+            len(predictions),
+
+        "predictions":
+            predictions
     }
 
     with open(
@@ -456,16 +572,23 @@ def main():
             indent=2
         )
 
-    print("\n" + "=" * 65)
+    # =====================================================
+    # SONUÇ
+    # =====================================================
+
+    print()
+    print("=" * 70)
     print("✅ TAHMİNLER OLUŞTURULDU")
-    print("=" * 65)
+    print("=" * 70)
 
     print(
-        f"🎯 Toplam tahmin: {len(predictions)}"
+        f"🎯 Toplam tahmin: "
+        f"{len(predictions)}"
     )
 
     print(
-        f"💾 {PREDICTIONS_FILE}"
+        f"💾 Dosya: "
+        f"{PREDICTIONS_FILE}"
     )
 
 
