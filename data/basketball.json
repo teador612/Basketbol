@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-06T14:10:25.912257+00:00",
-  "total": 2361,
-  "nba": 1579,
-  "nbaFinished": 1397,
+  "updatedAt": "2026-10-06T15:33:39.563456+00:00",
+  "total": 2373,
+  "nba": 1591,
+  "nbaFinished": 1409,
   "euroleague": 782,
   "euroleagueFinished": 432,
   "matches": [
@@ -106591,6 +106591,942 @@
       ]
     },
     {
+      "id": "401810906",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-25T23:00Z",
+      "utcDate": "2026-03-25T23:00Z",
+      "round": null,
+      "homeTeam": "Detroit Pistons",
+      "awayTeam": "Atlanta Hawks",
+      "homeScore": 129,
+      "awayScore": 130,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-23T23:00Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 113,
+          "conceded": 110
+        },
+        {
+          "date": "2026-03-20T23:30Z",
+          "opponent": "Golden State Warriors",
+          "scored": 115,
+          "conceded": 101
+        },
+        {
+          "date": "2026-03-13T23:30Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 126,
+          "conceded": 110
+        },
+        {
+          "date": "2026-03-12T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 131,
+          "conceded": 109
+        },
+        {
+          "date": "2026-03-07T23:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 105,
+          "conceded": 107
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-21T00:00Z",
+          "opponent": "Houston Rockets",
+          "scored": 95,
+          "conceded": 117
+        },
+        {
+          "date": "2026-03-19T00:30Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 135,
+          "conceded": 120
+        },
+        {
+          "date": "2026-03-05T02:30Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 131,
+          "conceded": 113
+        },
+        {
+          "date": "2026-02-20T00:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 117,
+          "conceded": 107
+        },
+        {
+          "date": "2026-02-12T00:00Z",
+          "opponent": "Charlotte Hornets",
+          "scored": 107,
+          "conceded": 110
+        }
+      ]
+    },
+    {
+      "id": "401810907",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-25T23:00Z",
+      "utcDate": "2026-03-25T23:00Z",
+      "round": null,
+      "homeTeam": "Indiana Pacers",
+      "awayTeam": "Los Angeles Lakers",
+      "homeScore": 130,
+      "awayScore": 137,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-18T23:30Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 119,
+          "conceded": 127
+        },
+        {
+          "date": "2026-03-13T23:30Z",
+          "opponent": "New York Knicks",
+          "scored": 92,
+          "conceded": 101
+        },
+        {
+          "date": "2026-03-12T23:00Z",
+          "opponent": "Phoenix Suns",
+          "scored": 108,
+          "conceded": 123
+        },
+        {
+          "date": "2026-03-01T22:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 106,
+          "conceded": 125
+        },
+        {
+          "date": "2026-02-27T00:00Z",
+          "opponent": "Charlotte Hornets",
+          "scored": 109,
+          "conceded": 133
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-23T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 110,
+          "conceded": 113
+        },
+        {
+          "date": "2026-03-21T23:00Z",
+          "opponent": "Orlando Magic",
+          "scored": 105,
+          "conceded": 104
+        },
+        {
+          "date": "2026-03-20T00:00Z",
+          "opponent": "Miami Heat",
+          "scored": 134,
+          "conceded": 126
+        },
+        {
+          "date": "2026-03-19T01:30Z",
+          "opponent": "Houston Rockets",
+          "scored": 124,
+          "conceded": 116
+        },
+        {
+          "date": "2026-03-17T01:30Z",
+          "opponent": "Houston Rockets",
+          "scored": 100,
+          "conceded": 92
+        }
+      ]
+    },
+    {
+      "id": "401810908",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-25T23:00Z",
+      "utcDate": "2026-03-25T23:00Z",
+      "round": null,
+      "homeTeam": "Philadelphia 76ers",
+      "awayTeam": "Chicago Bulls",
+      "homeScore": 157,
+      "awayScore": 137,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-23T23:00Z",
+          "opponent": "Oklahoma City Thunder",
+          "scored": 103,
+          "conceded": 123
+        },
+        {
+          "date": "2026-03-15T22:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 109,
+          "conceded": 103
+        },
+        {
+          "date": "2026-03-14T17:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 104,
+          "conceded": 97
+        },
+        {
+          "date": "2026-03-10T23:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 139,
+          "conceded": 129
+        },
+        {
+          "date": "2026-03-05T00:30Z",
+          "opponent": "Utah Jazz",
+          "scored": 106,
+          "conceded": 102
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-14T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 108,
+          "conceded": 119
+        },
+        {
+          "date": "2026-03-13T02:30Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 130,
+          "conceded": 142
+        },
+        {
+          "date": "2026-03-11T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 130,
+          "conceded": 124
+        },
+        {
+          "date": "2026-03-09T01:00Z",
+          "opponent": "Sacramento Kings",
+          "scored": 110,
+          "conceded": 126
+        },
+        {
+          "date": "2026-03-06T02:00Z",
+          "opponent": "Phoenix Suns",
+          "scored": 105,
+          "conceded": 103
+        }
+      ]
+    },
+    {
+      "id": "401810909",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-25T23:30Z",
+      "utcDate": "2026-03-25T23:30Z",
+      "round": null,
+      "homeTeam": "Boston Celtics",
+      "awayTeam": "Oklahoma City Thunder",
+      "homeScore": 119,
+      "awayScore": 109,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-23T00:00Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 92,
+          "conceded": 102
+        },
+        {
+          "date": "2026-03-18T23:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 120,
+          "conceded": 99
+        },
+        {
+          "date": "2026-03-16T23:30Z",
+          "opponent": "Phoenix Suns",
+          "scored": 120,
+          "conceded": 112
+        },
+        {
+          "date": "2026-03-14T22:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 111,
+          "conceded": 100
+        },
+        {
+          "date": "2026-03-07T00:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 120,
+          "conceded": 100
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-23T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 123,
+          "conceded": 103
+        },
+        {
+          "date": "2026-03-21T21:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 132,
+          "conceded": 111
+        },
+        {
+          "date": "2026-03-18T23:30Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 121,
+          "conceded": 92
+        },
+        {
+          "date": "2026-03-17T23:00Z",
+          "opponent": "Orlando Magic",
+          "scored": 113,
+          "conceded": 108
+        },
+        {
+          "date": "2026-03-05T00:00Z",
+          "opponent": "New York Knicks",
+          "scored": 103,
+          "conceded": 100
+        }
+      ]
+    },
+    {
+      "id": "401810910",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-25T23:30Z",
+      "utcDate": "2026-03-25T23:30Z",
+      "round": null,
+      "homeTeam": "Cleveland Cavaliers",
+      "awayTeam": "Miami Heat",
+      "homeScore": 103,
+      "awayScore": 120,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-25T00:00Z",
+          "opponent": "Orlando Magic",
+          "scored": 136,
+          "conceded": 131
+        },
+        {
+          "date": "2026-03-15T19:30Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 120,
+          "conceded": 130
+        },
+        {
+          "date": "2026-03-09T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 115,
+          "conceded": 101
+        },
+        {
+          "date": "2026-03-08T17:00Z",
+          "opponent": "Boston Celtics",
+          "scored": 98,
+          "conceded": 109
+        },
+        {
+          "date": "2026-03-04T00:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 113,
+          "conceded": 109
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-22T00:00Z",
+          "opponent": "Houston Rockets",
+          "scored": 122,
+          "conceded": 123
+        },
+        {
+          "date": "2026-03-17T23:00Z",
+          "opponent": "Charlotte Hornets",
+          "scored": 106,
+          "conceded": 136
+        },
+        {
+          "date": "2026-03-07T00:00Z",
+          "opponent": "Charlotte Hornets",
+          "scored": 128,
+          "conceded": 120
+        },
+        {
+          "date": "2026-02-27T00:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 117,
+          "conceded": 124
+        },
+        {
+          "date": "2026-02-25T01:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 117,
+          "conceded": 128
+        }
+      ]
+    },
+    {
+      "id": "401810911",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T00:00Z",
+      "utcDate": "2026-03-26T00:00Z",
+      "round": null,
+      "homeTeam": "Memphis Grizzlies",
+      "awayTeam": "San Antonio Spurs",
+      "homeScore": 98,
+      "awayScore": 123,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-21T00:00Z",
+          "opponent": "Boston Celtics",
+          "scored": 112,
+          "conceded": 117
+        },
+        {
+          "date": "2026-03-19T00:30Z",
+          "opponent": "Denver Nuggets",
+          "scored": 125,
+          "conceded": 118
+        },
+        {
+          "date": "2026-03-13T00:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 112,
+          "conceded": 120
+        },
+        {
+          "date": "2026-03-08T01:00Z",
+          "opponent": "LA Clippers",
+          "scored": 120,
+          "conceded": 123
+        },
+        {
+          "date": "2026-03-05T01:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 114,
+          "conceded": 122
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-23T23:00Z",
+          "opponent": "Miami Heat",
+          "scored": 136,
+          "conceded": 111
+        },
+        {
+          "date": "2026-03-18T02:00Z",
+          "opponent": "Sacramento Kings",
+          "scored": 132,
+          "conceded": 104
+        },
+        {
+          "date": "2026-03-17T02:00Z",
+          "opponent": "LA Clippers",
+          "scored": 119,
+          "conceded": 115
+        },
+        {
+          "date": "2026-03-04T01:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 131,
+          "conceded": 91
+        },
+        {
+          "date": "2026-03-01T18:00Z",
+          "opponent": "New York Knicks",
+          "scored": 89,
+          "conceded": 114
+        }
+      ]
+    },
+    {
+      "id": "401810912",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T01:00Z",
+      "utcDate": "2026-03-26T01:00Z",
+      "round": null,
+      "homeTeam": "Utah Jazz",
+      "awayTeam": "Washington Wizards",
+      "homeScore": 110,
+      "awayScore": 133,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-24T01:00Z",
+          "opponent": "Toronto Raptors",
+          "scored": 127,
+          "conceded": 143
+        },
+        {
+          "date": "2026-03-22T01:30Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 116,
+          "conceded": 126
+        },
+        {
+          "date": "2026-03-20T01:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 128,
+          "conceded": 96
+        },
+        {
+          "date": "2026-03-12T01:00Z",
+          "opponent": "New York Knicks",
+          "scored": 117,
+          "conceded": 134
+        },
+        {
+          "date": "2026-03-10T01:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 119,
+          "conceded": 116
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-22T23:30Z",
+          "opponent": "New York Knicks",
+          "scored": 113,
+          "conceded": 145
+        },
+        {
+          "date": "2026-03-14T22:00Z",
+          "opponent": "Boston Celtics",
+          "scored": 100,
+          "conceded": 111
+        },
+        {
+          "date": "2026-03-12T23:00Z",
+          "opponent": "Orlando Magic",
+          "scored": 131,
+          "conceded": 136
+        },
+        {
+          "date": "2026-03-10T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 129,
+          "conceded": 150
+        },
+        {
+          "date": "2026-03-08T23:00Z",
+          "opponent": "New Orleans Pelicans",
+          "scored": 118,
+          "conceded": 138
+        }
+      ]
+    },
+    {
+      "id": "401810913",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T01:42Z",
+      "utcDate": "2026-03-26T01:42Z",
+      "round": null,
+      "homeTeam": "Minnesota Timberwolves",
+      "awayTeam": "Houston Rockets",
+      "homeScore": 110,
+      "awayScore": 108,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-21T00:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 104,
+          "conceded": 108
+        },
+        {
+          "date": "2026-03-19T00:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 147,
+          "conceded": 111
+        },
+        {
+          "date": "2026-03-18T00:00Z",
+          "opponent": "Phoenix Suns",
+          "scored": 116,
+          "conceded": 104
+        },
+        {
+          "date": "2026-03-07T20:00Z",
+          "opponent": "Orlando Magic",
+          "scored": 92,
+          "conceded": 119
+        },
+        {
+          "date": "2026-03-06T01:00Z",
+          "opponent": "Toronto Raptors",
+          "scored": 115,
+          "conceded": 107
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-24T00:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 124,
+          "conceded": 132
+        },
+        {
+          "date": "2026-03-12T02:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 93,
+          "conceded": 129
+        },
+        {
+          "date": "2026-03-09T00:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 120,
+          "conceded": 145
+        },
+        {
+          "date": "2026-03-03T00:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 123,
+          "conceded": 118
+        },
+        {
+          "date": "2026-02-28T20:30Z",
+          "opponent": "Miami Heat",
+          "scored": 105,
+          "conceded": 115
+        }
+      ]
+    },
+    {
+      "id": "401810914",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T02:00Z",
+      "utcDate": "2026-03-26T02:00Z",
+      "round": null,
+      "homeTeam": "Denver Nuggets",
+      "awayTeam": "Dallas Mavericks",
+      "homeScore": 142,
+      "awayScore": 135,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-22T21:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 128,
+          "conceded": 112
+        },
+        {
+          "date": "2026-03-21T01:00Z",
+          "opponent": "Toronto Raptors",
+          "scored": 121,
+          "conceded": 115
+        },
+        {
+          "date": "2026-03-18T02:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 124,
+          "conceded": 96
+        },
+        {
+          "date": "2026-03-12T02:00Z",
+          "opponent": "Houston Rockets",
+          "scored": 129,
+          "conceded": 93
+        },
+        {
+          "date": "2026-03-07T02:00Z",
+          "opponent": "New York Knicks",
+          "scored": 103,
+          "conceded": 142
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-17T00:00Z",
+          "opponent": "New Orleans Pelicans",
+          "scored": 111,
+          "conceded": 129
+        },
+        {
+          "date": "2026-03-15T19:30Z",
+          "opponent": "Cleveland Cavaliers",
+          "scored": 130,
+          "conceded": 120
+        },
+        {
+          "date": "2026-03-13T00:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 120,
+          "conceded": 112
+        },
+        {
+          "date": "2026-03-10T23:30Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 112,
+          "conceded": 124
+        },
+        {
+          "date": "2026-03-08T22:00Z",
+          "opponent": "Toronto Raptors",
+          "scored": 92,
+          "conceded": 122
+        }
+      ]
+    },
+    {
+      "id": "401810915",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T02:00Z",
+      "utcDate": "2026-03-26T02:00Z",
+      "round": null,
+      "homeTeam": "Golden State Warriors",
+      "awayTeam": "Brooklyn Nets",
+      "homeScore": 109,
+      "awayScore": 106,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-14T02:00Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 117,
+          "conceded": 127
+        },
+        {
+          "date": "2026-03-11T02:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 124,
+          "conceded": 130
+        },
+        {
+          "date": "2026-03-03T03:00Z",
+          "opponent": "LA Clippers",
+          "scored": 101,
+          "conceded": 114
+        },
+        {
+          "date": "2026-03-01T01:30Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 101,
+          "conceded": 129
+        },
+        {
+          "date": "2026-02-22T20:30Z",
+          "opponent": "Denver Nuggets",
+          "scored": 128,
+          "conceded": 117
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-24T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 134
+        },
+        {
+          "date": "2026-03-22T22:00Z",
+          "opponent": "Sacramento Kings",
+          "scored": 122,
+          "conceded": 126
+        },
+        {
+          "date": "2026-03-14T17:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 97,
+          "conceded": 104
+        },
+        {
+          "date": "2026-03-12T23:30Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 97,
+          "conceded": 108
+        },
+        {
+          "date": "2026-03-07T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 107,
+          "conceded": 105
+        }
+      ]
+    },
+    {
+      "id": "401810916",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T02:00Z",
+      "utcDate": "2026-03-26T02:00Z",
+      "round": null,
+      "homeTeam": "Portland Trail Blazers",
+      "awayTeam": "Milwaukee Bucks",
+      "homeScore": 130,
+      "awayScore": 99,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-24T02:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 134,
+          "conceded": 99
+        },
+        {
+          "date": "2026-03-14T02:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 124,
+          "conceded": 114
+        },
+        {
+          "date": "2026-03-11T02:00Z",
+          "opponent": "Charlotte Hornets",
+          "scored": 101,
+          "conceded": 103
+        },
+        {
+          "date": "2026-03-09T01:00Z",
+          "opponent": "Indiana Pacers",
+          "scored": 131,
+          "conceded": 111
+        },
+        {
+          "date": "2026-02-25T03:00Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 121,
+          "conceded": 124
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-24T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 96,
+          "conceded": 129
+        },
+        {
+          "date": "2026-03-22T02:00Z",
+          "opponent": "Phoenix Suns",
+          "scored": 108,
+          "conceded": 105
+        },
+        {
+          "date": "2026-03-20T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 96,
+          "conceded": 128
+        },
+        {
+          "date": "2026-03-14T19:00Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 99,
+          "conceded": 122
+        },
+        {
+          "date": "2026-03-12T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 105,
+          "conceded": 112
+        }
+      ]
+    },
+    {
+      "id": "401810917",
+      "league": "NBA",
+      "season": "2026-27",
+      "date": "2026-03-26T02:30Z",
+      "utcDate": "2026-03-26T02:30Z",
+      "round": null,
+      "homeTeam": "LA Clippers",
+      "awayTeam": "Toronto Raptors",
+      "homeScore": 119,
+      "awayScore": 94,
+      "played": true,
+      "status": "finished",
+      "homeLast5": [
+        {
+          "date": "2026-03-24T02:30Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 129,
+          "conceded": 96
+        },
+        {
+          "date": "2026-03-17T02:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 115,
+          "conceded": 119
+        },
+        {
+          "date": "2026-03-15T02:30Z",
+          "opponent": "Sacramento Kings",
+          "scored": 109,
+          "conceded": 118
+        },
+        {
+          "date": "2026-03-14T02:30Z",
+          "opponent": "Chicago Bulls",
+          "scored": 119,
+          "conceded": 108
+        },
+        {
+          "date": "2026-03-12T02:30Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 153,
+          "conceded": 128
+        }
+      ],
+      "awayLast5": [
+        {
+          "date": "2026-03-24T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 143,
+          "conceded": 127
+        },
+        {
+          "date": "2026-03-23T01:00Z",
+          "opponent": "Phoenix Suns",
+          "scored": 98,
+          "conceded": 120
+        },
+        {
+          "date": "2026-03-21T01:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 115,
+          "conceded": 121
+        },
+        {
+          "date": "2026-03-19T00:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 139,
+          "conceded": 109
+        },
+        {
+          "date": "2026-03-12T00:00Z",
+          "opponent": "New Orleans Pelicans",
+          "scored": 111,
+          "conceded": 122
+        }
+      ]
+    },
+    {
       "id": "ec69cc61-ca3a-434c-ae1c-6aeba747f540",
       "league": "EuroLeague",
       "season": "E2025",
@@ -106995,6 +107931,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 129,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Los Angeles Lakers",
           "scored": 113,
@@ -107017,12 +107959,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 131,
           "conceded": 109
-        },
-        {
-          "date": "2026-03-07T23:00Z",
-          "opponent": "Brooklyn Nets",
-          "scored": 105,
-          "conceded": 107
         }
       ],
       "awayLast5": [
@@ -107541,6 +108477,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 130,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-18T23:30Z",
           "opponent": "Portland Trail Blazers",
           "scored": 119,
@@ -107563,12 +108505,6 @@
           "opponent": "Memphis Grizzlies",
           "scored": 106,
           "conceded": 125
-        },
-        {
-          "date": "2026-02-27T00:00Z",
-          "opponent": "Charlotte Hornets",
-          "scored": 109,
-          "conceded": 133
         }
       ],
       "awayLast5": [
@@ -107619,6 +108555,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Oklahoma City Thunder",
+          "scored": 119,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-23T00:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 92,
@@ -107641,15 +108583,15 @@
           "opponent": "Washington Wizards",
           "scored": 111,
           "conceded": 100
-        },
-        {
-          "date": "2026-03-07T00:00Z",
-          "opponent": "Dallas Mavericks",
-          "scored": 120,
-          "conceded": 100
         }
       ],
       "awayLast5": [
+        {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 130,
+          "conceded": 129
+        },
         {
           "date": "2026-03-21T00:00Z",
           "opponent": "Houston Rockets",
@@ -107673,12 +108615,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 117,
           "conceded": 107
-        },
-        {
-          "date": "2026-02-12T00:00Z",
-          "opponent": "Charlotte Hornets",
-          "scored": 107,
-          "conceded": 110
         }
       ]
     },
@@ -107696,6 +108632,12 @@
       "played": true,
       "status": "finished",
       "homeLast5": [
+        {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 103,
+          "conceded": 120
+        },
         {
           "date": "2026-03-25T00:00Z",
           "opponent": "Orlando Magic",
@@ -107719,15 +108661,15 @@
           "opponent": "Boston Celtics",
           "scored": 98,
           "conceded": 109
-        },
-        {
-          "date": "2026-03-04T00:00Z",
-          "opponent": "Detroit Pistons",
-          "scored": 113,
-          "conceded": 109
         }
       ],
       "awayLast5": [
+        {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Cleveland Cavaliers",
+          "scored": 120,
+          "conceded": 103
+        },
         {
           "date": "2026-03-22T00:00Z",
           "opponent": "Houston Rockets",
@@ -107751,12 +108693,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 117,
           "conceded": 124
-        },
-        {
-          "date": "2026-02-25T01:00Z",
-          "opponent": "Milwaukee Bucks",
-          "scored": 117,
-          "conceded": 128
         }
       ]
     },
@@ -107774,6 +108710,12 @@
       "played": true,
       "status": "finished",
       "homeLast5": [
+        {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 98,
+          "conceded": 123
+        },
         {
           "date": "2026-03-21T00:00Z",
           "opponent": "Boston Celtics",
@@ -107797,15 +108739,15 @@
           "opponent": "LA Clippers",
           "scored": 120,
           "conceded": 123
-        },
-        {
-          "date": "2026-03-05T01:00Z",
-          "opponent": "Portland Trail Blazers",
-          "scored": 114,
-          "conceded": 122
         }
       ],
       "awayLast5": [
+        {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 108,
+          "conceded": 110
+        },
         {
           "date": "2026-03-24T00:00Z",
           "opponent": "Chicago Bulls",
@@ -107829,12 +108771,6 @@
           "opponent": "Washington Wizards",
           "scored": 123,
           "conceded": 118
-        },
-        {
-          "date": "2026-02-28T20:30Z",
-          "opponent": "Miami Heat",
-          "scored": 105,
-          "conceded": 115
         }
       ]
     },
@@ -107885,6 +108821,12 @@
       ],
       "awayLast5": [
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 137,
+          "conceded": 157
+        },
+        {
           "date": "2026-03-14T02:30Z",
           "opponent": "LA Clippers",
           "scored": 108,
@@ -107907,12 +108849,6 @@
           "opponent": "Sacramento Kings",
           "scored": 110,
           "conceded": 126
-        },
-        {
-          "date": "2026-03-06T02:00Z",
-          "opponent": "Phoenix Suns",
-          "scored": 105,
-          "conceded": 103
         }
       ]
     },
@@ -108009,6 +108945,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 142,
+          "conceded": 135
+        },
+        {
           "date": "2026-03-22T21:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 128,
@@ -108031,12 +108973,6 @@
           "opponent": "Houston Rockets",
           "scored": 129,
           "conceded": 93
-        },
-        {
-          "date": "2026-03-07T02:00Z",
-          "opponent": "New York Knicks",
-          "scored": 103,
-          "conceded": 142
         }
       ],
       "awayLast5": [
@@ -108087,6 +109023,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 109,
+          "conceded": 106
+        },
+        {
           "date": "2026-03-14T02:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 117,
@@ -108109,15 +109051,15 @@
           "opponent": "Los Angeles Lakers",
           "scored": 101,
           "conceded": 129
-        },
-        {
-          "date": "2026-02-22T20:30Z",
-          "opponent": "Denver Nuggets",
-          "scored": 128,
-          "conceded": 117
         }
       ],
       "awayLast5": [
+        {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 133,
+          "conceded": 110
+        },
         {
           "date": "2026-03-22T23:30Z",
           "opponent": "New York Knicks",
@@ -108141,12 +109083,6 @@
           "opponent": "Miami Heat",
           "scored": 129,
           "conceded": 150
-        },
-        {
-          "date": "2026-03-08T23:00Z",
-          "opponent": "New Orleans Pelicans",
-          "scored": 118,
-          "conceded": 138
         }
       ]
     },
@@ -108164,6 +109100,12 @@
       "played": true,
       "status": "finished",
       "homeLast5": [
+        {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 130,
+          "conceded": 99
+        },
         {
           "date": "2026-03-24T02:00Z",
           "opponent": "Brooklyn Nets",
@@ -108187,15 +109129,15 @@
           "opponent": "Indiana Pacers",
           "scored": 131,
           "conceded": 111
-        },
-        {
-          "date": "2026-02-25T03:00Z",
-          "opponent": "Minnesota Timberwolves",
-          "scored": 121,
-          "conceded": 124
         }
       ],
       "awayLast5": [
+        {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 135,
+          "conceded": 142
+        },
         {
           "date": "2026-03-17T00:00Z",
           "opponent": "New Orleans Pelicans",
@@ -108219,12 +109161,6 @@
           "opponent": "Atlanta Hawks",
           "scored": 112,
           "conceded": 124
-        },
-        {
-          "date": "2026-03-08T22:00Z",
-          "opponent": "Toronto Raptors",
-          "scored": 92,
-          "conceded": 122
         }
       ]
     },
@@ -108275,6 +109211,12 @@
       ],
       "awayLast5": [
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
@@ -108297,12 +109239,6 @@
           "opponent": "Atlanta Hawks",
           "scored": 97,
           "conceded": 108
-        },
-        {
-          "date": "2026-03-07T23:00Z",
-          "opponent": "Detroit Pistons",
-          "scored": 107,
-          "conceded": 105
         }
       ]
     },
@@ -108353,6 +109289,12 @@
       ],
       "awayLast5": [
         {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 123,
+          "conceded": 98
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Miami Heat",
           "scored": 136,
@@ -108375,12 +109317,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 131,
           "conceded": 91
-        },
-        {
-          "date": "2026-03-01T18:00Z",
-          "opponent": "New York Knicks",
-          "scored": 89,
-          "conceded": 114
         }
       ]
     },
@@ -108398,6 +109334,12 @@
       "played": true,
       "status": "finished",
       "homeLast5": [
+        {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Houston Rockets",
+          "scored": 110,
+          "conceded": 108
+        },
         {
           "date": "2026-03-21T00:00Z",
           "opponent": "Portland Trail Blazers",
@@ -108421,12 +109363,6 @@
           "opponent": "Orlando Magic",
           "scored": 92,
           "conceded": 119
-        },
-        {
-          "date": "2026-03-06T01:00Z",
-          "opponent": "Toronto Raptors",
-          "scored": 115,
-          "conceded": 107
         }
       ],
       "awayLast5": [
@@ -108639,6 +109575,12 @@
           "conceded": 119
         },
         {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 98,
+          "conceded": 123
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Boston Celtics",
           "scored": 112,
@@ -108655,12 +109597,6 @@
           "opponent": "Dallas Mavericks",
           "scored": 112,
           "conceded": 120
-        },
-        {
-          "date": "2026-03-08T01:00Z",
-          "opponent": "LA Clippers",
-          "scored": 120,
-          "conceded": 123
         }
       ],
       "awayLast5": [
@@ -108669,6 +109605,12 @@
           "opponent": "Oklahoma City Thunder",
           "scored": 113,
           "conceded": 131
+        },
+        {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 137,
+          "conceded": 157
         },
         {
           "date": "2026-03-14T02:30Z",
@@ -108687,12 +109629,6 @@
           "opponent": "Golden State Warriors",
           "scored": 130,
           "conceded": 124
-        },
-        {
-          "date": "2026-03-09T01:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 110,
-          "conceded": 126
         }
       ]
     },
@@ -108873,6 +109809,12 @@
           "conceded": 114
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 130,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-18T23:30Z",
           "opponent": "Portland Trail Blazers",
           "scored": 119,
@@ -108889,12 +109831,6 @@
           "opponent": "Phoenix Suns",
           "scored": 108,
           "conceded": 123
-        },
-        {
-          "date": "2026-03-01T22:00Z",
-          "opponent": "Memphis Grizzlies",
-          "scored": 106,
-          "conceded": 125
         }
       ],
       "awayLast5": [
@@ -108903,6 +109839,12 @@
           "opponent": "Cleveland Cavaliers",
           "scored": 128,
           "conceded": 149
+        },
+        {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Cleveland Cavaliers",
+          "scored": 120,
+          "conceded": 103
         },
         {
           "date": "2026-03-22T00:00Z",
@@ -108921,12 +109863,6 @@
           "opponent": "Charlotte Hornets",
           "scored": 128,
           "conceded": 120
-        },
-        {
-          "date": "2026-02-27T00:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 117,
-          "conceded": 124
         }
       ]
     },
@@ -109185,6 +110121,12 @@
           "conceded": 100
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 130,
+          "conceded": 99
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Brooklyn Nets",
           "scored": 134,
@@ -109201,12 +110143,6 @@
           "opponent": "Charlotte Hornets",
           "scored": 101,
           "conceded": 103
-        },
-        {
-          "date": "2026-03-09T01:00Z",
-          "opponent": "Indiana Pacers",
-          "scored": 131,
-          "conceded": 111
         }
       ],
       "awayLast5": [
@@ -109215,6 +110151,12 @@
           "opponent": "Golden State Warriors",
           "scored": 126,
           "conceded": 131
+        },
+        {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 133,
+          "conceded": 110
         },
         {
           "date": "2026-03-22T23:30Z",
@@ -109233,12 +110175,6 @@
           "opponent": "Orlando Magic",
           "scored": 131,
           "conceded": 136
-        },
-        {
-          "date": "2026-03-10T23:30Z",
-          "opponent": "Miami Heat",
-          "scored": 129,
-          "conceded": 150
         }
       ]
     },
@@ -109295,6 +110231,12 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 108,
+          "conceded": 110
+        },
+        {
           "date": "2026-03-24T00:00Z",
           "opponent": "Chicago Bulls",
           "scored": 124,
@@ -109311,12 +110253,6 @@
           "opponent": "San Antonio Spurs",
           "scored": 120,
           "conceded": 145
-        },
-        {
-          "date": "2026-03-03T00:00Z",
-          "opponent": "Washington Wizards",
-          "scored": 123,
-          "conceded": 118
         }
       ]
     },
@@ -109419,6 +110355,12 @@
           "conceded": 129
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 142,
+          "conceded": 135
+        },
+        {
           "date": "2026-03-22T21:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 128,
@@ -109435,12 +110377,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 124,
           "conceded": 96
-        },
-        {
-          "date": "2026-03-12T02:00Z",
-          "opponent": "Houston Rockets",
-          "scored": 129,
-          "conceded": 93
         }
       ],
       "awayLast5": [
@@ -109659,6 +110595,12 @@
           "conceded": 119
         },
         {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 98,
+          "conceded": 123
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Boston Celtics",
           "scored": 112,
@@ -109669,12 +110611,6 @@
           "opponent": "Denver Nuggets",
           "scored": 125,
           "conceded": 118
-        },
-        {
-          "date": "2026-03-13T00:00Z",
-          "opponent": "Dallas Mavericks",
-          "scored": 112,
-          "conceded": 120
         }
       ],
       "awayLast5": [
@@ -109769,6 +110705,12 @@
           "conceded": 131
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 137,
+          "conceded": 157
+        },
+        {
           "date": "2026-03-14T02:30Z",
           "opponent": "LA Clippers",
           "scored": 108,
@@ -109779,12 +110721,6 @@
           "opponent": "Los Angeles Lakers",
           "scored": 130,
           "conceded": 142
-        },
-        {
-          "date": "2026-03-11T02:00Z",
-          "opponent": "Golden State Warriors",
-          "scored": 130,
-          "conceded": 124
         }
       ]
     },
@@ -109881,6 +110817,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
@@ -109903,12 +110845,6 @@
           "opponent": "New York Knicks",
           "scored": 117,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-10T01:00Z",
-          "opponent": "Golden State Warriors",
-          "scored": 119,
-          "conceded": 116
         }
       ],
       "awayLast5": [
@@ -110081,6 +111017,12 @@
           "conceded": 131
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 133,
+          "conceded": 110
+        },
+        {
           "date": "2026-03-22T23:30Z",
           "opponent": "New York Knicks",
           "scored": 113,
@@ -110091,12 +111033,6 @@
           "opponent": "Boston Celtics",
           "scored": 100,
           "conceded": 111
-        },
-        {
-          "date": "2026-03-12T23:00Z",
-          "opponent": "Orlando Magic",
-          "scored": 131,
-          "conceded": 136
         }
       ]
     },
@@ -110355,6 +111291,12 @@
           "conceded": 108
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 129,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Los Angeles Lakers",
           "scored": 113,
@@ -110371,15 +111313,15 @@
           "opponent": "Memphis Grizzlies",
           "scored": 126,
           "conceded": 110
-        },
-        {
-          "date": "2026-03-12T23:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 131,
-          "conceded": 109
         }
       ],
       "awayLast5": [
+        {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 94,
+          "conceded": 119
+        },
         {
           "date": "2026-03-24T01:00Z",
           "opponent": "Utah Jazz",
@@ -110403,12 +111345,6 @@
           "opponent": "Chicago Bulls",
           "scored": 139,
           "conceded": 109
-        },
-        {
-          "date": "2026-03-12T00:00Z",
-          "opponent": "New Orleans Pelicans",
-          "scored": 111,
-          "conceded": 122
         }
       ]
     },
@@ -110543,6 +111479,12 @@
           "conceded": 93
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 135,
+          "conceded": 142
+        },
+        {
           "date": "2026-03-17T00:00Z",
           "opponent": "New Orleans Pelicans",
           "scored": 111,
@@ -110559,12 +111501,6 @@
           "opponent": "Memphis Grizzlies",
           "scored": 120,
           "conceded": 112
-        },
-        {
-          "date": "2026-03-10T23:30Z",
-          "opponent": "Atlanta Hawks",
-          "scored": 112,
-          "conceded": 124
         }
       ]
     },
@@ -110661,6 +111597,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "Toronto Raptors",
+          "scored": 119,
+          "conceded": 94
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "Milwaukee Bucks",
           "scored": 129,
@@ -110683,12 +111625,6 @@
           "opponent": "Chicago Bulls",
           "scored": 119,
           "conceded": 108
-        },
-        {
-          "date": "2026-03-12T02:30Z",
-          "opponent": "Minnesota Timberwolves",
-          "scored": 153,
-          "conceded": 128
         }
       ],
       "awayLast5": [
@@ -110933,6 +111869,12 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 130,
+          "conceded": 129
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Houston Rockets",
           "scored": 95,
@@ -110949,12 +111891,6 @@
           "opponent": "Milwaukee Bucks",
           "scored": 131,
           "conceded": 113
-        },
-        {
-          "date": "2026-02-20T00:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 117,
-          "conceded": 107
         }
       ]
     },
@@ -111069,16 +112005,16 @@
           "conceded": 119
         },
         {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 98,
+          "conceded": 123
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Boston Celtics",
           "scored": 112,
           "conceded": 117
-        },
-        {
-          "date": "2026-03-19T00:30Z",
-          "opponent": "Denver Nuggets",
-          "scored": 125,
-          "conceded": 118
         }
       ],
       "awayLast5": [
@@ -111317,6 +112253,12 @@
       ],
       "awayLast5": [
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "LA Clippers",
           "scored": 96,
@@ -111339,12 +112281,6 @@
           "opponent": "Atlanta Hawks",
           "scored": 99,
           "conceded": 122
-        },
-        {
-          "date": "2026-03-12T23:30Z",
-          "opponent": "Miami Heat",
-          "scored": 105,
-          "conceded": 112
         }
       ]
     },
@@ -111369,6 +112305,12 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
@@ -111385,12 +112327,6 @@
           "opponent": "Milwaukee Bucks",
           "scored": 128,
           "conceded": 96
-        },
-        {
-          "date": "2026-03-12T01:00Z",
-          "opponent": "New York Knicks",
-          "scored": 117,
-          "conceded": 134
         }
       ],
       "awayLast5": [
@@ -111447,6 +112383,12 @@
           "conceded": 126
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 109,
+          "conceded": 106
+        },
+        {
           "date": "2026-03-14T02:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 117,
@@ -111463,12 +112405,6 @@
           "opponent": "LA Clippers",
           "scored": 101,
           "conceded": 114
-        },
-        {
-          "date": "2026-03-01T01:30Z",
-          "opponent": "Los Angeles Lakers",
-          "scored": 101,
-          "conceded": 129
         }
       ],
       "awayLast5": [
@@ -111477,6 +112413,12 @@
           "opponent": "Milwaukee Bucks",
           "scored": 127,
           "conceded": 95
+        },
+        {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 123,
+          "conceded": 98
         },
         {
           "date": "2026-03-23T23:00Z",
@@ -111495,12 +112437,6 @@
           "opponent": "LA Clippers",
           "scored": 119,
           "conceded": 115
-        },
-        {
-          "date": "2026-03-04T01:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 131,
-          "conceded": 91
         }
       ]
     },
@@ -112077,6 +113013,12 @@
           "conceded": 108
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 129,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Los Angeles Lakers",
           "scored": 113,
@@ -112087,12 +113029,6 @@
           "opponent": "Golden State Warriors",
           "scored": 115,
           "conceded": 101
-        },
-        {
-          "date": "2026-03-13T23:30Z",
-          "opponent": "Memphis Grizzlies",
-          "scored": 126,
-          "conceded": 110
         }
       ],
       "awayLast5": [
@@ -112175,6 +113111,12 @@
       ],
       "awayLast5": [
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Indiana Pacers",
+          "scored": 137,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Detroit Pistons",
           "scored": 110,
@@ -112197,12 +113139,6 @@
           "opponent": "Houston Rockets",
           "scored": 124,
           "conceded": 116
-        },
-        {
-          "date": "2026-03-17T01:30Z",
-          "opponent": "Houston Rockets",
-          "scored": 100,
-          "conceded": 92
         }
       ]
     },
@@ -112233,6 +113169,12 @@
           "conceded": 126
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 109,
+          "conceded": 106
+        },
+        {
           "date": "2026-03-14T02:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 117,
@@ -112243,12 +113185,6 @@
           "opponent": "Chicago Bulls",
           "scored": 124,
           "conceded": 130
-        },
-        {
-          "date": "2026-03-03T03:00Z",
-          "opponent": "LA Clippers",
-          "scored": 101,
-          "conceded": 114
         }
       ],
       "awayLast5": [
@@ -112311,6 +113247,12 @@
           "conceded": 100
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 130,
+          "conceded": 99
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Brooklyn Nets",
           "scored": 134,
@@ -112321,12 +113263,6 @@
           "opponent": "Utah Jazz",
           "scored": 124,
           "conceded": 114
-        },
-        {
-          "date": "2026-03-11T02:00Z",
-          "opponent": "Charlotte Hornets",
-          "scored": 101,
-          "conceded": 103
         }
       ],
       "awayLast5": [
@@ -112383,6 +113319,12 @@
           "conceded": 114
         },
         {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "Toronto Raptors",
+          "scored": 119,
+          "conceded": 94
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "Milwaukee Bucks",
           "scored": 129,
@@ -112399,12 +113341,6 @@
           "opponent": "Sacramento Kings",
           "scored": 109,
           "conceded": 118
-        },
-        {
-          "date": "2026-03-14T02:30Z",
-          "opponent": "Chicago Bulls",
-          "scored": 119,
-          "conceded": 108
         }
       ],
       "awayLast5": [
@@ -112421,6 +113357,12 @@
           "conceded": 95
         },
         {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 123,
+          "conceded": 98
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Miami Heat",
           "scored": 136,
@@ -112431,12 +113373,6 @@
           "opponent": "Sacramento Kings",
           "scored": 132,
           "conceded": 104
-        },
-        {
-          "date": "2026-03-17T02:00Z",
-          "opponent": "LA Clippers",
-          "scored": 119,
-          "conceded": 115
         }
       ]
     },
@@ -112767,6 +113703,12 @@
       "status": "finished",
       "homeLast5": [
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 157,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Oklahoma City Thunder",
           "scored": 103,
@@ -112789,12 +113731,6 @@
           "opponent": "Memphis Grizzlies",
           "scored": 139,
           "conceded": 129
-        },
-        {
-          "date": "2026-03-05T00:30Z",
-          "opponent": "Utah Jazz",
-          "scored": 106,
-          "conceded": 102
         }
       ],
       "awayLast5": [
@@ -112889,6 +113825,12 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 130,
+          "conceded": 129
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Houston Rockets",
           "scored": 95,
@@ -112899,12 +113841,6 @@
           "opponent": "Dallas Mavericks",
           "scored": 135,
           "conceded": 120
-        },
-        {
-          "date": "2026-03-05T02:30Z",
-          "opponent": "Milwaukee Bucks",
-          "scored": 131,
-          "conceded": 113
         }
       ]
     },
@@ -112973,16 +113909,16 @@
           "conceded": 131
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 137,
+          "conceded": 157
+        },
+        {
           "date": "2026-03-14T02:30Z",
           "opponent": "LA Clippers",
           "scored": 108,
           "conceded": 119
-        },
-        {
-          "date": "2026-03-13T02:30Z",
-          "opponent": "Los Angeles Lakers",
-          "scored": 130,
-          "conceded": 142
         }
       ]
     },
@@ -113103,10 +114039,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-21T00:00Z",
-          "opponent": "Boston Celtics",
-          "scored": 112,
-          "conceded": 117
+          "date": "2026-03-26T00:00Z",
+          "opponent": "San Antonio Spurs",
+          "scored": 98,
+          "conceded": 123
         }
       ],
       "awayLast5": [
@@ -113115,6 +114051,12 @@
           "opponent": "Detroit Pistons",
           "scored": 116,
           "conceded": 127
+        },
+        {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 94,
+          "conceded": 119
         },
         {
           "date": "2026-03-24T01:00Z",
@@ -113133,12 +114075,6 @@
           "opponent": "Denver Nuggets",
           "scored": 115,
           "conceded": 121
-        },
-        {
-          "date": "2026-03-19T00:00Z",
-          "opponent": "Chicago Bulls",
-          "scored": 139,
-          "conceded": 109
         }
       ]
     },
@@ -113441,16 +114377,16 @@
           "conceded": 131
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 133,
+          "conceded": 110
+        },
+        {
           "date": "2026-03-22T23:30Z",
           "opponent": "New York Knicks",
           "scored": 113,
           "conceded": 145
-        },
-        {
-          "date": "2026-03-14T22:00Z",
-          "opponent": "Boston Celtics",
-          "scored": 100,
-          "conceded": 111
         }
       ]
     },
@@ -113481,6 +114417,12 @@
           "conceded": 129
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 142,
+          "conceded": 135
+        },
+        {
           "date": "2026-03-22T21:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 128,
@@ -113491,12 +114433,6 @@
           "opponent": "Toronto Raptors",
           "scored": 121,
           "conceded": 115
-        },
-        {
-          "date": "2026-03-18T02:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 124,
-          "conceded": 96
         }
       ],
       "awayLast5": [
@@ -113519,16 +114455,16 @@
           "conceded": 95
         },
         {
+          "date": "2026-03-26T00:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 123,
+          "conceded": 98
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Miami Heat",
           "scored": 136,
           "conceded": 111
-        },
-        {
-          "date": "2026-03-18T02:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 132,
-          "conceded": 104
         }
       ]
     },
@@ -113553,6 +114489,12 @@
           "conceded": 103
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 157,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Oklahoma City Thunder",
           "scored": 103,
@@ -113569,12 +114511,6 @@
           "opponent": "Brooklyn Nets",
           "scored": 104,
           "conceded": 97
-        },
-        {
-          "date": "2026-03-10T23:00Z",
-          "opponent": "Memphis Grizzlies",
-          "scored": 139,
-          "conceded": 129
         }
       ],
       "awayLast5": [
@@ -113631,6 +114567,12 @@
           "conceded": 102
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Oklahoma City Thunder",
+          "scored": 119,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-23T00:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 92,
@@ -113647,12 +114589,6 @@
           "opponent": "Phoenix Suns",
           "scored": 120,
           "conceded": 112
-        },
-        {
-          "date": "2026-03-14T22:00Z",
-          "opponent": "Washington Wizards",
-          "scored": 111,
-          "conceded": 100
         }
       ],
       "awayLast5": [
@@ -113669,6 +114605,12 @@
           "conceded": 127
         },
         {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 94,
+          "conceded": 119
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Utah Jazz",
           "scored": 143,
@@ -113679,12 +114621,6 @@
           "opponent": "Phoenix Suns",
           "scored": 98,
           "conceded": 120
-        },
-        {
-          "date": "2026-03-21T01:00Z",
-          "opponent": "Denver Nuggets",
-          "scored": 115,
-          "conceded": 121
         }
       ]
     },
@@ -113759,10 +114695,10 @@
           "conceded": 131
         },
         {
-          "date": "2026-03-22T23:30Z",
-          "opponent": "New York Knicks",
-          "scored": 113,
-          "conceded": 145
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Utah Jazz",
+          "scored": 133,
+          "conceded": 110
         }
       ]
     },
@@ -113943,6 +114879,12 @@
           "conceded": 128
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 103,
+          "conceded": 120
+        },
+        {
           "date": "2026-03-25T00:00Z",
           "opponent": "Orlando Magic",
           "scored": 136,
@@ -113959,12 +114901,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 115,
           "conceded": 101
-        },
-        {
-          "date": "2026-03-08T17:00Z",
-          "opponent": "Boston Celtics",
-          "scored": 98,
-          "conceded": 109
         }
       ],
       "awayLast5": [
@@ -114021,6 +114957,12 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Houston Rockets",
+          "scored": 110,
+          "conceded": 108
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 104,
@@ -114037,12 +114979,6 @@
           "opponent": "Phoenix Suns",
           "scored": 116,
           "conceded": 104
-        },
-        {
-          "date": "2026-03-07T20:00Z",
-          "opponent": "Orlando Magic",
-          "scored": 92,
-          "conceded": 119
         }
       ],
       "awayLast5": [
@@ -114287,6 +115223,12 @@
           "conceded": 139
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Indiana Pacers",
+          "scored": 137,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Detroit Pistons",
           "scored": 110,
@@ -114303,12 +115245,6 @@
           "opponent": "Miami Heat",
           "scored": 134,
           "conceded": 126
-        },
-        {
-          "date": "2026-03-19T01:30Z",
-          "opponent": "Houston Rockets",
-          "scored": 124,
-          "conceded": 116
         }
       ]
     },
@@ -114423,16 +115359,16 @@
           "conceded": 126
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 109,
+          "conceded": 106
+        },
+        {
           "date": "2026-03-14T02:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 117,
           "conceded": 127
-        },
-        {
-          "date": "2026-03-11T02:00Z",
-          "opponent": "Chicago Bulls",
-          "scored": 124,
-          "conceded": 130
         }
       ],
       "awayLast5": [
@@ -114449,6 +115385,12 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 108,
+          "conceded": 110
+        },
+        {
           "date": "2026-03-24T00:00Z",
           "opponent": "Chicago Bulls",
           "scored": 124,
@@ -114459,12 +115401,6 @@
           "opponent": "Denver Nuggets",
           "scored": 93,
           "conceded": 129
-        },
-        {
-          "date": "2026-03-09T00:00Z",
-          "opponent": "San Antonio Spurs",
-          "scored": 120,
-          "conceded": 145
         }
       ]
     },
@@ -114813,16 +115749,16 @@
           "conceded": 129
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 142,
+          "conceded": 135
+        },
+        {
           "date": "2026-03-22T21:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 128,
           "conceded": 112
-        },
-        {
-          "date": "2026-03-21T01:00Z",
-          "opponent": "Toronto Raptors",
-          "scored": 121,
-          "conceded": 115
         }
       ],
       "awayLast5": [
@@ -115553,10 +116489,10 @@
           "conceded": 131
         },
         {
-          "date": "2026-03-14T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 108,
-          "conceded": 119
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Philadelphia 76ers",
+          "scored": 137,
+          "conceded": 157
         }
       ]
     },
@@ -115587,6 +116523,12 @@
           "conceded": 114
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 130,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-18T23:30Z",
           "opponent": "Portland Trail Blazers",
           "scored": 119,
@@ -115597,12 +116539,6 @@
           "opponent": "New York Knicks",
           "scored": 92,
           "conceded": 101
-        },
-        {
-          "date": "2026-03-12T23:00Z",
-          "opponent": "Phoenix Suns",
-          "scored": 108,
-          "conceded": 123
         }
       ],
       "awayLast5": [
@@ -115691,6 +116627,12 @@
           "conceded": 119
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "LA Clippers",
           "scored": 96,
@@ -115707,12 +116649,6 @@
           "opponent": "Utah Jazz",
           "scored": 96,
           "conceded": 128
-        },
-        {
-          "date": "2026-03-14T19:00Z",
-          "opponent": "Atlanta Hawks",
-          "scored": 99,
-          "conceded": 122
         }
       ]
     },
@@ -115775,6 +116711,12 @@
           "conceded": 149
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Cleveland Cavaliers",
+          "scored": 120,
+          "conceded": 103
+        },
+        {
           "date": "2026-03-22T00:00Z",
           "opponent": "Houston Rockets",
           "scored": 122,
@@ -115785,12 +116727,6 @@
           "opponent": "Charlotte Hornets",
           "scored": 106,
           "conceded": 136
-        },
-        {
-          "date": "2026-03-07T00:00Z",
-          "opponent": "Charlotte Hornets",
-          "scored": 128,
-          "conceded": 120
         }
       ]
     },
@@ -115821,6 +116757,12 @@
           "conceded": 102
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Oklahoma City Thunder",
+          "scored": 119,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-23T00:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 92,
@@ -115831,12 +116773,6 @@
           "opponent": "Golden State Warriors",
           "scored": 120,
           "conceded": 99
-        },
-        {
-          "date": "2026-03-16T23:30Z",
-          "opponent": "Phoenix Suns",
-          "scored": 120,
-          "conceded": 112
         }
       ],
       "awayLast5": [
@@ -115989,10 +116925,10 @@
           "conceded": 126
         },
         {
-          "date": "2026-03-14T02:00Z",
-          "opponent": "Minnesota Timberwolves",
-          "scored": 117,
-          "conceded": 127
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Brooklyn Nets",
+          "scored": 109,
+          "conceded": 106
         }
       ],
       "awayLast5": [
@@ -116075,6 +117011,12 @@
       ],
       "awayLast5": [
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Boston Celtics",
+          "scored": 109,
+          "conceded": 119
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Philadelphia 76ers",
           "scored": 123,
@@ -116097,12 +117039,6 @@
           "opponent": "Orlando Magic",
           "scored": 113,
           "conceded": 108
-        },
-        {
-          "date": "2026-03-05T00:00Z",
-          "opponent": "New York Knicks",
-          "scored": 103,
-          "conceded": 100
         }
       ]
     },
@@ -116133,6 +117069,12 @@
           "conceded": 114
         },
         {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "Toronto Raptors",
+          "scored": 119,
+          "conceded": 94
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "Milwaukee Bucks",
           "scored": 129,
@@ -116143,12 +117085,6 @@
           "opponent": "San Antonio Spurs",
           "scored": 115,
           "conceded": 119
-        },
-        {
-          "date": "2026-03-15T02:30Z",
-          "opponent": "Sacramento Kings",
-          "scored": 109,
-          "conceded": 118
         }
       ],
       "awayLast5": [
@@ -116165,6 +117101,12 @@
           "conceded": 93
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 135,
+          "conceded": 142
+        },
+        {
           "date": "2026-03-17T00:00Z",
           "opponent": "New Orleans Pelicans",
           "scored": 111,
@@ -116175,12 +117117,6 @@
           "opponent": "Cleveland Cavaliers",
           "scored": 130,
           "conceded": 120
-        },
-        {
-          "date": "2026-03-13T00:00Z",
-          "opponent": "Memphis Grizzlies",
-          "scored": 120,
-          "conceded": 112
         }
       ]
     },
@@ -116249,16 +117185,16 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 108,
+          "conceded": 110
+        },
+        {
           "date": "2026-03-24T00:00Z",
           "opponent": "Chicago Bulls",
           "scored": 124,
           "conceded": 132
-        },
-        {
-          "date": "2026-03-12T02:00Z",
-          "opponent": "Denver Nuggets",
-          "scored": 93,
-          "conceded": 129
         }
       ]
     },
@@ -116445,6 +117381,12 @@
           "conceded": 128
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 103,
+          "conceded": 120
+        },
+        {
           "date": "2026-03-25T00:00Z",
           "opponent": "Orlando Magic",
           "scored": 136,
@@ -116455,12 +117397,6 @@
           "opponent": "Dallas Mavericks",
           "scored": 120,
           "conceded": 130
-        },
-        {
-          "date": "2026-03-09T23:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 115,
-          "conceded": 101
         }
       ],
       "awayLast5": [
@@ -116483,16 +117419,16 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 130,
+          "conceded": 129
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Houston Rockets",
           "scored": 95,
           "conceded": 117
-        },
-        {
-          "date": "2026-03-19T00:30Z",
-          "opponent": "Dallas Mavericks",
-          "scored": 135,
-          "conceded": 120
         }
       ]
     },
@@ -116607,16 +117543,16 @@
           "conceded": 108
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 129,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Los Angeles Lakers",
           "scored": 113,
           "conceded": 110
-        },
-        {
-          "date": "2026-03-20T23:30Z",
-          "opponent": "Golden State Warriors",
-          "scored": 115,
-          "conceded": 101
         }
       ],
       "awayLast5": [
@@ -116633,6 +117569,12 @@
           "conceded": 119
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "LA Clippers",
           "scored": 96,
@@ -116643,12 +117585,6 @@
           "opponent": "Phoenix Suns",
           "scored": 108,
           "conceded": 105
-        },
-        {
-          "date": "2026-03-20T01:00Z",
-          "opponent": "Utah Jazz",
-          "scored": 96,
-          "conceded": 128
         }
       ]
     },
@@ -116691,10 +117627,10 @@
           "conceded": 129
         },
         {
-          "date": "2026-03-22T21:00Z",
-          "opponent": "Portland Trail Blazers",
-          "scored": 128,
-          "conceded": 112
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Dallas Mavericks",
+          "scored": 142,
+          "conceded": 135
         }
       ],
       "awayLast5": [
@@ -116841,16 +117777,16 @@
           "conceded": 114
         },
         {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "Toronto Raptors",
+          "scored": 119,
+          "conceded": 94
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "Milwaukee Bucks",
           "scored": 129,
           "conceded": 96
-        },
-        {
-          "date": "2026-03-17T02:00Z",
-          "opponent": "San Antonio Spurs",
-          "scored": 115,
-          "conceded": 119
         }
       ],
       "awayLast5": [
@@ -116859,6 +117795,12 @@
           "opponent": "Los Angeles Lakers",
           "scored": 123,
           "conceded": 87
+        },
+        {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Boston Celtics",
+          "scored": 109,
+          "conceded": 119
         },
         {
           "date": "2026-03-23T23:00Z",
@@ -116877,12 +117819,6 @@
           "opponent": "Brooklyn Nets",
           "scored": 121,
           "conceded": 92
-        },
-        {
-          "date": "2026-03-17T23:00Z",
-          "opponent": "Orlando Magic",
-          "scored": 113,
-          "conceded": 108
         }
       ]
     },
@@ -116951,16 +117887,16 @@
           "conceded": 93
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 135,
+          "conceded": 142
+        },
+        {
           "date": "2026-03-17T00:00Z",
           "opponent": "New Orleans Pelicans",
           "scored": 111,
           "conceded": 129
-        },
-        {
-          "date": "2026-03-15T19:30Z",
-          "opponent": "Cleveland Cavaliers",
-          "scored": 130,
-          "conceded": 120
         }
       ]
     },
@@ -117419,16 +118355,16 @@
           "conceded": 149
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Cleveland Cavaliers",
+          "scored": 120,
+          "conceded": 103
+        },
+        {
           "date": "2026-03-22T00:00Z",
           "opponent": "Houston Rockets",
           "scored": 122,
           "conceded": 123
-        },
-        {
-          "date": "2026-03-17T23:00Z",
-          "opponent": "Charlotte Hornets",
-          "scored": 106,
-          "conceded": 136
         }
       ]
     },
@@ -117803,6 +118739,12 @@
           "conceded": 139
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Indiana Pacers",
+          "scored": 137,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Detroit Pistons",
           "scored": 110,
@@ -117813,12 +118755,6 @@
           "opponent": "Orlando Magic",
           "scored": 105,
           "conceded": 104
-        },
-        {
-          "date": "2026-03-20T00:00Z",
-          "opponent": "Miami Heat",
-          "scored": 134,
-          "conceded": 126
         }
       ]
     },
@@ -118361,10 +119297,10 @@
           "conceded": 149
         },
         {
-          "date": "2026-03-22T00:00Z",
-          "opponent": "Houston Rockets",
-          "scored": 122,
-          "conceded": 123
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Cleveland Cavaliers",
+          "scored": 120,
+          "conceded": 103
         }
       ]
     },
@@ -118479,16 +119415,16 @@
           "conceded": 102
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Oklahoma City Thunder",
+          "scored": 119,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-23T00:00Z",
           "opponent": "Minnesota Timberwolves",
           "scored": 92,
           "conceded": 102
-        },
-        {
-          "date": "2026-03-18T23:00Z",
-          "opponent": "Golden State Warriors",
-          "scored": 120,
-          "conceded": 99
         }
       ],
       "awayLast5": [
@@ -118557,16 +119493,16 @@
           "conceded": 114
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 130,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-18T23:30Z",
           "opponent": "Portland Trail Blazers",
           "scored": 119,
           "conceded": 127
-        },
-        {
-          "date": "2026-03-13T23:30Z",
-          "opponent": "New York Knicks",
-          "scored": 92,
-          "conceded": 101
         }
       ],
       "awayLast5": [
@@ -118667,16 +119603,16 @@
           "conceded": 127
         },
         {
+          "date": "2026-03-26T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 94,
+          "conceded": 119
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Utah Jazz",
           "scored": 143,
           "conceded": 127
-        },
-        {
-          "date": "2026-03-23T01:00Z",
-          "opponent": "Phoenix Suns",
-          "scored": 98,
-          "conceded": 120
         }
       ]
     },
@@ -118811,6 +119747,12 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
@@ -118827,12 +119769,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 97,
           "conceded": 104
-        },
-        {
-          "date": "2026-03-12T23:30Z",
-          "opponent": "Atlanta Hawks",
-          "scored": 97,
-          "conceded": 108
         }
       ]
     },
@@ -118907,10 +119843,10 @@
           "conceded": 93
         },
         {
-          "date": "2026-03-17T00:00Z",
-          "opponent": "New Orleans Pelicans",
-          "scored": 111,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Denver Nuggets",
+          "scored": 135,
+          "conceded": 142
         }
       ]
     },
@@ -118973,6 +119909,12 @@
           "conceded": 87
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Boston Celtics",
+          "scored": 109,
+          "conceded": 119
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Philadelphia 76ers",
           "scored": 123,
@@ -118983,12 +119925,6 @@
           "opponent": "Washington Wizards",
           "scored": 132,
           "conceded": 111
-        },
-        {
-          "date": "2026-03-18T23:30Z",
-          "opponent": "Brooklyn Nets",
-          "scored": 121,
-          "conceded": 92
         }
       ]
     },
@@ -119097,6 +120033,12 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
@@ -119107,12 +120049,6 @@
           "opponent": "Philadelphia 76ers",
           "scored": 116,
           "conceded": 126
-        },
-        {
-          "date": "2026-03-20T01:00Z",
-          "opponent": "Milwaukee Bucks",
-          "scored": 128,
-          "conceded": 96
         }
       ],
       "awayLast5": [
@@ -119181,16 +120117,16 @@
           "conceded": 100
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 130,
+          "conceded": 99
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Brooklyn Nets",
           "scored": 134,
           "conceded": 99
-        },
-        {
-          "date": "2026-03-14T02:00Z",
-          "opponent": "Utah Jazz",
-          "scored": 124,
-          "conceded": 114
         }
       ],
       "awayLast5": [
@@ -119499,10 +120435,10 @@
           "conceded": 102
         },
         {
-          "date": "2026-03-23T00:00Z",
-          "opponent": "Minnesota Timberwolves",
-          "scored": 92,
-          "conceded": 102
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Oklahoma City Thunder",
+          "scored": 119,
+          "conceded": 109
         }
       ],
       "awayLast5": [
@@ -119571,16 +120507,16 @@
           "conceded": 128
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 103,
+          "conceded": 120
+        },
+        {
           "date": "2026-03-25T00:00Z",
           "opponent": "Orlando Magic",
           "scored": 136,
           "conceded": 131
-        },
-        {
-          "date": "2026-03-15T19:30Z",
-          "opponent": "Dallas Mavericks",
-          "scored": 120,
-          "conceded": 130
         }
       ],
       "awayLast5": [
@@ -119655,10 +120591,10 @@
           "conceded": 114
         },
         {
-          "date": "2026-03-18T23:30Z",
-          "opponent": "Portland Trail Blazers",
-          "scored": 119,
-          "conceded": 127
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Los Angeles Lakers",
+          "scored": 130,
+          "conceded": 137
         }
       ],
       "awayLast5": [
@@ -119765,10 +120701,10 @@
           "conceded": 109
         },
         {
-          "date": "2026-03-21T00:00Z",
-          "opponent": "Houston Rockets",
-          "scored": 95,
-          "conceded": 117
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Detroit Pistons",
+          "scored": 130,
+          "conceded": 129
         }
       ]
     },
@@ -119877,6 +120813,12 @@
           "conceded": 103
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 157,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Oklahoma City Thunder",
           "scored": 103,
@@ -119887,12 +120829,6 @@
           "opponent": "Portland Trail Blazers",
           "scored": 109,
           "conceded": 103
-        },
-        {
-          "date": "2026-03-14T17:00Z",
-          "opponent": "Brooklyn Nets",
-          "scored": 104,
-          "conceded": 97
         }
       ],
       "awayLast5": [
@@ -119915,16 +120851,16 @@
           "conceded": 119
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-24T02:30Z",
           "opponent": "LA Clippers",
           "scored": 96,
           "conceded": 129
-        },
-        {
-          "date": "2026-03-22T02:00Z",
-          "opponent": "Phoenix Suns",
-          "scored": 108,
-          "conceded": 105
         }
       ]
     },
@@ -119987,6 +120923,12 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
@@ -119997,12 +120939,6 @@
           "opponent": "Sacramento Kings",
           "scored": 122,
           "conceded": 126
-        },
-        {
-          "date": "2026-03-14T17:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 97,
-          "conceded": 104
         }
       ]
     },
@@ -120189,6 +121125,12 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Houston Rockets",
+          "scored": 110,
+          "conceded": 108
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 104,
@@ -120199,12 +121141,6 @@
           "opponent": "Utah Jazz",
           "scored": 147,
           "conceded": 111
-        },
-        {
-          "date": "2026-03-18T00:00Z",
-          "opponent": "Phoenix Suns",
-          "scored": 116,
-          "conceded": 104
         }
       ],
       "awayLast5": [
@@ -120513,10 +121449,10 @@
           "conceded": 114
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "Milwaukee Bucks",
-          "scored": 129,
-          "conceded": 96
+          "date": "2026-03-26T02:30Z",
+          "opponent": "Toronto Raptors",
+          "scored": 119,
+          "conceded": 94
         }
       ],
       "awayLast5": [
@@ -120591,9 +121527,9 @@
           "conceded": 100
         },
         {
-          "date": "2026-03-24T02:00Z",
-          "opponent": "Brooklyn Nets",
-          "scored": 134,
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Milwaukee Bucks",
+          "scored": 130,
           "conceded": 99
         }
       ],
@@ -120819,16 +121755,16 @@
           "conceded": 103
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 157,
+          "conceded": 137
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Oklahoma City Thunder",
           "scored": 103,
           "conceded": 123
-        },
-        {
-          "date": "2026-03-15T22:00Z",
-          "opponent": "Portland Trail Blazers",
-          "scored": 109,
-          "conceded": 103
         }
       ],
       "awayLast5": [
@@ -121917,10 +122853,10 @@
           "conceded": 128
         },
         {
-          "date": "2026-03-25T00:00Z",
-          "opponent": "Orlando Magic",
-          "scored": 136,
-          "conceded": 131
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Miami Heat",
+          "scored": 103,
+          "conceded": 120
         }
       ],
       "awayLast5": [
@@ -121949,10 +122885,10 @@
           "conceded": 127
         },
         {
-          "date": "2026-03-24T01:00Z",
-          "opponent": "Utah Jazz",
-          "scored": 143,
-          "conceded": 127
+          "date": "2026-03-26T02:30Z",
+          "opponent": "LA Clippers",
+          "scored": 94,
+          "conceded": 119
         }
       ]
     },
@@ -122183,10 +123119,10 @@
           "conceded": 109
         },
         {
-          "date": "2026-03-24T00:00Z",
-          "opponent": "Chicago Bulls",
-          "scored": 124,
-          "conceded": 132
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Minnesota Timberwolves",
+          "scored": 108,
+          "conceded": 110
         }
       ]
     },
@@ -122385,10 +123321,10 @@
           "conceded": 108
         },
         {
-          "date": "2026-03-23T23:00Z",
-          "opponent": "Los Angeles Lakers",
-          "scored": 113,
-          "conceded": 110
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Atlanta Hawks",
+          "scored": 129,
+          "conceded": 130
         }
       ],
       "awayLast5": [
@@ -123471,16 +124407,16 @@
           "conceded": 109
         },
         {
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Houston Rockets",
+          "scored": 110,
+          "conceded": 108
+        },
+        {
           "date": "2026-03-21T00:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 104,
           "conceded": 108
-        },
-        {
-          "date": "2026-03-19T00:00Z",
-          "opponent": "Utah Jazz",
-          "scored": 147,
-          "conceded": 111
         }
       ],
       "awayLast5": [
@@ -123633,10 +124569,10 @@
           "conceded": 103
         },
         {
-          "date": "2026-03-23T23:00Z",
-          "opponent": "Oklahoma City Thunder",
-          "scored": 103,
-          "conceded": 123
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Chicago Bulls",
+          "scored": 157,
+          "conceded": 137
         }
       ],
       "awayLast5": [
@@ -123737,16 +124673,16 @@
           "conceded": 139
         },
         {
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Indiana Pacers",
+          "scored": 137,
+          "conceded": 130
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Detroit Pistons",
           "scored": 110,
           "conceded": 113
-        },
-        {
-          "date": "2026-03-21T23:00Z",
-          "opponent": "Orlando Magic",
-          "scored": 105,
-          "conceded": 104
         }
       ]
     },
@@ -123821,10 +124757,10 @@
           "conceded": 95
         },
         {
-          "date": "2026-03-23T23:00Z",
-          "opponent": "Miami Heat",
-          "scored": 136,
-          "conceded": 111
+          "date": "2026-03-26T00:00Z",
+          "opponent": "Memphis Grizzlies",
+          "scored": 123,
+          "conceded": 98
         }
       ]
     },
@@ -123971,16 +124907,16 @@
           "conceded": 87
         },
         {
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Boston Celtics",
+          "scored": 109,
+          "conceded": 119
+        },
+        {
           "date": "2026-03-23T23:00Z",
           "opponent": "Philadelphia 76ers",
           "scored": 123,
           "conceded": 103
-        },
-        {
-          "date": "2026-03-21T21:00Z",
-          "opponent": "Washington Wizards",
-          "scored": 132,
-          "conceded": 111
         }
       ]
     },
@@ -124101,9 +125037,9 @@
           "conceded": 109
         },
         {
-          "date": "2026-03-21T00:00Z",
-          "opponent": "Portland Trail Blazers",
-          "scored": 104,
+          "date": "2026-03-26T01:42Z",
+          "opponent": "Houston Rockets",
+          "scored": 110,
           "conceded": 108
         }
       ],
@@ -124445,10 +125381,10 @@
           "conceded": 139
         },
         {
-          "date": "2026-03-23T23:00Z",
-          "opponent": "Detroit Pistons",
-          "scored": 110,
-          "conceded": 113
+          "date": "2026-03-25T23:00Z",
+          "opponent": "Indiana Pacers",
+          "scored": 137,
+          "conceded": 130
         }
       ]
     },
@@ -124601,10 +125537,10 @@
           "conceded": 87
         },
         {
-          "date": "2026-03-23T23:00Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 123,
-          "conceded": 103
+          "date": "2026-03-25T23:30Z",
+          "opponent": "Boston Celtics",
+          "scored": 109,
+          "conceded": 119
         }
       ]
     },
@@ -133008,16 +133944,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -133132,16 +134068,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -133560,10 +134496,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
@@ -135749,10 +136685,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
@@ -136024,16 +136960,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -136148,16 +137084,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -137368,16 +138304,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -139036,10 +139972,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
@@ -140128,10 +141064,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
@@ -142273,16 +143209,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -142695,16 +143631,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -142779,10 +143715,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
@@ -143209,16 +144145,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -144301,16 +145237,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -144908,16 +145844,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -146184,16 +147120,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -148139,16 +149075,16 @@
           "conceded": 122
         },
         {
+          "date": "2026-03-26T01:00Z",
+          "opponent": "Washington Wizards",
+          "scored": 110,
+          "conceded": 133
+        },
+        {
           "date": "2026-03-24T01:00Z",
           "opponent": "Toronto Raptors",
           "scored": 127,
           "conceded": 143
-        },
-        {
-          "date": "2026-03-22T01:30Z",
-          "opponent": "Philadelphia 76ers",
-          "scored": 116,
-          "conceded": 126
         }
       ],
       "awayLast5": [
@@ -148795,16 +149731,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -149263,16 +150199,16 @@
           "conceded": 116
         },
         {
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Golden State Warriors",
+          "scored": 106,
+          "conceded": 109
+        },
+        {
           "date": "2026-03-24T02:00Z",
           "opponent": "Portland Trail Blazers",
           "scored": 99,
           "conceded": 134
-        },
-        {
-          "date": "2026-03-22T22:00Z",
-          "opponent": "Sacramento Kings",
-          "scored": 122,
-          "conceded": 126
         }
       ]
     },
@@ -149659,10 +150595,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
@@ -150439,10 +151375,10 @@
           "conceded": 119
         },
         {
-          "date": "2026-03-24T02:30Z",
-          "opponent": "LA Clippers",
-          "scored": 96,
-          "conceded": 129
+          "date": "2026-03-26T02:00Z",
+          "opponent": "Portland Trail Blazers",
+          "scored": 99,
+          "conceded": 130
         }
       ]
     },
