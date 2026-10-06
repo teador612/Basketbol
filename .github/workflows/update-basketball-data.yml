@@ -1,45 +1,92 @@
-- name: Veri kontrolü
-  run: |
-    echo "========================================"
-    echo "DATA KONTROL"
-    echo "========================================"
+name: Basketbol Veri Güncelleme
 
-    python - <<'PY'
-    import json
+on:
+  workflow_dispatch:
 
-    with open("data/basketball.json", encoding="utf-8") as f:
-        data = json.load(f)
+  schedule:
+    - cron: "0 */6 * * *"
 
-    games = data.get("rawGames", [])
+permissions:
+  contents: write
 
-    print("Güncelleme:", data.get("updatedAt"))
-    print("Toplam:", data.get("count"))
-    print("Ham maç:", len(games))
+jobs:
+  update:
+    runs-on: ubuntu-latest
 
-    print()
-    print("========================================")
-    print("İLK HAM KAYIT")
-    print("========================================")
+    steps:
+      - name: 📥 Repo indir
+        uses: actions/checkout@v4
 
-    if games:
-        print(json.dumps(
-            games[0],
-            ensure_ascii=False,
-            indent=2
-        ))
-    else:
-        print("Ham maç bulunamadı.")
+      - name: 🐍 Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-    print()
-    print("========================================")
-    print("ALANLAR")
-    print("========================================")
+      - name: 📦 Paketleri kur
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-    if games and isinstance(games[0], dict):
-        for key, value in games[0].items():
-            print(
-                f"{key}: "
-                f"{type(value).__name__} = "
-                f"{value}"
-            )
-    PY
+      - name: 🏀 Basketbol verilerini güncelle
+        run: |
+          python update_basketball_data.py
+
+      - name: 🔎 Veri kontrolü
+        run: |
+          echo "========================================"
+          echo "DATA KONTROL"
+          echo "========================================"
+
+          python - <<'PY'
+          import json
+
+          with open("data/basketball.json", encoding="utf-8") as f:
+              data = json.load(f)
+
+          games = data.get("rawGames", [])
+
+          print("Güncelleme:", data.get("updatedAt"))
+          print("Toplam:", data.get("count"))
+          print("Ham maç:", len(games))
+
+          print()
+          print("========================================")
+          print("İLK HAM KAYIT")
+          print("========================================")
+
+          if games:
+              print(json.dumps(
+                  games[0],
+                  ensure_ascii=False,
+                  indent=2
+              ))
+          else:
+              print("Ham maç bulunamadı.")
+
+          print()
+          print("========================================")
+          print("ALANLAR")
+          print("========================================")
+
+          if games and isinstance(games[0], dict):
+              for key, value in games[0].items():
+                  print(
+                      f"{key}: "
+                      f"{type(value).__name__} = "
+                      f"{value}"
+                  )
+          PY
+
+      - name: 💾 Değişiklikleri kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/basketball.json
+
+          if git diff --cached --quiet; then
+            echo "Yeni veri yok."
+          else
+            git commit -m "Basketbol verileri güncellendi"
+            git push
+          fi
