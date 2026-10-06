@@ -1,630 +1,705 @@
 import json
 import re
-from datetime import datetime, timezone
+import time
+from datetime import datetime
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 
-# ============================================================
-# AYARLAR
-# ============================================================
-
 DATA_FILE = Path("data.json")
 HISTORY_FILE = Path("history.json")
 
-URL = "https://www.iddaa.com/euroleague-avrupa-basketbol-ligi"
+URLS = [
+    "https://www.iddaa.com/canli-skor/basketbol",
+    "https://www.iddaa.com/euroleague-avrupa-basketbol-ligi",
+]
 
 LAST_N = 5
 
 
-# ============================================================
-# TAKIM İSİMLERİ
-# ============================================================
-
 ALIASES = {
-    "Anadolu Efes": "Anadolu Efes",
-    "Efes": "Anadolu Efes",
+    "Paris": "Paris Basketball",
+    "Paris Basket": "Paris Basketball",
+    "Paris BC": "Paris Basketball",
+    "Paris Basketball": "Paris Basketball",
 
-    "Baskonia": "Baskonia",
+    "ASVEL": "LDLC ASVEL",
+    "Asvel": "LDLC ASVEL",
+    "LDLC ASVEL": "LDLC ASVEL",
 
-    "Bayern Münih": "Bayern Münih",
-    "B. Münih": "Bayern Münih",
-    "Bayern Munich": "Bayern Münih",
-
-    "Beşiktaş": "Beşiktaş",
-    "Besiktas": "Beşiktaş",
-
-    "Dubai Basketball": "Dubai Basketball",
-    "Dubai BC": "Dubai Basketball",
+    "BC Dubai": "Dubai Basketball",
     "Dubai": "Dubai Basketball",
-
-    "FC Barcelona": "FC Barcelona",
-    "Barcelona": "FC Barcelona",
-
-    "Fenerbahçe Beko": "Fenerbahçe Beko",
-    "Fenerbahce Beko": "Fenerbahçe Beko",
-    "Fenerbahçe": "Fenerbahçe Beko",
-
-    "Hapoel IBI Tel Aviv": "Hapoel IBI Tel Aviv",
-    "Hap.Tel Aviv": "Hapoel IBI Tel Aviv",
-    "Hapoel Tel Aviv": "Hapoel IBI Tel Aviv",
+    "Dubai BC": "Dubai Basketball",
+    "Dubai Basketball": "Dubai Basketball",
 
     "Kızılyıldız": "Kızılyıldız",
-    "Kizilyildiz": "Kızılyıldız",
-
-    "LDLC ASVEL": "LDLC ASVEL",
-    "ASVEL": "LDLC ASVEL",
+    "Crvena Zvezda": "Kızılyıldız",
 
     "Maccabi Tel Aviv": "Maccabi Tel Aviv",
     "Maccabi Rapyd Tel Aviv": "Maccabi Tel Aviv",
-    "Maccabi": "Maccabi Tel Aviv",
+    "M.Tel Aviv": "Maccabi Tel Aviv",
 
     "Olimpia Milano": "Olimpia Milano",
     "EA7 Emporio Armani Milan": "Olimpia Milano",
     "Milan": "Olimpia Milano",
 
-    "Olympiakos": "Olympiakos",
-    "Olympiacos": "Olympiakos",
+    "Bayern Münih": "Bayern Münih",
+    "B. Münih": "Bayern Münih",
+    "Bayern Munich": "Bayern Münih",
+
+    "Virtus Bologna": "Virtus Bologna",
+    "V. Bologna": "Virtus Bologna",
+    "Bologna": "Virtus Bologna",
 
     "Panathinaikos": "Panathinaikos",
+    "Panathinaikos Aktor": "Panathinaikos",
 
-    "Paris Basketball": "Paris Basketball",
-    "Paris BC": "Paris Basketball",
+    "Fenerbahçe": "Fenerbahçe Beko",
+    "Fenerbahçe Beko": "Fenerbahçe Beko",
+    "Fenerbahce Beko": "Fenerbahçe Beko",
 
-    "Partizan": "Partizan",
+    "Valencia": "Valencia Basket",
+    "Valencia Basket": "Valencia Basket",
+
+    "Hapoel Tel Aviv": "Hapoel IBI Tel Aviv",
+    "Hap.Tel Aviv": "Hapoel IBI Tel Aviv",
+    "Hapoel IBI Tel Aviv": "Hapoel IBI Tel Aviv",
 
     "Real Madrid": "Real Madrid",
     "R. Madrid": "Real Madrid",
 
-    "Valencia Basket": "Valencia Basket",
-    "Valencia": "Valencia Basket",
+    "Partizan": "Partizan",
+    "KK Partizan": "Partizan",
 
-    "Virtus Bologna": "Virtus Bologna",
-    "V. Bologna": "Virtus Bologna",
+    "Olympiakos": "Olympiakos",
 
-    "Zalgiris Kaunas": "Zalgiris Kaunas",
+    "Anadolu Efes": "Anadolu Efes",
+
+    "Barcelona": "FC Barcelona",
+    "FC Barcelona": "FC Barcelona",
+
     "Zalgiris": "Zalgiris Kaunas",
+    "Zalgiris Kaunas": "Zalgiris Kaunas",
+
+    "Baskonia": "Baskonia",
+    "Baskonia Vitoria-Gasteiz": "Baskonia",
+
+    "Beşiktaş": "Beşiktaş",
+    "Besiktas": "Beşiktaş",
 }
 
 
-def normalize_team(name):
-
-    if not name:
+def normalize_text(value):
+    if value is None:
         return ""
+
+    value = str(value)
+
+    value = value.replace("\u00a0", " ")
+    value = value.replace("İ", "I")
+    value = value.replace("ı", "i")
+    value = value.replace("Ş", "S")
+    value = value.replace("ş", "s")
+    value = value.replace("Ğ", "G")
+    value = value.replace("ğ", "g")
+    value = value.replace("Ü", "U")
+    value = value.replace("ü", "u")
+    value = value.replace("Ö", "O")
+    value = value.replace("ö", "o")
+    value = value.replace("Ç", "C")
+    value = value.replace("ç", "c")
+
+    value = re.sub(r"\s+", " ", value)
+
+    return value.strip().lower()
+
+
+def normalize_team(name):
+    if not name:
+        return None
 
     name = str(name).strip()
 
     if name in ALIASES:
         return ALIASES[name]
 
-    # Büyük/küçük harf toleransı
-    low = name.lower()
+    normalized = normalize_text(name)
 
-    for key, value in ALIASES.items():
+    for source, target in ALIASES.items():
+        if normalize_text(source) == normalized:
+            return target
 
-        if key.lower() == low:
-            return value
+    return name.strip()
 
-    return name
-
-
-# ============================================================
-# DATA.JSON
-# ============================================================
 
 def load_teams():
-
     if not DATA_FILE.exists():
+        raise RuntimeError("data.json bulunamadı")
 
-        raise RuntimeError(
-            "data.json bulunamadı"
-        )
-
-    with open(
-        DATA_FILE,
-        "r",
-        encoding="utf-8"
-    ) as f:
-
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     teams = set()
 
     for match in data.get("matches", []):
-
-        home = match.get("home")
-        away = match.get("away")
+        home = normalize_team(match.get("home"))
+        away = normalize_team(match.get("away"))
 
         if home:
-            teams.add(
-                normalize_team(home)
-            )
+            teams.add(home)
 
         if away:
-            teams.add(
-                normalize_team(away)
-            )
+            teams.add(away)
 
     return sorted(teams)
 
 
-# ============================================================
-# JSON İÇİNDE RECURSIVE GEZ
-# ============================================================
+def is_known_team(name, teams):
+    if not name:
+        return False
 
-def walk_json(value):
+    normalized = normalize_text(name)
 
-    if isinstance(value, dict):
+    for team in teams:
+        if normalized == normalize_text(team):
+            return True
 
-        yield value
+        if normalized_team_match(normalized, normalize_text(team)):
+            return True
 
-        for child in value.values():
-
-            yield from walk_json(child)
-
-    elif isinstance(value, list):
-
-        for child in value:
-
-            yield from walk_json(child)
+    return False
 
 
-# ============================================================
-# SKOR ÇÖZ
-# ============================================================
+def normalized_team_match(a, b):
+    a = re.sub(r"[^a-z0-9]+", "", a)
+    b = re.sub(r"[^a-z0-9]+", "", b)
 
-def parse_score(value):
+    return a == b
 
+
+def parse_score_value(value):
     if value is None:
         return None
 
     if isinstance(value, dict):
-
-        # Muhtemel alanlar
-        home_keys = [
-            "homeScore",
-            "home_score",
-            "homePoints",
-            "home_points",
-            "scoreHome",
-            "home"
+        pairs = [
+            ("home", "away"),
+            ("homeScore", "awayScore"),
+            ("home_score", "away_score"),
+            ("homePoints", "awayPoints"),
+            ("home_points", "away_points"),
+            ("scoreHome", "scoreAway"),
         ]
 
-        away_keys = [
-            "awayScore",
-            "away_score",
-            "awayPoints",
-            "away_points",
-            "scoreAway",
-            "away"
-        ]
-
-        home = None
-        away = None
-
-        for key in home_keys:
-
-            if key in value:
-
+        for home_key, away_key in pairs:
+            if home_key in value and away_key in value:
                 try:
-                    home = int(value[key])
-                    break
+                    h = int(value[home_key])
+                    a = int(value[away_key])
+
+                    if 0 <= h <= 300 and 0 <= a <= 300:
+                        return h, a
                 except Exception:
                     pass
-
-        for key in away_keys:
-
-            if key in value:
-
-                try:
-                    away = int(value[key])
-                    break
-                except Exception:
-                    pass
-
-        if home is not None and away is not None:
-
-            return home, away
-
-        # İç içe score
-        for child in value.values():
-
-            result = parse_score(child)
-
-            if result:
-                return result
-
-    if isinstance(value, str):
-
-        match = re.search(
-            r"\b(\d{2,3})\s*[-:]\s*(\d{2,3})\b",
-            value
-        )
-
-        if match:
-
-            return (
-                int(match.group(1)),
-                int(match.group(2))
-            )
-
-    return None
-
-
-# ============================================================
-# JSON'DAN MAÇ BUL
-# ============================================================
-
-def extract_matches_from_json(
-    obj,
-    teams
-):
-
-    matches = []
-
-    team_set = set(teams)
-
-    for item in walk_json(obj):
-
-        if not isinstance(item, dict):
-            continue
-
-        # ----------------------------------------------------
-        # Takım isimlerini bul
-        # ----------------------------------------------------
-
-        home = None
-        away = None
-
-        home_keys = [
-            "home",
-            "homeTeam",
-            "home_team",
-            "homeName",
-            "homeTeamName"
-        ]
-
-        away_keys = [
-            "away",
-            "awayTeam",
-            "away_team",
-            "awayName",
-            "awayTeamName"
-        ]
-
-        for key in home_keys:
-
-            value = item.get(key)
-
-            if isinstance(value, dict):
-
-                value = (
-                    value.get("name")
-                    or value.get("teamName")
-                    or value.get("shortName")
-                )
-
-            if value:
-
-                normalized = normalize_team(
-                    str(value)
-                )
-
-                if normalized in team_set:
-
-                    home = normalized
-                    break
-
-        for key in away_keys:
-
-            value = item.get(key)
-
-            if isinstance(value, dict):
-
-                value = (
-                    value.get("name")
-                    or value.get("teamName")
-                    or value.get("shortName")
-                )
-
-            if value:
-
-                normalized = normalize_team(
-                    str(value)
-                )
-
-                if normalized in team_set:
-
-                    away = normalized
-                    break
-
-        if not home or not away:
-            continue
-
-        # ----------------------------------------------------
-        # Skor
-        # ----------------------------------------------------
-
-        score = None
 
         for key in [
             "score",
             "result",
             "finalScore",
-            "matchScore"
+            "final_score",
+            "matchScore",
         ]:
+            if key in value:
+                result = parse_score_value(value[key])
 
-            if key in item:
+                if result:
+                    return result
 
-                score = parse_score(
-                    item[key]
-                )
-
-                if score:
-                    break
-
-        if not score:
-
-            score = parse_score(item)
-
-        if not score:
-            continue
-
-        home_score, away_score = score
-
-        # ----------------------------------------------------
-        # Tarih
-        # ----------------------------------------------------
-
-        date_value = None
-
-        for key in [
-            "date",
-            "matchDate",
-            "startDate",
-            "startTime",
-            "dateTime"
-        ]:
-
-            if key in item:
-
-                date_value = item[key]
-
-                if date_value:
-                    break
-
-        if not date_value:
-            continue
-
-        date_iso = parse_date(
-            date_value
-        )
-
-        if not date_iso:
-            continue
-
-        matches.append({
-            "date": date_iso,
-            "home": home,
-            "away": away,
-            "homeScore": home_score,
-            "awayScore": away_score
-        })
-
-    return matches
-
-
-# ============================================================
-# TARİH ÇÖZ
-# ============================================================
-
-def parse_date(value):
-
-    if value is None:
         return None
 
-    value = str(value).strip()
+    if isinstance(value, (list, tuple)):
+        if len(value) >= 2:
+            try:
+                h = int(value[0])
+                a = int(value[1])
 
-    # ISO
-    try:
+                if 0 <= h <= 300 and 0 <= a <= 300:
+                    return h, a
+            except Exception:
+                pass
 
-        dt = datetime.fromisoformat(
-            value.replace("Z", "+00:00")
-        )
+        return None
 
-        return dt.strftime(
-            "%Y-%m-%d"
-        )
+    text = str(value)
 
-    except Exception:
-        pass
+    patterns = [
+        r"(\d{1,3})\s*[-:]\s*(\d{1,3})",
+        r"(\d{1,3})\s*–\s*(\d{1,3})",
+        r"(\d{1,3})\s+(\d{1,3})",
+    ]
 
-    # DD.MM.YYYY
-    match = re.search(
-        r"(\d{1,2})\.(\d{1,2})\.(\d{4})",
-        value
-    )
+    for pattern in patterns:
+        match = re.search(pattern, text)
 
-    if match:
+        if match:
+            try:
+                h = int(match.group(1))
+                a = int(match.group(2))
 
-        try:
-
-            dt = datetime.strptime(
-                match.group(0),
-                "%d.%m.%Y"
-            )
-
-            return dt.strftime(
-                "%Y-%m-%d"
-            )
-
-        except Exception:
-            pass
-
-    # YYYY-MM-DD
-    match = re.search(
-        r"(\d{4})-(\d{2})-(\d{2})",
-        value
-    )
-
-    if match:
-
-        return match.group(0)
+                if 0 <= h <= 300 and 0 <= a <= 300:
+                    return h, a
+            except Exception:
+                pass
 
     return None
 
 
-# ============================================================
-# TAKIM İSTATİSTİĞİ
-# ============================================================
+def parse_date(value):
+    if value is None:
+        return None
 
-def calculate_stats(
-    history,
-    team
-):
+    text = str(value).strip()
 
-    team = normalize_team(team)
+    if not text:
+        return None
 
-    home_games = [
-        m for m in history
-        if m["home"] == team
-    ]
-
-    away_games = [
-        m for m in history
-        if m["away"] == team
-    ]
-
-    home_games.sort(
-        key=lambda x: x["date"],
-        reverse=True
+    # ISO tarih
+    match = re.search(
+        r"(20\d{2})[-/](\d{1,2})[-/](\d{1,2})",
+        text
     )
 
-    away_games.sort(
-        key=lambda x: x["date"],
-        reverse=True
+    if match:
+        try:
+            year = int(match.group(1))
+            month = int(match.group(2))
+            day = int(match.group(3))
+
+            return f"{year:04d}-{month:02d}-{day:02d}"
+        except Exception:
+            pass
+
+    # Türkçe tarih
+    match = re.search(
+        r"(\d{1,2})[./-](\d{1,2})[./-](20\d{2})",
+        text
     )
 
-    home_games = home_games[:LAST_N]
-    away_games = away_games[:LAST_N]
+    if match:
+        try:
+            day = int(match.group(1))
+            month = int(match.group(2))
+            year = int(match.group(3))
 
-    def average(values):
+            return f"{year:04d}-{month:02d}-{day:02d}"
+        except Exception:
+            pass
 
-        if not values:
-            return None
+    return None
 
-        return round(
-            sum(values) / len(values),
-            2
-        )
 
-    return {
+def get_string(obj, keys):
+    if not isinstance(obj, dict):
+        return None
 
-        "home": {
-
-            "games": len(home_games),
-
-            "scored": average([
-                x["homeScore"]
-                for x in home_games
-            ]),
-
-            "conceded": average([
-                x["awayScore"]
-                for x in home_games
-            ]),
-
-            "matches": home_games
-        },
-
-        "away": {
-
-            "games": len(away_games),
-
-            "scored": average([
-                x["awayScore"]
-                for x in away_games
-            ]),
-
-            "conceded": average([
-                x["homeScore"]
-                for x in away_games
-            ]),
-
-            "matches": away_games
-        }
+    lowered = {
+        str(k).lower(): v
+        for k, v in obj.items()
     }
 
+    for key in keys:
+        if key.lower() in lowered:
+            value = lowered[key.lower()]
 
-# ============================================================
-# ANA
-# ============================================================
+            if isinstance(value, (str, int, float)):
+                return str(value)
+
+    return None
+
+
+def get_team_from_object(obj, home=True):
+    if not isinstance(obj, dict):
+        return None
+
+    if home:
+        keys = [
+            "home",
+            "homeTeam",
+            "home_team",
+            "homeName",
+            "homeTeamName",
+            "homeParticipant",
+            "homeCompetitor",
+            "teamHome",
+            "localTeam",
+            "hostTeam",
+        ]
+    else:
+        keys = [
+            "away",
+            "awayTeam",
+            "away_team",
+            "awayName",
+            "awayTeamName",
+            "awayParticipant",
+            "awayCompetitor",
+            "teamAway",
+            "visitorTeam",
+            "guestTeam",
+        ]
+
+    value = get_string(obj, keys)
+
+    if value:
+        return normalize_team(value)
+
+    return None
+
+
+def get_date_from_object(obj):
+    if not isinstance(obj, dict):
+        return None
+
+    keys = [
+        "date",
+        "matchDate",
+        "gameDate",
+        "startDate",
+        "startTime",
+        "dateTime",
+        "datetime",
+        "eventDate",
+        "scheduledAt",
+        "playedAt",
+    ]
+
+    for key in keys:
+        value = get_string(obj, [key])
+
+        if value:
+            result = parse_date(value)
+
+            if result:
+                return result
+
+    return None
+
+
+def get_score_from_object(obj):
+    if not isinstance(obj, dict):
+        return None
+
+    # Önce doğrudan skor alanlarını dene
+    for key in [
+        "score",
+        "result",
+        "finalScore",
+        "final_score",
+        "matchScore",
+        "scores",
+    ]:
+        if key in obj:
+            result = parse_score_value(obj[key])
+
+            if result:
+                return result
+
+    # Sonra home/away score alanlarını dene
+    home_keys = [
+        "homeScore",
+        "home_score",
+        "homePoints",
+        "home_points",
+        "scoreHome",
+        "homeResult",
+    ]
+
+    away_keys = [
+        "awayScore",
+        "away_score",
+        "awayPoints",
+        "away_points",
+        "scoreAway",
+        "awayResult",
+    ]
+
+    home_value = get_string(obj, home_keys)
+    away_value = get_string(obj, away_keys)
+
+    if home_value is not None and away_value is not None:
+        try:
+            h = int(float(home_value))
+            a = int(float(away_value))
+
+            if 0 <= h <= 300 and 0 <= a <= 300:
+                return h, a
+        except Exception:
+            pass
+
+    return None
+
+
+def extract_from_dict(obj, teams, found):
+    if not isinstance(obj, dict):
+        return
+
+    home = get_team_from_object(obj, True)
+    away = get_team_from_object(obj, False)
+    score = get_score_from_object(obj)
+    date = get_date_from_object(obj)
+
+    if home and away and score:
+        known_home = None
+        known_away = None
+
+        for team in teams:
+            if normalized_team_match(
+                normalize_text(home),
+                normalize_text(team)
+            ):
+                known_home = team
+
+            if normalized_team_match(
+                normalize_text(away),
+                normalize_text(team)
+            ):
+                known_away = team
+
+        if known_home and known_away:
+            home_score, away_score = score
+
+            if date is None:
+                date = datetime.utcnow().strftime("%Y-%m-%d")
+
+            match = {
+                "date": date,
+                "home": known_home,
+                "away": known_away,
+                "homeScore": home_score,
+                "awayScore": away_score,
+            }
+
+            key = (
+                match["date"],
+                match["home"],
+                match["away"],
+            )
+
+            found[key] = match
+
+    for value in obj.values():
+        walk_json(value, teams, found)
+
+
+def walk_json(value, teams, found):
+    if isinstance(value, dict):
+        extract_from_dict(value, teams, found)
+
+    elif isinstance(value, list):
+        for item in value:
+            walk_json(item, teams, found)
+
+
+def extract_from_text(text, teams, found):
+    if not text:
+        return
+
+    # Tarih + takım + skor yakalamaya çalış
+    date_pattern = (
+        r"(\d{1,2}[./-]\d{1,2}[./-]20\d{2}"
+        r"|20\d{2}[./-]\d{1,2}[./-]\d{1,2})"
+    )
+
+    score_pattern = r"(\d{1,3})\s*[-:]\s*(\d{1,3})"
+
+    for date_match in re.finditer(date_pattern, text):
+        start = max(0, date_match.start() - 500)
+        end = min(len(text), date_match.end() + 1000)
+
+        block = text[start:end]
+
+        score_match = re.search(score_pattern, block)
+
+        if not score_match:
+            continue
+
+        home_score = int(score_match.group(1))
+        away_score = int(score_match.group(2))
+
+        if home_score > 300 or away_score > 300:
+            continue
+
+        # Bilinen takımları blok içinde ara
+        found_teams = []
+
+        for team in teams:
+            if normalize_text(team) in normalize_text(block):
+                found_teams.append(team)
+
+        if len(found_teams) < 2:
+            continue
+
+        # Aynı blokta iki takım bulunduysa olası eşleşme
+        for i in range(len(found_teams)):
+            for j in range(i + 1, len(found_teams)):
+                home = found_teams[i]
+                away = found_teams[j]
+
+                date = parse_date(date_match.group(1))
+
+                if not date:
+                    continue
+
+                match = {
+                    "date": date,
+                    "home": home,
+                    "away": away,
+                    "homeScore": home_score,
+                    "awayScore": away_score,
+                }
+
+                key = (
+                    date,
+                    home,
+                    away,
+                )
+
+                found[key] = match
+
+
+def calculate_team_stats(history, teams):
+    team_stats = {}
+
+    for team in teams:
+        home_games = [
+            m for m in history
+            if normalize_text(m["home"]) == normalize_text(team)
+        ]
+
+        away_games = [
+            m for m in history
+            if normalize_text(m["away"]) == normalize_text(team)
+        ]
+
+        home_games.sort(
+            key=lambda x: x["date"],
+            reverse=True
+        )
+
+        away_games.sort(
+            key=lambda x: x["date"],
+            reverse=True
+        )
+
+        home_games = home_games[:LAST_N]
+        away_games = away_games[:LAST_N]
+
+        home_for = [
+            m["homeScore"]
+            for m in home_games
+        ]
+
+        home_against = [
+            m["awayScore"]
+            for m in home_games
+        ]
+
+        away_for = [
+            m["awayScore"]
+            for m in away_games
+        ]
+
+        away_against = [
+            m["homeScore"]
+            for m in away_games
+        ]
+
+        team_stats[team] = {
+            "home": {
+                "games": len(home_games),
+                "scored": round(
+                    sum(home_for) / len(home_for),
+                    2
+                ) if home_for else 0,
+                "conceded": round(
+                    sum(home_against) / len(home_against),
+                    2
+                ) if home_against else 0,
+            },
+            "away": {
+                "games": len(away_games),
+                "scored": round(
+                    sum(away_for) / len(away_for),
+                    2
+                ) if away_for else 0,
+                "conceded": round(
+                    sum(away_against) / len(away_against),
+                    2
+                ) if away_against else 0,
+            },
+        }
+
+    return team_stats
+
 
 def main():
-
     print("=" * 60)
-    print("🏀 IDDAA.COM EUROLEAGUE GEÇMİŞ VERİ")
+    print("🏀 IDDAA.COM EUROLEAGUE GEÇMİŞ VERİ SCRAPER")
     print("=" * 60)
 
     teams = load_teams()
 
-    print(
-        f"📦 Takım sayısı: {len(teams)}"
-    )
+    print(f"\n📦 Takım sayısı: {len(teams)}")
 
-    captured_json = []
+    if len(teams) == 0:
+        raise RuntimeError("data.json içinde takım bulunamadı")
 
-    captured_text = []
+    print("\n📋 Takımlar:")
+
+    for team in teams:
+        print(f"   • {team}")
+
+    captured = []
 
     with sync_playwright() as p:
-
         browser = p.chromium.launch(
             headless=True
         )
 
-        context = browser.new_context()
+        context = browser.new_context(
+            locale="tr-TR"
+        )
 
         page = context.new_page()
 
-        # ----------------------------------------------------
-        # Network JSON yakala
-        # ----------------------------------------------------
-
         def response_handler(response):
-
             try:
-
                 content_type = (
-                    response.headers
-                    .get("content-type", "")
-                    .lower()
+                    response.headers.get(
+                        "content-type",
+                        ""
+                    ).lower()
                 )
 
-                url = response.url
+                url = response.url.lower()
 
                 if (
-                    "json" not in content_type
-                    and not url.lower().endswith(".json")
+                    "json" in content_type
+                    or ".json" in url
+                    or "/api/" in url
                 ):
-                    return
+                    try:
+                        body = response.text()
 
-                text = response.text()
+                        if body and len(body) > 20:
+                            captured.append({
+                                "url": response.url,
+                                "body": body,
+                            })
 
-                if len(text) > 5_000_000:
-                    return
-
-                try:
-
-                    obj = json.loads(text)
-
-                    captured_json.append({
-                        "url": url,
-                        "data": obj
-                    })
-
-                except Exception:
-                    pass
+                    except Exception:
+                        pass
 
             except Exception:
                 pass
@@ -634,150 +709,124 @@ def main():
             response_handler
         )
 
-        print("\n🌐 iddaa.com açılıyor...")
+        for url in URLS:
+            print(f"\n🌐 Açılıyor: {url}")
 
-        page.goto(
-            URL,
-            wait_until="domcontentloaded",
-            timeout=60000
-        )
+            try:
+                page.goto(
+                    url,
+                    wait_until="domcontentloaded",
+                    timeout=60000
+                )
 
-        page.wait_for_timeout(
-            8000
-        )
+                page.wait_for_timeout(8000)
+
+                # Sayfanın yüklediği dinamik içerikleri tetikle
+                for _ in range(4):
+                    page.mouse.wheel(
+                        0,
+                        1800
+                    )
+                    page.wait_for_timeout(1500)
+
+                # Biraz daha bekle
+                page.wait_for_timeout(5000)
+
+            except Exception as e:
+                print(
+                    f"   ⚠️ Sayfa hatası: {e}"
+                )
 
         print(
-            f"📡 Yakalanan JSON cevap: "
-            f"{len(captured_json)}"
-        )
-
-        # ----------------------------------------------------
-        # Body text
-        # ----------------------------------------------------
-
-        try:
-
-            body = page.locator(
-                "body"
-            ).inner_text()
-
-            captured_text.append(body)
-
-        except Exception:
-            pass
-
-        # ----------------------------------------------------
-        # Biraz daha bekle
-        # ----------------------------------------------------
-
-        page.wait_for_timeout(
-            5000
+            f"\n📡 Yakalanan JSON cevap: "
+            f"{len(captured)}"
         )
 
         browser.close()
 
-    # ========================================================
-    # JSON VERİLERİNDEN MAÇLARI ÇIKAR
-    # ========================================================
-
-    all_matches = {}
+    found = {}
 
     print("\n🔎 JSON cevapları taranıyor...")
 
-    for packet in captured_json:
+    for item in captured:
+        body = item["body"]
 
-        found = extract_matches_from_json(
-            packet["data"],
-            teams
+        # JSON olarak parse etmeyi dene
+        try:
+            parsed = json.loads(body)
+
+            walk_json(
+                parsed,
+                teams,
+                found
+            )
+
+        except Exception:
+            pass
+
+        # JSON dışında metin içinde de ara
+        extract_from_text(
+            body,
+            teams,
+            found
         )
 
-        if found:
+    history = list(found.values())
 
-            print(
-                f"   ✅ {len(found)} maç: "
-                f"{packet['url']}"
-            )
+    # Sadece gerçek skorları bırak
+    history = [
+        m for m in history
+        if isinstance(m["homeScore"], int)
+        and isinstance(m["awayScore"], int)
+        and 0 <= m["homeScore"] <= 300
+        and 0 <= m["awayScore"] <= 300
+    ]
 
-        for match in found:
-
-            key = (
-                match["date"],
-                match["home"],
-                match["away"]
-            )
-
-            all_matches[key] = match
-
-    # ========================================================
-    # TEXT İÇİN BASİT KONTROL
-    # ========================================================
-
-    print(
-        f"\n🏀 Toplam bulunan geçmiş maç: "
-        f"{len(all_matches)}"
+    history.sort(
+        key=lambda x: (
+            x["date"],
+            x["home"],
+            x["away"],
+        ),
+        reverse=True
     )
 
-    if not all_matches:
+    print(
+        f"🏀 Toplam bulunan geçmiş maç: "
+        f"{len(history)}"
+    )
 
-        print("\n❌ İddaa.com'dan geçmiş maç verisi alınamadı.")
+    if not history:
+        print(
+            "\n❌ iddaa.com'dan geçmiş "
+            "maç verisi bulunamadı."
+        )
 
         print(
             "❌ Sahte veri oluşturulmadı."
         )
 
-        print(
-            "📡 Yakalanan JSON: "
-            f"{len(captured_json)}"
-        )
-
         raise RuntimeError(
-            "iddaa.com geçmiş maç veri kaynağı bulunamadı"
+            "iddaa.com geçmiş maç veri "
+            "kaynağı bulunamadı"
         )
 
-    # ========================================================
-    # GEÇMİŞ
-    # ========================================================
+    # --------------------------------------------------
+    # HISTORY.JSON
+    # --------------------------------------------------
 
-    history = list(
-        all_matches.values()
+    team_stats = calculate_team_stats(
+        history,
+        teams
     )
-
-    history.sort(
-        key=lambda x: x["date"]
-    )
-
-    # ========================================================
-    # TAKIM İSTATİSTİKLERİ
-    # ========================================================
-
-    team_stats = {}
-
-    for team in teams:
-
-        team_stats[team] = calculate_stats(
-            history,
-            team
-        )
-
-    # ========================================================
-    # KAYDET
-    # ========================================================
 
     output = {
-
-        "source": URL,
-
+        "source": "https://www.iddaa.com",
         "league": "EuroLeague",
-
-        "updatedAt": datetime.now(
-            timezone.utc
-        ).isoformat(),
-
+        "updatedAt": datetime.utcnow().isoformat() + "Z",
         "lastN": LAST_N,
-
         "matches": history,
-
-        "teamStats": team_stats
+        "teamStats": team_stats,
     }
 
     with open(
@@ -785,17 +834,12 @@ def main():
         "w",
         encoding="utf-8"
     ) as f:
-
         json.dump(
             output,
             f,
             ensure_ascii=False,
             indent=2
         )
-
-    # ========================================================
-    # ÖZET
-    # ========================================================
 
     print("\n" + "=" * 60)
     print("📊 SONUÇ")
@@ -806,36 +850,31 @@ def main():
     )
 
     print(
-        f"👥 Takım: {len(team_stats)}"
+        f"💾 Dosya: {HISTORY_FILE}"
     )
 
-    print(
-        f"💾 {HISTORY_FILE}"
-    )
-
-    print("\n📋 SON 5 İSTATİSTİK")
+    print("\n📋 SON 5 EV / DEPLASMAN")
 
     for team in teams:
+        stats = team_stats.get(team, {})
 
-        stats = team_stats[team]
+        home = stats.get("home", {})
+        away = stats.get("away", {})
 
-        h = stats["home"]
-        a = stats["away"]
-
-        print(f"\n🏀 {team}")
+        print(f"\n{team}")
 
         print(
-            f"   🏠 İç saha: "
-            f"{h['games']} maç | "
-            f"Attı: {h['scored']} | "
-            f"Yedi: {h['conceded']}"
+            f"   🏠 Ev: "
+            f"{home.get('games', 0)} maç | "
+            f"Attı: {home.get('scored', 0)} | "
+            f"Yedi: {home.get('conceded', 0)}"
         )
 
         print(
-            f"   ✈️ Deplasman: "
-            f"{a['games']} maç | "
-            f"Attı: {a['scored']} | "
-            f"Yedi: {a['conceded']}"
+            f"   ✈️ Dep: "
+            f"{away.get('games', 0)} maç | "
+            f"Attı: {away.get('scored', 0)} | "
+            f"Yedi: {away.get('conceded', 0)}"
         )
 
     print("\n✅ history.json oluşturuldu.")
