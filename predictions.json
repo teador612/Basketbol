@@ -1,6 +1,6 @@
 {
   "source": "data/basketball.json",
-  "updatedAt": "2026-10-06T15:51:54.746846+00:00",
+  "updatedAt": "2026-10-06T16:12:34.050691+00:00",
   "method": {
     "homeSample": "basketball.json homeLast5",
     "awaySample": "basketball.json awayLast5",
@@ -1188,23 +1188,54 @@
           "conceded": 91.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 91.2,
         "conceded": 79.6
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 87.7,
+        "away": 79.2
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 84.0,
       "result": null,
       "correct": null
     },
@@ -3758,6 +3789,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -3793,9 +3836,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -3803,11 +3846,11 @@
         "conceded": 81.6
       },
       "expectedScore": {
-        "home": 83.13,
-        "away": 74.6
+        "home": 83.7,
+        "away": 75.8
       },
       "prediction": "1",
-      "confidence": 84.1,
+      "confidence": 81.6,
       "result": null,
       "correct": null
     },
@@ -5656,6 +5699,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -5691,9 +5746,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -5701,11 +5756,11 @@
         "conceded": 81.0
       },
       "expectedScore": {
-        "home": 82.84,
-        "away": 77.9
+        "home": 83.4,
+        "away": 79.1
       },
       "prediction": "1",
-      "confidence": 69.8,
+      "confidence": 67.2,
       "result": null,
       "correct": null
     },
@@ -9840,23 +9895,54 @@
           "conceded": 76.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 88.2,
         "conceded": 71.2
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 86.2,
+        "away": 75.0
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 94.8,
       "result": null,
       "correct": null
     },
@@ -13529,23 +13615,54 @@
           "conceded": 68.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 90.8,
         "conceded": 86.4
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 87.5,
+        "away": 82.6
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 69.6,
       "result": null,
       "correct": null
     },
@@ -15616,23 +15733,54 @@
           "conceded": 83.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 93.0,
         "conceded": 78.6
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 88.6,
+        "away": 78.7
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 89.6,
       "result": null,
       "correct": null
     },
@@ -21225,6 +21373,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -21260,9 +21420,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -21270,11 +21430,11 @@
         "conceded": 92.8
       },
       "expectedScore": {
-        "home": 88.73,
-        "away": 77.3
+        "home": 89.3,
+        "away": 78.5
       },
       "prediction": "1",
-      "confidence": 95,
+      "confidence": 93.2,
       "result": null,
       "correct": null
     },
@@ -22075,23 +22235,54 @@
           "conceded": 90.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 91.6,
         "conceded": 86.6
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 87.9,
+        "away": 82.7
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 70.8,
       "result": null,
       "correct": null
     },
@@ -22961,6 +23152,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -22996,9 +23199,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -23006,8 +23209,8 @@
         "conceded": 89.0
       },
       "expectedScore": {
-        "home": 86.84,
-        "away": 74.7
+        "home": 87.4,
+        "away": 75.9
       },
       "prediction": "1",
       "confidence": 95,
@@ -23876,23 +24079,54 @@
           "conceded": 85.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 1,
         "scored": 87.0,
         "conceded": 85.0
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 85.6,
+        "away": 81.9
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 64.8,
       "result": null,
       "correct": null
     },
@@ -24853,23 +25087,54 @@
           "conceded": 88.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 87.0,
         "conceded": 80.8
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 85.6,
+        "away": 79.8
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 73.2,
       "result": null,
       "correct": null
     },
@@ -25342,6 +25607,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -25377,9 +25654,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -25387,11 +25664,11 @@
         "conceded": 93.6
       },
       "expectedScore": {
-        "home": 89.13,
-        "away": 80.6
+        "home": 89.7,
+        "away": 81.8
       },
       "prediction": "1",
-      "confidence": 84.1,
+      "confidence": 81.6,
       "result": null,
       "correct": null
     },
@@ -26095,6 +26372,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -26130,9 +26419,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -26140,11 +26429,11 @@
         "conceded": 87.0
       },
       "expectedScore": {
-        "home": 85.84,
-        "away": 74.0
+        "home": 86.4,
+        "away": 75.2
       },
       "prediction": "1",
-      "confidence": 95,
+      "confidence": 94.8,
       "result": null,
       "correct": null
     },
@@ -27014,6 +27303,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -27049,9 +27350,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -27059,11 +27360,11 @@
         "conceded": 92.2
       },
       "expectedScore": {
-        "home": 88.44,
-        "away": 77.2
+        "home": 89.0,
+        "away": 78.4
       },
       "prediction": "1",
-      "confidence": 95.0,
+      "confidence": 92.4,
       "result": null,
       "correct": null
     },
@@ -27767,6 +28068,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -27802,9 +28115,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -27812,8 +28125,8 @@
         "conceded": 94.6
       },
       "expectedScore": {
-        "home": 89.63,
-        "away": 75.8
+        "home": 90.2,
+        "away": 77.0
       },
       "prediction": "1",
       "confidence": 95,
@@ -28599,23 +28912,54 @@
           "conceded": 96.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 2,
         "scored": 88.0,
         "conceded": 95.5
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 86.1,
+        "away": 87.15
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "2",
+      "confidence": 54.2,
       "result": null,
       "correct": null
     },
@@ -29420,6 +29764,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -29455,9 +29811,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -29465,11 +29821,11 @@
         "conceded": 86.8
       },
       "expectedScore": {
-        "home": 85.73,
-        "away": 76.6
+        "home": 86.3,
+        "away": 77.8
       },
       "prediction": "1",
-      "confidence": 86.5,
+      "confidence": 84.0,
       "result": null,
       "correct": null
     },
@@ -30424,23 +30780,54 @@
           "conceded": 60.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 89.0,
         "conceded": 81.0
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 86.6,
+        "away": 79.9
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 76.8,
       "result": null,
       "correct": null
     },
@@ -31081,23 +31468,54 @@
           "conceded": 91.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 85.4,
         "conceded": 87.0
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 84.8,
+        "away": 82.9
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 57.6,
       "result": null,
       "correct": null
     },
@@ -32663,23 +33081,54 @@
           "conceded": 78.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 89.2,
         "conceded": 84.0
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 86.7,
+        "away": 81.4
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 71.2,
       "result": null,
       "correct": null
     },
@@ -32796,6 +33245,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -32807,9 +33268,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 1,
@@ -32817,11 +33278,11 @@
         "conceded": 93.0
       },
       "expectedScore": {
-        "home": 88.84,
-        "away": 89.5
+        "home": 89.4,
+        "away": 90.7
       },
       "prediction": "2",
-      "confidence": 52.6,
+      "confidence": 55.2,
       "result": null,
       "correct": null
     },
@@ -33970,6 +34431,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -34005,9 +34478,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -34015,11 +34488,11 @@
         "conceded": 91.2
       },
       "expectedScore": {
-        "home": 87.94,
-        "away": 79.9
+        "home": 88.5,
+        "away": 81.1
       },
       "prediction": "1",
-      "confidence": 82.2,
+      "confidence": 79.6,
       "result": null,
       "correct": null
     },
@@ -34660,23 +35133,54 @@
           "conceded": 109.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 98.4,
         "conceded": 97.0
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 91.3,
+        "away": 87.9
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 63.6,
       "result": null,
       "correct": null
     },
@@ -35631,23 +36135,54 @@
           "conceded": 82.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 83.8,
         "conceded": 89.6
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 84.0,
+        "away": 84.2
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "2",
+      "confidence": 50.8,
       "result": null,
       "correct": null
     },
@@ -36612,6 +37147,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -36629,9 +37176,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 2,
@@ -36639,8 +37186,8 @@
         "conceded": 89.0
       },
       "expectedScore": {
-        "home": 86.84,
-        "away": 73.0
+        "home": 87.4,
+        "away": 74.2
       },
       "prediction": "1",
       "confidence": 95,
@@ -37462,23 +38009,54 @@
           "conceded": 89.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 82.0,
         "conceded": 81.2
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 83.1,
+        "away": 80.0
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 62.4,
       "result": null,
       "correct": null
     },
@@ -38012,23 +38590,54 @@
           "conceded": 103.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 82.2,
         "conceded": 91.6
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 83.2,
+        "away": 85.2
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "2",
+      "confidence": 58.0,
       "result": null,
       "correct": null
     },
@@ -38922,6 +39531,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -38957,9 +39578,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -38967,11 +39588,11 @@
         "conceded": 88.8
       },
       "expectedScore": {
-        "home": 86.73,
-        "away": 82.6
+        "home": 87.3,
+        "away": 83.8
       },
       "prediction": "1",
-      "confidence": 66.5,
+      "confidence": 64.0,
       "result": null,
       "correct": null
     },
@@ -39313,6 +39934,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -39348,9 +39981,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -39358,11 +39991,11 @@
         "conceded": 89.0
       },
       "expectedScore": {
-        "home": 86.84,
-        "away": 76.7
+        "home": 87.4,
+        "away": 77.9
       },
       "prediction": "1",
-      "confidence": 90.6,
+      "confidence": 88.0,
       "result": null,
       "correct": null
     },
@@ -40347,23 +40980,54 @@
           "conceded": 89.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 85.6,
         "conceded": 85.8
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 84.9,
+        "away": 82.3
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 60.4,
       "result": null,
       "correct": null
     },
@@ -41328,6 +41992,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -41363,9 +42039,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -41373,11 +42049,11 @@
         "conceded": 86.2
       },
       "expectedScore": {
-        "home": 85.44,
-        "away": 75.9
+        "home": 86.0,
+        "away": 77.1
       },
       "prediction": "1",
-      "confidence": 88.2,
+      "confidence": 85.6,
       "result": null,
       "correct": null
     },
@@ -42083,23 +42759,54 @@
           "conceded": 100.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 94.6,
         "conceded": 97.2
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 89.4,
+        "away": 88.0
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 55.6,
       "result": null,
       "correct": null
     },
@@ -42684,6 +43391,18 @@
           "opponent": "Virtus Bologna",
           "scored": 78.0,
           "conceded": 68.0
+        },
+        {
+          "date": "2026-04-30T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 86.0,
+          "conceded": 74.0
+        },
+        {
+          "date": "2026-04-28T19:45:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 89.0,
+          "conceded": 78.0
         }
       ],
       "awayLast5": [
@@ -42719,9 +43438,9 @@
         }
       ],
       "homeAverage": {
-        "sample": 3,
-        "scored": 84.67,
-        "conceded": 70.0
+        "sample": 5,
+        "scored": 85.8,
+        "conceded": 72.4
       },
       "awayAverage": {
         "sample": 5,
@@ -42729,11 +43448,11 @@
         "conceded": 88.6
       },
       "expectedScore": {
-        "home": 86.63,
-        "away": 83.7
+        "home": 87.2,
+        "away": 84.9
       },
       "prediction": "1",
-      "confidence": 61.7,
+      "confidence": 59.2,
       "result": null,
       "correct": null
     },
@@ -43558,23 +44277,54 @@
           "conceded": 81.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 83.2,
         "conceded": 82.6
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 83.7,
+        "away": 80.7
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 62.0,
       "result": null,
       "correct": null
     },
@@ -44286,23 +45036,54 @@
           "conceded": 77.0
         }
       ],
-      "awayLast5": [],
+      "awayLast5": [
+        {
+          "date": "2026-05-22T17:00:00",
+          "opponent": "Olympiacos Piraeus",
+          "scored": 61.0,
+          "conceded": 79.0
+        },
+        {
+          "date": "2026-05-08T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 94.0,
+          "conceded": 90.0
+        },
+        {
+          "date": "2026-05-06T19:00:00",
+          "opponent": "Zalgiris Kaunas",
+          "scored": 78.0,
+          "conceded": 81.0
+        },
+        {
+          "date": "2026-04-16T20:00:00",
+          "opponent": "LDLC ASVEL Villeurbanne",
+          "scored": 81.0,
+          "conceded": 76.0
+        },
+        {
+          "date": "2026-04-07T18:00:00",
+          "opponent": "Hapoel IBI Tel Aviv",
+          "scored": 80.0,
+          "conceded": 95.0
+        }
+      ],
       "homeAverage": {
         "sample": 5,
         "scored": 82.4,
         "conceded": 84.2
       },
       "awayAverage": {
-        "sample": 0,
-        "scored": null,
-        "conceded": null
+        "sample": 5,
+        "scored": 78.8,
+        "conceded": 84.2
       },
       "expectedScore": {
-        "home": null,
-        "away": null
+        "home": 83.3,
+        "away": 81.5
       },
-      "prediction": null,
-      "confidence": null,
+      "prediction": "1",
+      "confidence": 57.2,
       "result": null,
       "correct": null
     },
