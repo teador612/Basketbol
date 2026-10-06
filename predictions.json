@@ -1,6 +1,6 @@
 {
   "source": "data/basketball.json",
-  "updatedAt": "2026-10-06T15:43:05.638656+00:00",
+  "updatedAt": "2026-10-06T15:51:54.746846+00:00",
   "method": {
     "homeSample": "basketball.json homeLast5",
     "awaySample": "basketball.json awayLast5",
