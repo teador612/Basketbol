@@ -1,1591 +1,182 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-  >
+name: Basketbol Veri ve Tahmin Güncelleme
+
+on:
+  workflow_dispatch:
 
-  <title>Basketbol Tahmin</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      background: #0b0f14;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0b0f14;
-      color: #e8edf3;
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-      font-size: 13px;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 10px;
-    }
-
-    /* HEADER */
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .title {
-      font-size: 17px;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.3px;
-    }
-
-    .subtitle {
-      margin-top: 2px;
-      color: #7f8a98;
-      font-size: 10px;
-    }
-
-    /* SUMMARY */
-
-    .summary {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .summary-card {
-      background: #121820;
-      border: 1px solid #202a35;
-      border-radius: 8px;
-      padding: 7px 5px;
-      text-align: center;
-    }
-
-    .summary-value {
-      font-size: 16px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .summary-label {
-      margin-top: 2px;
-      font-size: 9px;
-      color: #7f8a98;
-    }
-
-    /* FILTERS */
-
-    .filters {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 9px;
-    }
-
-    .filter {
-      min-width: 0;
-    }
-
-    .filter label {
-      display: block;
-      margin: 0 0 3px 2px;
-      color: #778392;
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .filter input,
-    .filter select {
-      width: 100%;
-      min-height: 34px;
-      padding: 6px 8px;
-      border: 1px solid #283441;
-      border-radius: 7px;
-      background: #111820;
-      color: #e8edf3;
-      outline: none;
-    }
-
-    .filter input:focus,
-    .filter select:focus {
-      border-color: #526b84;
-    }
-
-    /* DATE */
-
-    input[type="date"] {
-      color-scheme: dark;
-    }
-
-    /* STATUS */
-
-    .status-line {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin: 7px 1px;
-      color: #7f8a98;
-      font-size: 10px;
-    }
-
-    .status-count {
-      color: #aeb8c4;
-      font-weight: 700;
-    }
-
-    /* MATCH LIST */
-
-    .matches {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .match-card {
-      overflow: hidden;
-      border: 1px solid #202a35;
-      border-radius: 8px;
-      background: #11171e;
-      transition:
-        border-color 0.15s ease,
-        background 0.15s ease;
-    }
-
-    .match-card:hover {
-      border-color: #334353;
-    }
-
-    .match-head {
-      width: 100%;
-      min-height: 58px;
-      padding: 7px 9px;
-      display: grid;
-      grid-template-columns: 45px 1fr auto;
-      gap: 7px;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .match-time {
-      text-align: center;
-      color: #7d8996;
-      font-size: 9px;
-      line-height: 1.2;
-    }
-
-    .match-time strong {
-      display: block;
-      margin-bottom: 2px;
-      color: #aeb8c4;
-      font-size: 10px;
-    }
-
-    .teams {
-      min-width: 0;
-    }
-
-    .team-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      line-height: 1.35;
-    }
-
-    .team-name {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: #e9edf2;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .score {
-      flex: 0 0 auto;
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .score.empty {
-      color: #596574;
-    }
-
-    .prediction-box {
-      min-width: 74px;
-      text-align: right;
-    }
-
-    .prediction-market {
-      color: #737f8c;
-      font-size: 8px;
-      margin-bottom: 2px;
-    }
-
-    .prediction {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 64px;
-      padding: 3px 6px;
-      border-radius: 5px;
-      font-size: 10px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .prediction.over {
-      background: #153626;
-      color: #65df9a;
-    }
-
-    .prediction.under {
-      background: #302c18;
-      color: #e3c55e;
-    }
-
-    .prediction.pending {
-      background: #202730;
-      color: #929dab;
-    }
-
-    .prediction.push {
-      background: #30281d;
-      color: #e0ad55;
-    }
-
-    .prediction.fail {
-      background: #361d22;
-      color: #ef7e89;
-    }
-
-    .prediction.success {
-      background: #153626;
-      color: #65df9a;
-    }
-
-    .expand-icon {
-      margin-left: 4px;
-      color: #566372;
-      font-size: 12px;
-      transition: transform 0.15s ease;
-    }
-
-    .match-card.open .expand-icon {
-      transform: rotate(180deg);
-    }
-
-    /* DETAILS */
-
-    .details {
-      display: none;
-      padding: 0 9px 9px;
-      border-top: 1px solid #1d2630;
-      background: #0e141a;
-    }
-
-    .match-card.open .details {
-      display: block;
-    }
-
-    .detail-top {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
-      margin: 7px 0;
-    }
-
-    .detail-box {
-      padding: 6px;
-      border: 1px solid #202a35;
-      border-radius: 6px;
-      background: #121920;
-      text-align: center;
-    }
-
-    .detail-label {
-      color: #707c89;
-      font-size: 8px;
-      margin-bottom: 2px;
-    }
-
-    .detail-value {
-      color: #e8edf3;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    /* PERIODS */
-
-    .period-title {
-      margin: 8px 0 5px;
-      color: #9ca8b5;
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .period-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 4px;
-    }
-
-    .period-card {
-      min-width: 0;
-      padding: 6px 3px;
-      border: 1px solid #202a35;
-      border-radius: 6px;
-      background: #121920;
-      text-align: center;
-    }
-
-    .period-name {
-      color: #707c89;
-      font-size: 8px;
-      margin-bottom: 3px;
-    }
-
-    .period-line {
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .period-prediction {
-      margin-top: 2px;
-      color: #8f9aa7;
-      font-size: 8px;
-      font-weight: 700;
-    }
-
-    /* HISTORY */
-
-    .history-row {
-      display: grid;
-      grid-template-columns: 1fr 48px 48px;
-      gap: 5px;
-      align-items: center;
-      padding: 4px 0;
-      border-bottom: 1px solid #1a222b;
-      font-size: 9px;
-    }
-
-    .history-row:last-child {
-      border-bottom: 0;
-    }
-
-    .history-team {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: #9aa5b1;
-    }
-
-    .history-score {
-      text-align: center;
-      color: #d7dde4;
-      font-weight: 700;
-    }
-
-    .history-total {
-      text-align: right;
-      color: #8a96a4;
-    }
-
-    /* EMPTY */
-
-    .empty {
-      padding: 25px 12px;
-      border: 1px solid #202a35;
-      border-radius: 8px;
-      background: #11171e;
-      text-align: center;
-      color: #7d8996;
-      font-size: 11px;
-    }
-
-    /* LOADING */
-
-    .loading {
-      padding: 20px;
-      text-align: center;
-      color: #7d8996;
-      font-size: 11px;
-    }
-
-    /* ERROR */
-
-    .error {
-      padding: 12px;
-      border: 1px solid #4a252b;
-      border-radius: 8px;
-      background: #24151a;
-      color: #ef8c96;
-      font-size: 11px;
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 560px) {
-      .container {
-        padding: 8px;
-      }
-
-      .summary {
-        gap: 4px;
-      }
-
-      .summary-card {
-        padding: 6px 3px;
-      }
-
-      .summary-value {
-        font-size: 14px;
-      }
-
-      .summary-label {
-        font-size: 8px;
-      }
-
-      .filters {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .filter:first-child {
-        grid-column: 1 / -1;
-      }
-
-      .match-head {
-        grid-template-columns: 39px 1fr auto;
-        padding: 6px 7px;
-      }
-
-      .team-name {
-        font-size: 10px;
-      }
-
-      .score {
-        font-size: 11px;
-      }
-
-      .prediction-box {
-        min-width: 68px;
-      }
-
-      .prediction {
-        min-width: 59px;
-        font-size: 9px;
-      }
-
-      .period-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
-
-    @media (max-width: 360px) {
-      .summary {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .filters {
-        grid-template-columns: 1fr;
-      }
-
-      .filter:first-child {
-        grid-column: auto;
-      }
-
-      .period-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <div class="header">
-    <div>
-      <div class="title">🏀 Basketbol Tahmin</div>
-      <div class="subtitle">Maç toplam Alt / Üst</div>
-    </div>
-  </div>
-
-  <div class="summary">
-    <div class="summary-card">
-      <div class="summary-value" id="successRate">-</div>
-      <div class="summary-label">Başarı</div>
-    </div>
-
-    <div class="summary-card">
-      <div class="summary-value" id="successful">-</div>
-      <div class="summary-label">Başarılı</div>
-    </div>
-
-    <div class="summary-card">
-      <div class="summary-value" id="failed">-</div>
-      <div class="summary-label">Başarısız</div>
-    </div>
-
-    <div class="summary-card">
-      <div class="summary-value" id="completed">-</div>
-      <div class="summary-label">Biten</div>
-    </div>
-  </div>
-
-  <div class="filters">
-
-    <div class="filter">
-      <label for="dateFilter">Tarih</label>
-      <input
-        type="date"
-        id="dateFilter"
-      >
-    </div>
-
-    <div class="filter">
-      <label for="leagueFilter">Lig</label>
-      <select id="leagueFilter">
-        <option value="all">Tüm ligler</option>
-        <option value="NBA">NBA</option>
-        <option value="EuroLeague">EuroLeague</option>
-      </select>
-    </div>
-
-    <div class="filter">
-      <label for="statusFilter">Durum</label>
-      <select id="statusFilter">
-        <option value="all">Tümü</option>
-        <option value="pending">Oynanmamış</option>
-        <option value="success">Başarılı</option>
-        <option value="failed">Başarısız</option>
-        <option value="push">Push</option>
-      </select>
-    </div>
-
-  </div>
-
-  <div class="status-line">
-    <span id="dateTitle">Maçlar</span>
-    <span
-      class="status-count"
-      id="matchCount"
-    >
-      0 maç
-    </span>
-  </div>
-
-  <div id="content">
-    <div class="loading">
-      Veriler yükleniyor...
-    </div>
-  </div>
-
-</div>
-
-<script>
-  const CACHE_KEY =
-    "?v=" + Date.now();
-
-  let predictions = [];
-  let resultsMap = {};
-
-  const dateFilter =
-    document.getElementById("dateFilter");
-
-  const leagueFilter =
-    document.getElementById("leagueFilter");
-
-  const statusFilter =
-    document.getElementById("statusFilter");
-
-  const content =
-    document.getElementById("content");
-
-  const matchCount =
-    document.getElementById("matchCount");
-
-  const dateTitle =
-    document.getElementById("dateTitle");
-
-
-  function normalizeDate(value) {
-    if (!value) {
-      return "";
-    }
-
-    const text =
-      String(value).trim();
-
-    if (
-      /^\d{4}-\d{2}-\d{2}$/.test(text)
-    ) {
-      return text;
-    }
-
-    const match =
-      text.match(
-        /^(\d{4})-(\d{2})-(\d{2})/
-      );
-
-    if (match) {
-      return (
-        match[1] +
-        "-" +
-        match[2] +
-        "-" +
-        match[3]
-      );
-    }
-
-    return "";
-  }
-
-
-  function formatDate(date) {
-    if (!date) {
-      return "-";
-    }
-
-    const parts =
-      date.split("-");
-
-    if (parts.length !== 3) {
-      return date;
-    }
-
-    return (
-      parts[2] +
-      "." +
-      parts[1] +
-      "." +
-      parts[0]
-    );
-  }
-
-
-  function todayString() {
-    const now =
-      new Date();
-
-    const y =
-      now.getFullYear();
-
-    const m =
-      String(
-        now.getMonth() + 1
-      ).padStart(2, "0");
-
-    const d =
-      String(
-        now.getDate()
-      ).padStart(2, "0");
-
-    return (
-      y +
-      "-" +
-      m +
-      "-" +
-      d
-    );
-  }
-
-
-  function escapeHtml(value) {
-    return String(
-      value ?? ""
-    )
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-
-  function number(value) {
-    const n =
-      Number(value);
-
-    return Number.isFinite(n)
-      ? n
-      : null;
-  }
-
-
-  function resultForPrediction(p) {
-    const id =
-      String(
-        p.id ?? ""
-      );
-
-    if (
-      resultsMap[id]
-    ) {
-      return resultsMap[id];
-    }
-
-    return null;
-  }
-
-
-  function getStatus(p) {
-    const result =
-      resultForPrediction(p);
-
-    if (
-      result &&
-      result.status
-    ) {
-      return String(
-        result.status
-      ).toLowerCase();
-    }
-
-    if (
-      p.played !== true
-    ) {
-      return "pending";
-    }
-
-    if (
-      p.success === true
-    ) {
-      return "success";
-    }
-
-    if (
-      p.success === false
-    ) {
-      return "failed";
-    }
-
-    if (
-      p.result === "Push"
-    ) {
-      return "push";
-    }
-
-    const homeScore =
-      number(p.homeScore);
-
-    const awayScore =
-      number(p.awayScore);
-
-    const line =
-      number(p.line);
-
-    if (
-      homeScore !== null &&
-      awayScore !== null &&
-      line !== null
-    ) {
-      const total =
-        homeScore +
-        awayScore;
-
-      if (total === line) {
-        return "push";
-      }
-
-      const actual =
-        total > line
-          ? "üst"
-          : "alt";
-
-      const predicted =
-        String(
-          p.prediction ?? ""
-        ).toLowerCase();
-
-      return actual === predicted
-        ? "success"
-        : "failed";
-    }
-
-    return "pending";
-  }
-
-
-  function statusText(status) {
-    if (status === "success") {
-      return "✓ Başarılı";
-    }
-
-    if (status === "failed") {
-      return "✕ Başarısız";
-    }
-
-    if (status === "push") {
-      return "＝ Push";
-    }
-
-    return "Bekliyor";
-  }
-
-
-  function predictionClass(
-    prediction,
-    status
-  ) {
-    if (
-      status === "success"
-    ) {
-      return "success";
-    }
-
-    if (
-      status === "failed"
-    ) {
-      return "fail";
-    }
-
-    if (
-      status === "push"
-    ) {
-      return "push";
-    }
-
-    const text =
-      String(
-        prediction ?? ""
-      ).toLowerCase();
-
-    if (
-      text === "üst"
-    ) {
-      return "over";
-    }
-
-    if (
-      text === "alt"
-    ) {
-      return "under";
-    }
-
-    return "pending";
-  }
-
-
-  function predictionText(p) {
-    const prediction =
-      String(
-        p.prediction ?? ""
-      ).trim();
-
-    const line =
-      number(p.line);
-
-    if (!prediction) {
-      return "Tahmin yok";
-    }
-
-    if (line === null) {
-      return prediction;
-    }
-
-    return (
-      prediction +
-      " " +
-      line
-    );
-  }
-
-
-  function getPeriodData(
-    p,
-    key
-  ) {
-    const data =
-      p[key];
-
-    if (!data) {
-      return null;
-    }
-
-    if (
-      typeof data !== "object"
-    ) {
-      return null;
-    }
-
-    return data;
-  }
-
-
-  function getPeriodLine(
-    p,
-    key
-  ) {
-    const data =
-      getPeriodData(
-        p,
-        key
-      );
-
-    if (!data) {
-      return null;
-    }
-
-    return (
-      number(data.line) ??
-      number(data.barem)
-    );
-  }
-
-
-  function getPeriodPrediction(
-    p,
-    key
-  ) {
-    const data =
-      getPeriodData(
-        p,
-        key
-      );
-
-    if (!data) {
-      return "";
-    }
-
-    return String(
-      data.prediction ??
-      data.result ??
-      ""
-    );
-  }
-
-
-  function periodCard(
-    title,
-    p,
-    key
-  ) {
-    const line =
-      getPeriodLine(
-        p,
-        key
-      );
-
-    const prediction =
-      getPeriodPrediction(
-        p,
-        key
-      );
-
-    return `
-      <div class="period-card">
-        <div class="period-name">
-          ${escapeHtml(title)}
-        </div>
-
-        <div class="period-line">
-          ${
-            line !== null
-              ? escapeHtml(line)
-              : "-"
-          }
-        </div>
-
-        <div class="period-prediction">
-          ${
-            prediction
-              ? escapeHtml(prediction)
-              : "-"
-          }
-        </div>
-      </div>
-    `;
-  }
-
-
-  function buildPeriodSection(p) {
-    const firstHalf =
-      p.firstHalfTotal ??
-      p.firstHalf ??
-      null;
-
-    const firstHalfLine =
-      typeof firstHalf === "object"
-        ? (
-            number(firstHalf.line) ??
-            number(firstHalf.barem)
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: basketbol-veri-guncelleme
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: 📥 Repo indir
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 📦 Paketleri kur
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: 🏀 Basketbol verilerini güncelle
+        run: |
+          python update_basketball_data.py
+
+      - name: 🎯 Tahminleri oluştur
+        run: |
+          python predictions.py
+
+      - name: 📊 Sonuç başarılarını hesapla
+        run: |
+          python results.py
+
+      - name: 🔎 Dosyaları kontrol et
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          print("=" * 70)
+          print("🏀 BASKETBOL SİSTEM KONTROLÜ")
+          print("=" * 70)
+
+          files = [
+              Path("basketball.json"),
+              Path("data/basketball.json"),
+              Path("predictions.json"),
+              Path("results.json"),
+          ]
+
+          for file in files:
+              if file.exists():
+                  print(f"✅ {file}")
+              else:
+                  print(f"⚠️ {file} bulunamadı")
+
+          basketball_file = None
+
+          if Path("basketball.json").exists():
+              basketball_file = Path("basketball.json")
+          elif Path("data/basketball.json").exists():
+              basketball_file = Path("data/basketball.json")
+
+          if basketball_file is None:
+              raise SystemExit("❌ basketball.json bulunamadı")
+
+          with basketball_file.open(encoding="utf-8") as f:
+              basketball = json.load(f)
+
+          with Path("predictions.json").open(encoding="utf-8") as f:
+              predictions = json.load(f)
+
+          with Path("results.json").open(encoding="utf-8") as f:
+              results = json.load(f)
+
+          matches = basketball.get("matches", [])
+          prediction_list = predictions.get("predictions", [])
+          statistics = results.get("statistics", {})
+          overall = statistics.get("overall", {})
+
+          print()
+          print("=" * 70)
+          print("📊 VERİ")
+          print("=" * 70)
+
+          print("Toplam maç        :", len(matches))
+          print("NBA               :", basketball.get("nba"))
+          print("NBA tamamlanan    :", basketball.get("nbaFinished"))
+          print("EuroLeague        :", basketball.get("euroleague"))
+          print("EuroLeague tamam  :", basketball.get("euroleagueFinished"))
+
+          print()
+          print("=" * 70)
+          print("🎯 TAHMİN")
+          print("=" * 70)
+
+          print("Toplam tahmin     :", len(prediction_list))
+
+          print()
+          print("=" * 70)
+          print("🏆 ANA BAŞARI")
+          print("=" * 70)
+
+          print("Ana market        : Maç Toplam Alt/Üst")
+          print("Tamamlanan        :", overall.get("completed"))
+          print("Başarılı          :", overall.get("successful"))
+          print("Başarısız         :", overall.get("failed"))
+          print("Push              :", overall.get("push"))
+          print("Oynanmamış        :", overall.get("notPlayed"))
+          print("Başarı oranı      :", overall.get("successRate"))
+
+          print()
+          print("=" * 70)
+          print("📈 ALT / ÜST")
+          print("=" * 70)
+
+          distribution = statistics.get(
+              "predictionDistribution",
+              {}
           )
-        : null;
 
-    const firstHalfPrediction =
-      typeof firstHalf === "object"
-        ? String(
-            firstHalf.prediction ??
-            firstHalf.result ??
-            ""
+          for market, data in distribution.items():
+              print(
+                  f"{market}: "
+                  f"{data.get('successful', 0)}/"
+                  f"{data.get('total', 0)} "
+                  f"→ %{data.get('successRate')}"
+              )
+
+          print()
+          print("=" * 70)
+          print("🏆 LİGLER")
+          print("=" * 70)
+
+          leagues = statistics.get(
+              "leagues",
+              {}
           )
-        : "";
 
-    return `
-      <div class="period-title">
-        Periyot baremleri
-      </div>
-
-      <div class="period-grid">
-
-        <div class="period-card">
-          <div class="period-name">
-            Maç
-          </div>
-
-          <div class="period-line">
-            ${
-              number(p.line) !== null
-                ? escapeHtml(p.line)
-                : "-"
-            }
-          </div>
-
-          <div class="period-prediction">
-            ${escapeHtml(
-              p.prediction ?? "-"
-            )}
-          </div>
-        </div>
-
-        <div class="period-card">
-          <div class="period-name">
-            İY
-          </div>
-
-          <div class="period-line">
-            ${
-              firstHalfLine !== null
-                ? escapeHtml(
-                    firstHalfLine
-                  )
-                : "-"
-            }
-          </div>
-
-          <div class="period-prediction">
-            ${
-              firstHalfPrediction
-                ? escapeHtml(
-                    firstHalfPrediction
-                  )
-                : "-"
-            }
-          </div>
-        </div>
-
-        ${periodCard(
-          "Q1",
-          p,
-          "q1"
-        )}
-
-        ${periodCard(
-          "Q2",
-          p,
-          "q2"
-        )}
-
-        ${periodCard(
-          "Q3",
-          p,
-          "q3"
-        )}
-
-        ${periodCard(
-          "Q4",
-          p,
-          "q4"
-        )}
-
-      </div>
-    `;
-  }
-
-
-  function buildHistory(
-    title,
-    history
-  ) {
-    if (
-      !Array.isArray(history) ||
-      history.length === 0
-    ) {
-      return "";
-    }
-
-    const rows =
-      history
-        .slice(0, 5)
-        .map(item => {
-
-          const scored =
-            number(item.scored);
-
-          const conceded =
-            number(item.conceded);
-
-          const total =
-            scored !== null &&
-            conceded !== null
-              ? scored + conceded
-              : null;
-
-          return `
-            <div class="history-row">
-
-              <div class="history-team">
-                ${escapeHtml(
-                  item.opponent ??
-                  "-"
-                )}
-              </div>
-
-              <div class="history-score">
-                ${
-                  scored !== null &&
-                  conceded !== null
-                    ? (
-                        scored +
-                        " - " +
-                        conceded
-                      )
-                    : "-"
-                }
-              </div>
-
-              <div class="history-total">
-                ${
-                  total !== null
-                    ? total
-                    : "-"
-                }
-              </div>
-
-            </div>
-          `;
-        })
-        .join("");
-
-    return `
-      <div class="period-title">
-        ${escapeHtml(title)}
-      </div>
-
-      ${rows}
-    `;
-  }
-
-
-  function buildDetails(p) {
-    const expected =
-      number(
-        p.expectedTotal
-      );
-
-    const homeExpected =
-      number(
-        p.expectedHome
-      );
-
-    const awayExpected =
-      number(
-        p.expectedAway
-      );
-
-    const homeSample =
-      number(
-        p.homeSample
-      );
-
-    const awaySample =
-      number(
-        p.awaySample
-      );
-
-    return `
-      <div class="details">
-
-        <div class="detail-top">
-
-          <div class="detail-box">
-            <div class="detail-label">
-              Maç baremi
-            </div>
-            <div class="detail-value">
-              ${
-                number(p.line) !== null
-                  ? p.line
-                  : "-"
-              }
-            </div>
-          </div>
-
-          <div class="detail-box">
-            <div class="detail-label">
-              Beklenen
-            </div>
-            <div class="detail-value">
-              ${
-                expected !== null
-                  ? expected.toFixed(1)
-                  : "-"
-              }
-            </div>
-          </div>
-
-          <div class="detail-box">
-            <div class="detail-label">
-              Güven
-            </div>
-            <div class="detail-value">
-              ${
-                number(p.confidence) !== null
-                  ? "%" +
-                    Math.round(
-                      p.confidence
-                    )
-                  : "-"
-              }
-            </div>
-          </div>
-
-        </div>
-
-        <div class="detail-top">
-
-          <div class="detail-box">
-            <div class="detail-label">
-              Ev beklenen
-            </div>
-            <div class="detail-value">
-              ${
-                homeExpected !== null
-                  ? homeExpected.toFixed(1)
-                  : "-"
-              }
-            </div>
-          </div>
-
-          <div class="detail-box">
-            <div class="detail-label">
-              Deplasman beklenen
-            </div>
-            <div class="detail-value">
-              ${
-                awayExpected !== null
-                  ? awayExpected.toFixed(1)
-                  : "-"
-              }
-            </div>
-          </div>
-
-          <div class="detail-box">
-            <div class="detail-label">
-              Örneklem
-            </div>
-            <div class="detail-value">
-              ${
-                homeSample !== null
-                  ? homeSample
-                  : "-"
-              }
-              /
-              ${
-                awaySample !== null
-                  ? awaySample
-                  : "-"
-              }
-            </div>
-          </div>
-
-        </div>
-
-        ${buildPeriodSection(p)}
-
-        ${
-          buildHistory(
-            "Ev takımının son maçları",
-            p.homeLast5 ??
-            p.homeHistory
-          )
-        }
-
-        ${
-          buildHistory(
-            "Deplasman takımının son maçları",
-            p.awayLast5 ??
-            p.awayHistory
-          )
-        }
-
-      </div>
-    `;
-  }
-
-
-  function createMatchCard(p) {
-    const status =
-      getStatus(p);
-
-    const date =
-      normalizeDate(
-        p.date ??
-        p.utcDate
-      );
-
-    const home =
-      p.home ??
-      p.homeTeam ??
-      "-";
-
-    const away =
-      p.away ??
-      p.awayTeam ??
-      "-";
-
-    const homeScore =
-      number(
-        p.homeScore
-      );
-
-    const awayScore =
-      number(
-        p.awayScore
-      );
-
-    const hasScore =
-      homeScore !== null &&
-      awayScore !== null;
-
-    const predictionClassName =
-      predictionClass(
-        p.prediction,
-        status
-      );
-
-    const predictionLabel =
-      predictionText(p);
-
-    const statusLabel =
-      statusText(status);
-
-    const league =
-      p.league ??
-      "";
-
-    const time =
-      p.time ??
-      "";
-
-    const card =
-      document.createElement(
-        "div"
-      );
-
-    card.className =
-      "match-card";
-
-    card.dataset.id =
-      String(
-        p.id ?? ""
-      );
-
-    card.innerHTML = `
-      <div
-        class="match-head"
-        role="button"
-        tabindex="0"
-        aria-expanded="false"
-      >
-
-        <div class="match-time">
-          <strong>
-            ${
-              time
-                ? escapeHtml(time)
-                : "🏀"
-            }
-          </strong>
-          <span>
-            ${escapeHtml(
-              league
-            )}
-          </span>
-        </div>
-
-        <div class="teams">
-
-          <div class="team-row">
-            <span class="team-name">
-              ${escapeHtml(home)}
-            </span>
-
-            <span
-              class="score ${
-                hasScore
-                  ? ""
-                  : "empty"
-              }"
-            >
-              ${
-                hasScore
-                  ? homeScore
-                  : "-"
-              }
-            </span>
-          </div>
-
-          <div class="team-row">
-            <span class="team-name">
-              ${escapeHtml(away)}
-            </span>
-
-            <span
-              class="score ${
-                hasScore
-                  ? ""
-                  : "empty"
-              }"
-            >
-              ${
-                hasScore
-                  ? awayScore
-                  : "-"
-              }
-            </span>
-          </div>
-
-        </div>
-
-        <div class="prediction-box">
-
-          <div class="prediction-market">
-            ${escapeHtml(
-              statusLabel
-            )}
-          </div>
-
-          <div
-            class="prediction ${predictionClassName}"
-          >
-            ${escapeHtml(
-              predictionLabel
-            )}
-          </div>
-
-          <span class="expand-icon">
-            ▼
-          </span>
-
-        </div>
-
-      </div>
-
-      ${buildDetails(p)}
-    `;
-
-    const head =
-      card.querySelector(
-        ".match-head"
-      );
-
-    function toggle() {
-      const open =
-        card.classList.toggle(
-          "open"
-        );
-
-      head.setAttribute(
-        "aria-expanded",
-        open
-          ? "true"
-          : "false"
-      );
-    }
-
-    head.addEventListener(
-      "click",
-      toggle
-    );
-
-    head.addEventListener(
-      "keydown",
-      event => {
-        if (
-          event.key === "Enter" ||
-          event.key === " "
-        ) {
-          event.preventDefault();
-          toggle();
-        }
-      }
-    );
-
-    return card;
-  }
-
-
-  function getAvailableDates() {
-    return [
-      ...new Set(
-        predictions
-          .map(p =>
-            normalizeDate(
-              p.date ??
-              p.utcDate
-            )
-          )
-          .filter(Boolean)
-      )
-    ].sort();
-  }
-
-
-  function setDefaultDate() {
-    const dates =
-      getAvailableDates();
-
-    if (dates.length === 0) {
-      return;
-    }
-
-    const today =
-      todayString();
-
-    if (
-     
+          for league, data in leagues.items():
+              print(
+                  f"{league}: "
+                  f"{data.get('successful', 0)}/"
+                  f"{data.get('completed', 0)} "
+                  f"→ %{data.get('successRate')}"
+              )
+
+          print()
+          print("=" * 70)
+          print("✅ KONTROL TAMAMLANDI")
+          print("=" * 70)
+          PY
+
+      - name: 💾 Değişiklikleri kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add basketball.json
+          git add data/basketball.json
+          git add predictions.json
+          git add results.json
+
+          if git diff --cached --quiet; then
+            echo "ℹ️ Yeni değişiklik yok."
+          else
+            git commit -m "Basketbol verileri ve tahminler güncellendi"
+            git push
+          fi
