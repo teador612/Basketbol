@@ -24,7 +24,7 @@ def now_iso():
 def get_euroleague_games():
     print()
     print("========================================")
-    print("🌍 EUROLEAGUE API KONTROLÜ")
+    print("🌍 EUROLEAGUE VERİLERİ")
     print("========================================")
     print(f"Sezon: {EUROLEAGUE_SEASON}")
     print()
@@ -54,7 +54,6 @@ def get_euroleague_games():
         data = response.json()
 
     except Exception as e:
-        print()
         print("❌ EuroLeague API hatası:")
         print(e)
         return []
@@ -74,50 +73,95 @@ def get_euroleague_games():
     else:
         games = []
 
-    print()
     print("📦 API maç kaydı:", len(games))
 
+    return games
+
+
+def convert_game(game):
+    local = game.get("local") or {}
+    road = game.get("road") or {}
+
+    local_club = local.get("club") or {}
+    road_club = road.get("club") or {}
+
+    home_name = local_club.get("name")
+    away_name = road_club.get("name")
+
+    if not home_name or not away_name:
+        return None
+
+    played = bool(game.get("played", False))
+
+    home_score = local.get("score")
+    away_score = road.get("score")
+
+    # Oynanmamış maçlarda API 0-0 döndürüyor.
+    # Bu nedenle skorları None yapıyoruz.
+    if not played:
+        home_score = None
+        away_score = None
+    else:
+        try:
+            home_score = int(home_score)
+        except (TypeError, ValueError):
+            home_score = None
+
+        try:
+            away_score = int(away_score)
+        except (TypeError, ValueError):
+            away_score = None
+
+    return {
+        "id": game.get("id"),
+        "gameCode": game.get("gameCode"),
+        "league": "EuroLeague",
+        "season": EUROLEAGUE_SEASON,
+        "round": game.get("round"),
+        "date": game.get("date"),
+        "utcDate": game.get("utcDate"),
+        "homeTeam": home_name,
+        "awayTeam": away_name,
+        "homeScore": home_score,
+        "awayScore": away_score,
+        "played": played,
+        "status": "finished" if played else "scheduled",
+    }
+
+
+def main():
+    print("🏀 BASKETBOL VERİ GÜNCELLEYİCİ")
+    print("========================================")
+
+    games = get_euroleague_games()
+
     if not games:
-        print("❌ API boş veri döndürdü.")
-        return []
+        raise RuntimeError("EuroLeague maç verisi alınamadı.")
 
-    # =====================================================
-    # HAM API KAYDI
-    # =====================================================
+    matches = []
 
-    print()
-    print("========================================")
-    print("🔎 İLK HAM API KAYDI")
-    print("========================================")
+    for game in games:
+        converted = convert_game(game)
 
-    print(
-        json.dumps(
-            games[0],
-            ensure_ascii=False,
-            indent=2,
+        if converted:
+            matches.append(converted)
+
+    if not matches:
+        raise RuntimeError(
+            "EuroLeague maçları dönüştürülemedi."
         )
-    )
 
-    # =====================================================
-    # TÜM ALANLARI GÖSTER
-    # =====================================================
+    finished = [
+        m for m in matches
+        if m["played"]
+        and m["homeScore"] is not None
+        and m["awayScore"] is not None
+    ]
 
-    print()
-    print("========================================")
-    print("🔑 İLK KAYDIN ALANLARI")
-    print("========================================")
-
-    if isinstance(games[0], dict):
-        for key, value in games[0].items():
-            print(
-                f"{key}: "
-                f"{type(value).__name__} = "
-                f"{value}"
-            )
-
-    # =====================================================
-    # SADECE TEST AMAÇLI JSON KAYDI
-    # =====================================================
+    scheduled = [
+        m for m in matches
+        if not m["played"]
+    ]
 
     DATA_DIR.mkdir(
         parents=True,
@@ -125,10 +169,13 @@ def get_euroleague_games():
     )
 
     output = {
+        "source": EUROLEAGUE_URL,
         "updatedAt": now_iso(),
         "euroleagueSeason": EUROLEAGUE_SEASON,
-        "count": len(games),
-        "rawGames": games,
+        "total": len(matches),
+        "finished": len(finished),
+        "scheduled": len(scheduled),
+        "matches": matches,
     }
 
     OUTPUT.write_text(
@@ -142,20 +189,25 @@ def get_euroleague_games():
 
     print()
     print("========================================")
-    print("✅ HAM VERİ KAYDEDİLDİ")
+    print("✅ VERİ KAYDEDİLDİ")
     print("========================================")
     print(f"📁 {OUTPUT}")
-    print(f"🌍 EuroLeague maç sayısı: {len(games)}")
+    print(f"🏀 Toplam maç: {len(matches)}")
+    print(f"✅ Oynanmış/skorlu: {len(finished)}")
+    print(f"📅 Oynanmamış: {len(scheduled)}")
+
     print()
-    print("➡️ Şimdi workflow çıktısındaki")
-    print("'İLK HAM API KAYDI' bölümünü gönder.")
+    print("========================================")
+    print("🔎 ÖRNEK MAÇLAR")
+    print("========================================")
 
-
-def main():
-    print("🏀 BASKETBOL VERİ KONTROLÜ")
-    print(f"EuroLeague sezonu: {EUROLEAGUE_SEASON}")
-
-    get_euroleague_games()
+    for match in matches[:5]:
+        print(
+            f'{match["date"]} | '
+            f'{match["homeTeam"]} - {match["awayTeam"]} | '
+            f'{match["homeScore"]} - {match["awayScore"]} | '
+            f'{match["status"]}'
+        )
 
 
 if __name__ == "__main__":
