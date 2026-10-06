@@ -1,0 +1,91 @@
+name: Basketbol veri 
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Repo indir
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Paketleri kur
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas requests nba_api
+
+      - name: Basketbol verilerini güncelle
+        run: |
+          python update_basketball_data.py
+
+      - name: Veri kontrolü
+        run: |
+          echo "========================================"
+          echo "DATA KONTROL"
+          echo "========================================"
+
+          python - <<'PY'
+          import json
+
+          with open("data/basketball.json", encoding="utf-8") as f:
+              data = json.load(f)
+
+          print("Güncelleme:", data.get("updatedAt"))
+          print("Toplam:", data.get("count"))
+
+          nba = [
+              x for x in data["matches"]
+              if x.get("league") == "NBA"
+          ]
+
+          euro = [
+              x for x in data["matches"]
+              if x.get("league") == "EuroLeague"
+          ]
+
+          print("NBA:", len(nba))
+          print("EuroLeague:", len(euro))
+
+          print()
+          print("İlk 3 kayıt:")
+
+          for x in data["matches"][:3]:
+              print(
+                  x.get("league"),
+                  x.get("date"),
+                  x.get("homeTeam"),
+                  "-",
+                  x.get("awayTeam"),
+                  x.get("homeScore"),
+                  "-",
+                  x.get("awayScore")
+              )
+          PY
+
+      - name: Değişiklikleri kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/basketball.json
+
+          if git diff --cached --quiet; then
+            echo "Yeni veri yok."
+          else
+            git commit -m "Basketbol verileri güncellendi"
+            git push
+          fi
