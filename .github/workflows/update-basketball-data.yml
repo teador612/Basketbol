@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: 📥 Repo indir
         uses: actions/checkout@v4
 
@@ -43,6 +42,10 @@ jobs:
       - name: 📊 Sonuçları hesapla
         run: |
           python results.py
+
+      - name: 🔬 Tahmin performansını analiz et
+        run: |
+          python analysis.py
 
       - name: 🔎 Dosyaları kontrol et
         run: |
@@ -70,7 +73,8 @@ jobs:
           required_files = [
               basketball_file,
               Path("predictions.json"),
-              Path("results.json")
+              Path("results.json"),
+              Path("analysis.json")
           ]
 
           for file in required_files:
@@ -96,6 +100,11 @@ jobs:
           ) as f:
               results = json.load(f)
 
+          with Path("analysis.json").open(
+              encoding="utf-8"
+          ) as f:
+              analysis = json.load(f)
+
           matches = basketball.get(
               "matches",
               []
@@ -109,6 +118,11 @@ jobs:
           overall = (
               results
               .get("statistics", {})
+              .get("overall", {})
+          )
+
+          analysis_overall = (
+              analysis
               .get("overall", {})
           )
 
@@ -194,6 +208,57 @@ jobs:
 
           print()
           print("=" * 70)
+          print("🔬 PERFORMANS ANALİZİ")
+          print("=" * 70)
+
+          print(
+              "Tamamlanan       :",
+              analysis_overall.get(
+                  "completed",
+                  0
+              )
+          )
+
+          print(
+              "Başarılı         :",
+              analysis_overall.get(
+                  "successful",
+                  0
+              )
+          )
+
+          print(
+              "Başarısız        :",
+              analysis_overall.get(
+                  "failed",
+                  0
+              )
+          )
+
+          print(
+              "Push             :",
+              analysis_overall.get(
+                  "push",
+                  0
+              )
+          )
+
+          print(
+              "Başarı oranı     :",
+              analysis_overall.get(
+                  "successRate"
+              )
+          )
+
+          print(
+              "Ortalama hata    :",
+              analysis_overall.get(
+                  "averageError"
+              )
+          )
+
+          print()
+          print("=" * 70)
           print("🏆 LİG BAŞARILARI")
           print("=" * 70)
 
@@ -237,6 +302,61 @@ jobs:
 
           print()
           print("=" * 70)
+          print("🎯 BAREM ANALİZİ")
+          print("=" * 70)
+
+          line_ranges = analysis.get(
+              "lineRanges",
+              {}
+          )
+
+          range_order = [
+              "<140",
+              "140-159",
+              "160-179",
+              "180-199",
+              "200+"
+          ]
+
+          for range_name in range_order:
+
+              stats = line_ranges.get(
+                  range_name
+              )
+
+              if not stats:
+                  continue
+
+              print(
+                  f"{range_name}: "
+                  f"{stats.get('successful', 0)}/"
+                  f"{stats.get('successful', 0) + stats.get('failed', 0)} "
+                  f"→ %{stats.get('successRate')} "
+                  f"| Hata: "
+                  f"{stats.get('averageError')}"
+              )
+
+          print()
+          print("=" * 70)
+          print("🔥 EN BÜYÜK HATALAR")
+          print("=" * 70)
+
+          for row in analysis.get(
+              "biggestErrors",
+              []
+          )[:10]:
+
+              print(
+                  f"{row.get('home')} - "
+                  f"{row.get('away')} | "
+                  f"Barem: {row.get('line')} | "
+                  f"Tahmin: {row.get('prediction')} | "
+                  f"Gerçek: {row.get('actualTotal')} | "
+                  f"Fark: {row.get('difference')}"
+              )
+
+          print()
+          print("=" * 70)
           print("✅ TÜM KONTROLLER TAMAMLANDI")
           print("=" * 70)
           PY
@@ -251,6 +371,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "ℹ️ Yeni değişiklik yok."
           else
-            git commit -m "Basketbol verileri ve tahminler güncellendi"
+            git commit -m "Basketbol verileri ve tahmin analizleri güncellendi"
             git push
           fi
