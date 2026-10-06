@@ -33,48 +33,66 @@ jobs:
 
       - name: 🔎 Veri kontrolü
         run: |
-          echo "========================================"
-          echo "DATA KONTROL"
-          echo "========================================"
-
           python - <<'PY'
           import json
 
           with open("data/basketball.json", encoding="utf-8") as f:
               data = json.load(f)
 
-          games = data.get("rawGames", [])
+          matches = data.get("matches", [])
+
+          print("========================================")
+          print("🏀 BASKETBOL DATA KONTROL")
+          print("========================================")
 
           print("Güncelleme:", data.get("updatedAt"))
-          print("Toplam:", data.get("count"))
-          print("Ham maç:", len(games))
+          print("Toplam maç:", data.get("total"))
+          print("NBA:", data.get("nba"))
+          print("NBA oynanan:", data.get("nbaFinished"))
+          print("EuroLeague:", data.get("euroleague"))
+          print("EuroLeague oynanan:", data.get("euroleagueFinished"))
 
           print()
           print("========================================")
-          print("İLK HAM KAYIT")
+          print("🔎 SON 5 VERİ KONTROLÜ")
           print("========================================")
 
-          if games:
-              print(json.dumps(
-                  games[0],
-                  ensure_ascii=False,
-                  indent=2
-              ))
-          else:
-              print("Ham maç bulunamadı.")
+          checked = 0
 
-          print()
-          print("========================================")
-          print("ALANLAR")
-          print("========================================")
+          for match in matches:
+              home_last5 = match.get("homeLast5", [])
+              away_last5 = match.get("awayLast5", [])
 
-          if games and isinstance(games[0], dict):
-              for key, value in games[0].items():
+              if home_last5 or away_last5:
+                  print()
                   print(
-                      f"{key}: "
-                      f"{type(value).__name__} = "
-                      f"{value}"
+                      f'{match.get("league")} | '
+                      f'{match.get("homeTeam")} - {match.get("awayTeam")}'
                   )
+
+                  print("Ev son 5:")
+                  for x in home_last5:
+                      print(
+                          f'  {x.get("date")} | '
+                          f'{x.get("scored")}-{x.get("conceded")} | '
+                          f'{x.get("opponent")}'
+                      )
+
+                  print("Deplasman son 5:")
+                  for x in away_last5:
+                      print(
+                          f'  {x.get("date")} | '
+                          f'{x.get("scored")}-{x.get("conceded")} | '
+                          f'{x.get("opponent")}'
+                      )
+
+                  checked += 1
+
+                  if checked >= 5:
+                      break
+
+          print()
+          print("Kontrol edilen maç:", checked)
           PY
 
       - name: 💾 Değişiklikleri kaydet
