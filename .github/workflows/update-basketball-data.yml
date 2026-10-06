@@ -40,7 +40,7 @@ jobs:
         run: |
           python predictions.py
 
-      - name: 📊 Sonuç başarılarını hesapla
+      - name: 📊 Sonuçları hesapla
         run: |
           python results.py
 
@@ -54,113 +54,190 @@ jobs:
           print("🏀 BASKETBOL SİSTEM KONTROLÜ")
           print("=" * 70)
 
-          files = [
-              Path("basketball.json"),
-              Path("data/basketball.json"),
-              Path("predictions.json"),
-              Path("results.json"),
-          ]
-
-          for file in files:
-              if file.exists():
-                  print(f"✅ {file}")
-              else:
-                  print(f"⚠️ {file} bulunamadı")
-
           basketball_file = None
 
           if Path("basketball.json").exists():
               basketball_file = Path("basketball.json")
+
           elif Path("data/basketball.json").exists():
               basketball_file = Path("data/basketball.json")
 
           if basketball_file is None:
-              raise SystemExit("❌ basketball.json bulunamadı")
+              raise SystemExit(
+                  "❌ basketball.json bulunamadı"
+              )
 
-          with basketball_file.open(encoding="utf-8") as f:
+          required_files = [
+              basketball_file,
+              Path("predictions.json"),
+              Path("results.json")
+          ]
+
+          for file in required_files:
+              if not file.exists():
+                  raise SystemExit(
+                      f"❌ Dosya bulunamadı: {file}"
+                  )
+
+              print(f"✅ {file}")
+
+          with basketball_file.open(
+              encoding="utf-8"
+          ) as f:
               basketball = json.load(f)
 
-          with Path("predictions.json").open(encoding="utf-8") as f:
+          with Path("predictions.json").open(
+              encoding="utf-8"
+          ) as f:
               predictions = json.load(f)
 
-          with Path("results.json").open(encoding="utf-8") as f:
+          with Path("results.json").open(
+              encoding="utf-8"
+          ) as f:
               results = json.load(f)
 
-          matches = basketball.get("matches", [])
-          prediction_list = predictions.get("predictions", [])
-          statistics = results.get("statistics", {})
-          overall = statistics.get("overall", {})
+          matches = basketball.get(
+              "matches",
+              []
+          )
+
+          prediction_list = predictions.get(
+              "predictions",
+              []
+          )
+
+          overall = (
+              results
+              .get("statistics", {})
+              .get("overall", {})
+          )
 
           print()
           print("=" * 70)
           print("📊 VERİ")
           print("=" * 70)
 
-          print("Toplam maç        :", len(matches))
-          print("NBA               :", basketball.get("nba"))
-          print("NBA tamamlanan    :", basketball.get("nbaFinished"))
-          print("EuroLeague        :", basketball.get("euroleague"))
-          print("EuroLeague tamam  :", basketball.get("euroleagueFinished"))
+          print(
+              "Toplam maç       :",
+              len(matches)
+          )
+
+          print(
+              "NBA              :",
+              basketball.get("nba")
+          )
+
+          print(
+              "NBA tamamlanan   :",
+              basketball.get("nbaFinished")
+          )
+
+          print(
+              "EuroLeague       :",
+              basketball.get("euroleague")
+          )
+
+          print(
+              "EuroLeague biten :",
+              basketball.get("euroleagueFinished")
+          )
 
           print()
           print("=" * 70)
           print("🎯 TAHMİN")
           print("=" * 70)
 
-          print("Toplam tahmin     :", len(prediction_list))
+          print(
+              "Toplam tahmin    :",
+              len(prediction_list)
+          )
+
+          print(
+              "Ana market       :",
+              "Maç Toplam Alt/Üst"
+          )
 
           print()
           print("=" * 70)
           print("🏆 ANA BAŞARI")
           print("=" * 70)
 
-          print("Ana market        : Maç Toplam Alt/Üst")
-          print("Tamamlanan        :", overall.get("completed"))
-          print("Başarılı          :", overall.get("successful"))
-          print("Başarısız         :", overall.get("failed"))
-          print("Push              :", overall.get("push"))
-          print("Oynanmamış        :", overall.get("notPlayed"))
-          print("Başarı oranı      :", overall.get("successRate"))
+          print(
+              "Tamamlanan       :",
+              overall.get("completed", 0)
+          )
+
+          print(
+              "Başarılı         :",
+              overall.get("successful", 0)
+          )
+
+          print(
+              "Başarısız        :",
+              overall.get("failed", 0)
+          )
+
+          print(
+              "Push             :",
+              overall.get("push", 0)
+          )
+
+          print(
+              "Oynanmamış       :",
+              overall.get("notPlayed", 0)
+          )
+
+          print(
+              "Başarı oranı     :",
+              overall.get("successRate")
+          )
+
+          print()
+          print("=" * 70)
+          print("🏆 LİG BAŞARILARI")
+          print("=" * 70)
+
+          leagues = (
+              results
+              .get("statistics", {})
+              .get("leagues", {})
+          )
+
+          for league, stats in leagues.items():
+
+              print(
+                  f"{league}: "
+                  f"{stats.get('successful', 0)}/"
+                  f"{stats.get('completed', 0)} "
+                  f"→ %{stats.get('successRate')}"
+              )
 
           print()
           print("=" * 70)
           print("📈 ALT / ÜST")
           print("=" * 70)
 
-          distribution = statistics.get(
-              "predictionDistribution",
-              {}
+          distribution = (
+              results
+              .get("statistics", {})
+              .get(
+                  "predictionDistribution",
+                  {}
+              )
           )
 
-          for market, data in distribution.items():
+          for market, stats in distribution.items():
+
               print(
                   f"{market}: "
-                  f"{data.get('successful', 0)}/"
-                  f"{data.get('total', 0)} "
-                  f"→ %{data.get('successRate')}"
+                  f"{stats.get('successful', 0)}/"
+                  f"{stats.get('total', 0)} "
+                  f"→ %{stats.get('successRate')}"
               )
 
           print()
           print("=" * 70)
-          print("🏆 LİGLER")
-          print("=" * 70)
-
-          leagues = statistics.get(
-              "leagues",
-              {}
-          )
-
-          for league, data in leagues.items():
-              print(
-                  f"{league}: "
-                  f"{data.get('successful', 0)}/"
-                  f"{data.get('completed', 0)} "
-                  f"→ %{data.get('successRate')}"
-              )
-
-          print()
-          print("=" * 70)
-          print("✅ KONTROL TAMAMLANDI")
+          print("✅ TÜM KONTROLLER TAMAMLANDI")
           print("=" * 70)
           PY
 
@@ -169,10 +246,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add basketball.json
-          git add data/basketball.json
-          git add predictions.json
-          git add results.json
+          git add -A
 
           if git diff --cached --quiet; then
             echo "ℹ️ Yeni değişiklik yok."
