@@ -21,27 +21,13 @@ def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
 
-def find_value(obj, names):
-    if not isinstance(obj, dict):
-        return None
-
-    lower = {
-        str(k).lower(): v
-        for k, v in obj.items()
-    }
-
-    for name in names:
-        if name.lower() in lower:
-            return lower[name.lower()]
-
-    return None
-
-
 def get_euroleague_games():
     print()
     print("========================================")
-    print("🌍 EUROLEAGUE VERİLERİ")
+    print("🌍 EUROLEAGUE API KONTROLÜ")
     print("========================================")
+    print(f"Sezon: {EUROLEAGUE_SEASON}")
+    print()
 
     headers = {
         "User-Agent": (
@@ -61,19 +47,26 @@ def get_euroleague_games():
             timeout=60,
         )
 
+        print("HTTP:", response.status_code)
+
         response.raise_for_status()
 
         data = response.json()
 
     except Exception as e:
-        print(f"❌ EuroLeague API hatası: {e}")
+        print()
+        print("❌ EuroLeague API hatası:")
+        print(e)
         return []
 
     if isinstance(data, dict):
-        games = data.get("data", [])
+        games = data.get("data")
 
         if not isinstance(games, list):
-            games = data.get("games", [])
+            games = data.get("games")
+
+        if not isinstance(games, list):
+            games = []
 
     elif isinstance(data, list):
         games = data
@@ -81,162 +74,61 @@ def get_euroleague_games():
     else:
         games = []
 
-    print(f"📦 API maç kaydı: {len(games)}")
+    print()
+    print("📦 API maç kaydı:", len(games))
 
-    result = []
+    if not games:
+        print("❌ API boş veri döndürdü.")
+        return []
 
-    for game in games:
+    # =====================================================
+    # HAM API KAYDI
+    # =====================================================
 
-        if not isinstance(game, dict):
-            continue
+    print()
+    print("========================================")
+    print("🔎 İLK HAM API KAYDI")
+    print("========================================")
 
-        game_code = find_value(
-            game,
-            [
-                "gameCode",
-                "gamecode",
-                "code",
-                "gameId",
-                "id",
-            ],
+    print(
+        json.dumps(
+            games[0],
+            ensure_ascii=False,
+            indent=2,
         )
+    )
 
-        date = find_value(
-            game,
-            [
-                "date",
-                "gameDate",
-                "startDate",
-                "startTime",
-            ],
-        )
+    # =====================================================
+    # TÜM ALANLARI GÖSTER
+    # =====================================================
 
-        home_team = find_value(
-            game,
-            [
-                "localTeamName",
-                "homeTeamName",
-                "localTeam",
-                "homeTeam",
-                "home",
-            ],
-        )
+    print()
+    print("========================================")
+    print("🔑 İLK KAYDIN ALANLARI")
+    print("========================================")
 
-        away_team = find_value(
-            game,
-            [
-                "roadTeamName",
-                "awayTeamName",
-                "roadTeam",
-                "awayTeam",
-                "away",
-            ],
-        )
-
-        home_score = find_value(
-            game,
-            [
-                "localScore",
-                "homeScore",
-                "localPoints",
-                "homePoints",
-            ],
-        )
-
-        away_score = find_value(
-            game,
-            [
-                "roadScore",
-                "awayScore",
-                "roadPoints",
-                "awayPoints",
-            ],
-        )
-
-        if isinstance(home_team, dict):
-            home_team = find_value(
-                home_team,
-                [
-                    "name",
-                    "teamName",
-                    "clubName",
-                ],
+    if isinstance(games[0], dict):
+        for key, value in games[0].items():
+            print(
+                f"{key}: "
+                f"{type(value).__name__} = "
+                f"{value}"
             )
 
-        if isinstance(away_team, dict):
-            away_team = find_value(
-                away_team,
-                [
-                    "name",
-                    "teamName",
-                    "clubName",
-                ],
-            )
-
-        if game_code is None:
-            continue
-
-        status = "scheduled"
-
-        try:
-            if home_score is not None and away_score is not None:
-                home_score = int(home_score)
-                away_score = int(away_score)
-                status = "finished"
-            else:
-                home_score = None
-                away_score = None
-        except Exception:
-            home_score = None
-            away_score = None
-
-        result.append({
-            "id": f"EL-{game_code}",
-            "gameCode": str(game_code),
-            "league": "EuroLeague",
-            "season": EUROLEAGUE_SEASON,
-            "date": date,
-            "homeTeam": home_team,
-            "awayTeam": away_team,
-            "homeScore": home_score,
-            "awayScore": away_score,
-            "status": status,
-            "source": "euroleague_api",
-        })
-
-    print(f"🌍 EuroLeague toplam maç: {len(result)}")
-
-    return result
-
-
-def save_data(euroleague_games):
+    # =====================================================
+    # SADECE TEST AMAÇLI JSON KAYDI
+    # =====================================================
 
     DATA_DIR.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    unique = {}
-
-    for game in euroleague_games:
-        key = game.get("id")
-
-        if key:
-            unique[key] = game
-
-    games = list(unique.values())
-
-    games.sort(
-        key=lambda x: str(
-            x.get("date") or ""
-        )
-    )
-
     output = {
         "updatedAt": now_iso(),
         "euroleagueSeason": EUROLEAGUE_SEASON,
         "count": len(games),
-        "matches": games,
+        "rawGames": games,
     }
 
     OUTPUT.write_text(
@@ -250,25 +142,20 @@ def save_data(euroleague_games):
 
     print()
     print("========================================")
-    print("✅ VERİ KAYDEDİLDİ")
+    print("✅ HAM VERİ KAYDEDİLDİ")
     print("========================================")
     print(f"📁 {OUTPUT}")
-    print(f"🌍 EuroLeague: {len(games)}")
+    print(f"🌍 EuroLeague maç sayısı: {len(games)}")
+    print()
+    print("➡️ Şimdi workflow çıktısındaki")
+    print("'İLK HAM API KAYDI' bölümünü gönder.")
 
 
 def main():
+    print("🏀 BASKETBOL VERİ KONTROLÜ")
+    print(f"EuroLeague sezonu: {EUROLEAGUE_SEASON}")
 
-    print("🏀 BASKETBOL VERİ GÜNCELLEYİCİ")
-    print(f"EuroLeague: {EUROLEAGUE_SEASON}")
-
-    euroleague = get_euroleague_games()
-
-    if not euroleague:
-        raise RuntimeError(
-            "EuroLeague verisi alınamadı."
-        )
-
-    save_data(euroleague)
+    get_euroleague_games()
 
 
 if __name__ == "__main__":
