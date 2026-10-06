@@ -1,4 +1,6 @@
 import json
+import re
+import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -10,19 +12,8 @@ import requests
 # ============================================================
 
 ROOT = Path(__file__).resolve().parent
-
 DATA_DIR = ROOT / "data"
 OUTPUT = DATA_DIR / "basketball.json"
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 "
-        "(KHTML, like Gecko) "
-        "Chrome/140 Safari/537.36"
-    ),
-    "Accept": "application/json",
-}
 
 NBA_HISTORY_DAYS = 400
 NBA_FUTURE_DAYS = 30
@@ -41,6 +32,241 @@ ESPN_URL = (
     "https://site.api.espn.com/apis/site/v2/"
     "sports/basketball/nba/scoreboard"
 )
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 "
+        "(KHTML, like Gecko) "
+        "Chrome/140 Safari/537.36"
+    ),
+    "Accept": "application/json",
+}
+
+
+# ============================================================
+# TAKIM İSİM NORMALİZASYONU
+# ============================================================
+
+TEAM_ALIASES = {
+    # FENERBAHÇE
+    "fenerbahcetarfinistanbul": "fenerbahce",
+    "fenerbahcebekoistanbul": "fenerbahce",
+    "fenerbahceistanbul": "fenerbahce",
+    "fenerbahce": "fenerbahce",
+
+    # BEŞİKTAŞ
+    "besiktasistanbul": "besiktas",
+    "besiktasfibabankaistanbul": "besiktas",
+    "besiktas": "besiktas",
+
+    # REAL MADRID
+    "realmadrid": "realmadrid",
+    "realmadridbaloncesto": "realmadrid",
+
+    # OLYMPIACOS
+    "olympiacospiraeus": "olympiacos",
+    "olympiacos": "olympiacos",
+
+    # PANATHINAIKOS
+    "panathinaikosaktorathens": "panathinaikos",
+    "panathinaikosathens": "panathinaikos",
+    "panathinaikos": "panathinaikos",
+
+    # MILANO
+    "armaniolimpiamilan": "olimpiamilano",
+    "ea7emporioarmanimeilan": "olimpiamilano",
+    "olimpiamilano": "olimpiamilano",
+    "olimpiamilan": "olimpiamilano",
+    "axarmaniexchangemilan": "olimpiamilano",
+    "armanimilan": "olimpiamilano",
+
+    # BASKONIA
+    "kosnerbaskoniavitoriagasteiz": "baskonia",
+    "baskoniavitoriagasteiz": "baskonia",
+    "cazoobaskonia": "baskonia",
+    "bitcibaskonia": "baskonia",
+    "baskonia": "baskonia",
+
+    # BAYERN
+    "fcbayernmunich": "bayernmunich",
+    "bayernmunich": "bayernmunich",
+    "bayernmunchen": "bayernmunich",
+
+    # MACCABI
+    "maccabirapydtelaviv": "maccabitelaviv",
+    "maccabiplaykatelaviv": "maccabitelaviv",
+    "maccabitelaviv": "maccabitelaviv",
+
+    # HAPOEL
+    "hapoelibitelaviv": "hapoeltelaviv",
+    "hapoeltelaviv": "hapoeltelaviv",
+    "hapoel": "hapoeltelaviv",
+
+    # ZALGIRIS
+    "zalgiriskaunas": "zalgiris",
+    "zalgiris": "zalgiris",
+
+    # PARTIZAN
+    "partizanmozartbetbelgrade": "partizan",
+    "partizanbelgrade": "partizan",
+    "partizan": "partizan",
+
+    # VALENCIA
+    "valenciabasket": "valencia",
+    "valencia": "valencia",
+
+    # VIRTUS
+    "virtusbologna": "virtusbologna",
+    "virtussegafredobologna": "virtusbologna",
+    "virtus": "virtusbologna",
+
+    # EFES
+    "anadoluefesistanbul": "anadoluefes",
+    "anadoluefes": "anadoluefes",
+
+    # ASVEL
+    "ldlcasvelvilleurbanne": "asvel",
+    "asvelvilleurbanne": "asvel",
+    "ldlcasvel": "asvel",
+    "asvel": "asvel",
+
+    # CRVENA ZVEZDA
+    "crvenazvezdameridianbetbelgrade": "crvenazvezda",
+    "crvenazvezdabelgrade": "crvenazvezda",
+    "crvenazvezda": "crvenazvezda",
+
+    # DUBAI
+    "dubaibasketball": "dubaibasketball",
+    "dubai": "dubaibasketball",
+
+    # LONDON
+    "londonlions": "londonlions",
+
+    # NBA bazı isim varyasyonları
+    "losangeleslakers": "losangeleslakers",
+    "lalakers": "losangeleslakers",
+
+    "losangelesclippers": "losangelesclippers",
+    "laclippers": "losangelesclippers",
+
+    "goldenstatewarriors": "goldenstatewarriors",
+
+    "oklahomacitythunder": "oklahomacitythunder",
+
+    "sanantoniospurs": "sanantoniospurs",
+
+    "newyorkknicks": "newyorkknicks",
+
+    "brooklynnets": "brooklynnets",
+
+    "bostonceltics": "bostonceltics",
+
+    "miamiheat": "miamiheat",
+
+    "chicagobulls": "chicagobulls",
+
+    "clevelandcavaliers": "clevelandcavaliers",
+
+    "milwaukeebucks": "milwaukeebucks",
+
+    "indianapacers": "indianapacers",
+
+    "detroitpistons": "detroitpistons",
+
+    "torontoraptors": "torontoraptors",
+
+    "atlantahawks": "atlantahawks",
+
+    "charlottehornets": "charlottehornets",
+
+    "orlandomagic": "orlandomagic",
+
+    "washingtonwizards": "washingtonwizards",
+
+    "philadelphia76ers": "philadelphia76ers",
+
+    "denvernuggets": "denvernuggets",
+
+    "phoenixsuns": "phoenixsuns",
+
+    "sacramentokings": "sacramentokings",
+
+    "portlandtrailblazers": "portlandtrailblazers",
+
+    "utahjazz": "utahjazz",
+
+    "minnesotatimberwolves": "minnesotatimberwolves",
+
+    "dallasmavericks": "dallasmavericks",
+
+    "houstonrockets": "houstonrockets",
+
+    "memphisgrizzlies": "memphisgrizzlies",
+
+    "neworleanspelicans": "neworleanspelicans",
+
+    "sacramentokings": "sacramentokings",
+
+    "charlottehornets": "charlottehornets",
+
+    "utahjazz": "utahjazz",
+
+    "phoenixsuns": "phoenixsuns",
+}
+
+
+def normalize_team_name(name):
+    if not name:
+        return ""
+
+    text = str(name).strip().lower()
+
+    # Türkçe / özel karakterleri sadeleştir
+    text = unicodedata.normalize(
+        "NFKD",
+        text
+    )
+
+    text = "".join(
+        char
+        for char in text
+        if not unicodedata.combining(char)
+    )
+
+    # Bazı sponsor / gereksiz ifadeleri kaldır
+    removable = [
+        "tarfin",
+        "beko",
+        "fibabanka",
+        "playtika",
+        "rapyd",
+        "mozartbet",
+        "meridianbet",
+        "kosner",
+        "cazoo",
+        "bitci",
+        "ea7",
+        "emporio",
+        "armani",
+        "ldlc",
+        "segafredo",
+    ]
+
+    for word in removable:
+        text = text.replace(word, "")
+
+    # Sadece harf/rakam bırak
+    text = re.sub(
+        r"[^a-z0-9]",
+        "",
+        text
+    )
+
+    return TEAM_ALIASES.get(
+        text,
+        text
+    )
 
 
 # ============================================================
@@ -64,7 +290,10 @@ def safe_int(value):
             )
         )
 
-    except (TypeError, ValueError):
+    except (
+        TypeError,
+        ValueError
+    ):
         return None
 
 
@@ -135,6 +364,17 @@ def reverse_date_key(value):
     return dt
 
 
+def match_datetime(match):
+    return (
+        parse_date(
+            match.get("utcDate")
+        )
+        or parse_date(
+            match.get("date")
+        )
+    )
+
+
 # ============================================================
 # EUROLEAGUE
 # ============================================================
@@ -177,20 +417,16 @@ def get_euroleague_games():
             data = response.json()
 
         except Exception as e:
-
             print(
                 f"❌ {season} hatası:",
                 e
             )
-
             continue
 
         if isinstance(data, list):
-
             games = data
 
         elif isinstance(data, dict):
-
             games = data.get("data")
 
             if not isinstance(
@@ -206,7 +442,6 @@ def get_euroleague_games():
                 games = []
 
         else:
-
             games = []
 
         print(
@@ -316,14 +551,34 @@ def get_euroleague_games():
                 ),
             })
 
+    # --------------------------------------------------------
+    # DUPLICATE TEMİZLE
+    # --------------------------------------------------------
+
     unique = {}
 
     for match in all_matches:
 
-        key = (
-            f'{match.get("season")}:'
-            f'{match.get("id")}'
+        season = match.get(
+            "season"
         )
+
+        game_id = match.get(
+            "id"
+        )
+
+        if game_id:
+            key = (
+                f"{season}:"
+                f"{game_id}"
+            )
+        else:
+            key = (
+                f"{season}:"
+                f"{match.get('date')}:"
+                f"{normalize_team_name(match.get('homeTeam'))}:"
+                f"{normalize_team_name(match.get('awayTeam'))}"
+            )
 
         unique[key] = match
 
@@ -343,6 +598,17 @@ def get_euroleague_games():
         len(matches)
     )
 
+    finished = sum(
+        1
+        for x in matches
+        if x.get("played")
+    )
+
+    print(
+        "🏁 EuroLeague oynanan:",
+        finished
+    )
+
     return matches
 
 
@@ -357,7 +623,6 @@ def get_nba_day(date_value):
     )
 
     try:
-
         response = requests.get(
             ESPN_URL,
             params={
@@ -373,12 +638,10 @@ def get_nba_day(date_value):
         data = response.json()
 
     except Exception as e:
-
         print(
             f"   ❌ {date_text} NBA hatası:",
             e
         )
-
         return []
 
     events = (
@@ -406,9 +669,7 @@ def get_nba_day(date_value):
         if not competitions:
             continue
 
-        competition = (
-            competitions[0]
-        )
+        competition = competitions[0]
 
         competitors = (
             competition.get(
@@ -630,15 +891,12 @@ def get_nba_games():
         )
 
         if game_id:
-
             key = str(game_id)
-
         else:
-
             key = (
                 f'{match.get("date")}:'
-                f'{match.get("homeTeam")}:'
-                f'{match.get("awayTeam")}'
+                f'{normalize_team_name(match.get("homeTeam"))}:'
+                f'{normalize_team_name(match.get("awayTeam"))}'
             )
 
         unique[key] = match
@@ -657,6 +915,17 @@ def get_nba_games():
     print(
         "🏀 NBA toplam maç:",
         len(matches)
+    )
+
+    finished = sum(
+        1
+        for x in matches
+        if x.get("played")
+    )
+
+    print(
+        "🏁 NBA oynanan:",
+        finished
     )
 
     return matches
@@ -682,13 +951,19 @@ def last_five_home(
     if target is None:
         return []
 
+    target_team = normalize_team_name(
+        team
+    )
+
     previous = []
 
     for match in matches:
 
-        if match.get(
-            "homeTeam"
-        ) != team:
+        match_team = normalize_team_name(
+            match.get("homeTeam")
+        )
+
+        if match_team != target_team:
             continue
 
         if not match.get(
@@ -710,8 +985,8 @@ def last_five_home(
         if away_score is None:
             continue
 
-        match_date = parse_date(
-            match.get("date")
+        match_date = match_datetime(
+            match
         )
 
         if match_date is None:
@@ -726,7 +1001,8 @@ def last_five_home(
 
     previous.sort(
         key=lambda x: reverse_date_key(
-            x.get("date")
+            x.get("utcDate")
+            or x.get("date")
         ),
         reverse=True
     )
@@ -773,13 +1049,19 @@ def last_five_away(
     if target is None:
         return []
 
+    target_team = normalize_team_name(
+        team
+    )
+
     previous = []
 
     for match in matches:
 
-        if match.get(
-            "awayTeam"
-        ) != team:
+        match_team = normalize_team_name(
+            match.get("awayTeam")
+        )
+
+        if match_team != target_team:
             continue
 
         if not match.get(
@@ -801,8 +1083,8 @@ def last_five_away(
         if away_score is None:
             continue
 
-        match_date = parse_date(
-            match.get("date")
+        match_date = match_datetime(
+            match
         )
 
         if match_date is None:
@@ -817,7 +1099,8 @@ def last_five_away(
 
     previous.sort(
         key=lambda x: reverse_date_key(
-            x.get("date")
+            x.get("utcDate")
+            or x.get("date")
         ),
         reverse=True
     )
@@ -885,27 +1168,27 @@ def add_last_five(matches):
 
     for match in matches:
 
+        home_team = match.get(
+            "homeTeam"
+        )
+
+        away_team = match.get(
+            "awayTeam"
+        )
+
         match["homeLast5"] = (
             last_five_home(
                 finished,
-                match.get(
-                    "homeTeam"
-                ),
-                match.get(
-                    "date"
-                )
+                home_team,
+                match.get("date")
             )
         )
 
         match["awayLast5"] = (
             last_five_away(
                 finished,
-                match.get(
-                    "awayTeam"
-                ),
-                match.get(
-                    "date"
-                )
+                away_team,
+                match.get("date")
             )
         )
 
@@ -913,14 +1196,14 @@ def add_last_five(matches):
 
 
 # ============================================================
-# GÜNCEL SON 5 KONTROL
+# TAKIM VERİ KONTROLÜ
 # ============================================================
 
-def print_samples(matches):
+def print_team_match_debug(matches):
 
     print()
     print("========================================")
-    print("🔎 GÜNCEL SON 5 KONTROL")
+    print("🔎 TAKIM SON 5 KONTROL")
     print("========================================")
 
     now = datetime.now(
@@ -931,13 +1214,11 @@ def print_samples(matches):
 
     for match in matches:
 
-        if match.get(
-            "played"
-        ):
+        if match.get("played"):
             continue
 
-        match_date = parse_date(
-            match.get("date")
+        match_date = match_datetime(
+            match
         )
 
         if match_date is None:
@@ -963,8 +1244,8 @@ def print_samples(matches):
         upcoming.append({
             "date": match_date,
             "match": match,
-            "homeLast5": home_last5,
-            "awayLast5": away_last5,
+            "home": home_last5,
+            "away": away_last5,
         })
 
     upcoming.sort(
@@ -977,13 +1258,14 @@ def print_samples(matches):
 
         match = item["match"]
 
-        home_last5 = item[
-            "homeLast5"
-        ]
+        home_last5 = item["home"]
+        away_last5 = item["away"]
 
-        away_last5 = item[
-            "awayLast5"
-        ]
+        if (
+            len(home_last5) >= 5
+            and len(away_last5) >= 5
+        ):
+            continue
 
         print()
         print(
@@ -993,61 +1275,157 @@ def print_samples(matches):
         )
 
         print(
-            "Maç tarihi:",
-            match.get("date")
+            f'   Ev: {len(home_last5)}/5 | '
+            f'{normalize_team_name(match.get("homeTeam"))}'
         )
 
-        print()
         print(
-            f"🏠 EV SON 5: "
-            f"{len(home_last5)}/5"
+            f'   Dep: {len(away_last5)}/5 | '
+            f'{normalize_team_name(match.get("awayTeam"))}'
         )
-
-        if home_last5:
-
-            for game in home_last5:
-
-                print(
-                    f'  {game.get("date")} | '
-                    f'{game.get("scored")}-'
-                    f'{game.get("conceded")} | '
-                    f'{game.get("opponent")}'
-                )
-
-        else:
-
-            print("  Veri yok")
-
-        print()
-        print(
-            f"✈️ DEP SON 5: "
-            f"{len(away_last5)}/5"
-        )
-
-        if away_last5:
-
-            for game in away_last5:
-
-                print(
-                    f'  {game.get("date")} | '
-                    f'{game.get("scored")}-'
-                    f'{game.get("conceded")} | '
-                    f'{game.get("opponent")}'
-                )
-
-        else:
-
-            print("  Veri yok")
 
         shown += 1
 
-        if shown >= 10:
+        if shown >= 20:
             break
 
     print()
     print(
-        "Kontrol edilen güncel maç:",
+        "Eksik veri gösterilen maç:",
         shown
+    )
+
+
+# ============================================================
+# İSTATİSTİK
+# ============================================================
+
+def print_statistics(matches):
+
+    print()
+    print("========================================")
+    print("📊 SONUÇ")
+    print("========================================")
+
+    nba = [
+        x for x in matches
+        if x.get("league") == "NBA"
+    ]
+
+    euroleague = [
+        x for x in matches
+        if x.get("league") == "EuroLeague"
+    ]
+
+    nba_finished = sum(
+        1
+        for x in nba
+        if (
+            x.get("played")
+            and x.get("homeScore") is not None
+            and x.get("awayScore") is not None
+        )
+    )
+
+    euro_finished = sum(
+        1
+        for x in euroleague
+        if (
+            x.get("played")
+            and x.get("homeScore") is not None
+            and x.get("awayScore") is not None
+        )
+    )
+
+    upcoming = [
+        x
+        for x in matches
+        if not x.get("played")
+    ]
+
+    both_5 = 0
+    home_5 = 0
+    away_5 = 0
+    incomplete = 0
+
+    for match in upcoming:
+
+        home_count = len(
+            match.get(
+                "homeLast5"
+            )
+            or []
+        )
+
+        away_count = len(
+            match.get(
+                "awayLast5"
+            )
+            or []
+        )
+
+        if home_count >= 5:
+            home_5 += 1
+
+        if away_count >= 5:
+            away_5 += 1
+
+        if (
+            home_count >= 5
+            and away_count >= 5
+        ):
+            both_5 += 1
+        else:
+            incomplete += 1
+
+    print(
+        "Toplam maç:",
+        len(matches)
+    )
+
+    print(
+        "NBA:",
+        len(nba)
+    )
+
+    print(
+        "NBA oynanan:",
+        nba_finished
+    )
+
+    print(
+        "EuroLeague:",
+        len(euroleague)
+    )
+
+    print(
+        "EuroLeague oynanan:",
+        euro_finished
+    )
+
+    print(
+        "Gelecek maç:",
+        len(upcoming)
+    )
+
+    print(
+        "Ev 5/5:",
+        home_5
+    )
+
+    print(
+        "Dep 5/5:",
+        away_5
+    )
+
+    print(
+        "İki taraf 5/5:",
+        both_5
+    )
+
+    print(
+        "Eksik Son 5:",
+        incomplete
     )
 
 
@@ -1057,13 +1435,9 @@ def print_samples(matches):
 
 def main():
 
-    print(
-        "🏀 BASKETBOL VERİ GÜNCELLEYİCİ"
-    )
-
-    print(
-        "========================================"
-    )
+    print()
+    print("🏀 BASKETBOL VERİ GÜNCELLEYİCİ")
+    print("========================================")
 
     DATA_DIR.mkdir(
         parents=True,
@@ -1071,7 +1445,7 @@ def main():
     )
 
     # --------------------------------------------------------
-    # VERİLER
+    # VERİLERİ AL
     # --------------------------------------------------------
 
     euroleague = (
@@ -1115,8 +1489,8 @@ def main():
             key = (
                 f"{league}:"
                 f"{match.get('date')}:"
-                f"{match.get('homeTeam')}:"
-                f"{match.get('awayTeam')}"
+                f"{normalize_team_name(match.get('homeTeam'))}:"
+                f"{normalize_team_name(match.get('awayTeam'))}"
             )
 
         unique[key] = match
@@ -1126,7 +1500,7 @@ def main():
     )
 
     # --------------------------------------------------------
-    # TARİH
+    # TARİHE GÖRE SIRALA
     # --------------------------------------------------------
 
     matches.sort(
@@ -1147,40 +1521,12 @@ def main():
     # KONTROL
     # --------------------------------------------------------
 
-    print_samples(
+    print_team_match_debug(
         matches
     )
 
-    # --------------------------------------------------------
-    # İSTATİSTİK
-    # --------------------------------------------------------
-
-    nba_finished = sum(
-        1
-        for match in nba
-        if (
-            match.get("played")
-            and match.get(
-                "homeScore"
-            ) is not None
-            and match.get(
-                "awayScore"
-            ) is not None
-        )
-    )
-
-    euro_finished = sum(
-        1
-        for match in euroleague
-        if (
-            match.get("played")
-            and match.get(
-                "homeScore"
-            ) is not None
-            and match.get(
-                "awayScore"
-            ) is not None
-        )
+    print_statistics(
+        matches
     )
 
     # --------------------------------------------------------
@@ -1189,63 +1535,59 @@ def main():
 
     output = {
         "updatedAt": now_iso(),
-
         "total": len(matches),
-
-        "nba": len(nba),
-        "nbaFinished": nba_finished,
-
-        "euroleague": len(euroleague),
-        "euroleagueFinished": euro_finished,
-
+        "nba": sum(
+            1
+            for x in matches
+            if x.get("league") == "NBA"
+        ),
+        "nbaFinished": sum(
+            1
+            for x in matches
+            if (
+                x.get("league") == "NBA"
+                and x.get("played")
+            )
+        ),
+        "euroleague": sum(
+            1
+            for x in matches
+            if x.get("league") == "EuroLeague"
+        ),
+        "euroleagueFinished": sum(
+            1
+            for x in matches
+            if (
+                x.get("league") == "EuroLeague"
+                and x.get("played")
+            )
+        ),
         "matches": matches,
     }
 
-    OUTPUT.write_text(
-        json.dumps(
+    with OUTPUT.open(
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        json.dump(
             output,
+            file,
             ensure_ascii=False,
             indent=2
-        ),
-        encoding="utf-8"
-    )
-
-    # --------------------------------------------------------
-    # SONUÇ
-    # --------------------------------------------------------
+        )
 
     print()
     print("========================================")
-    print("✅ TAMAMLANDI")
+    print("✅ BASKETBALL.JSON OLUŞTURULDU")
     print("========================================")
-
     print(
-        "📁 Dosya:",
+        "📁",
         OUTPUT
     )
-
     print(
-        "🏀 Toplam maç:",
+        "📦 Maç:",
         len(matches)
-    )
-
-    print(
-        "NBA:",
-        len(nba),
-        "| Oynanan:",
-        nba_finished
-    )
-
-    print(
-        "EuroLeague:",
-        len(euroleague),
-        "| Oynanan:",
-        euro_finished
-    )
-
-    print(
-        "🕒 Güncelleme:",
-        output["updatedAt"]
     )
 
 
