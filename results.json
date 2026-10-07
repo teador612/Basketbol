@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T11:05:24.173839+00:00",
+  "updatedAt": "2026-10-07T12:09:11.588940+00:00",
   "source": "predictions.json",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
@@ -21,8 +21,8 @@
       "successful": 0,
       "failed": 0,
       "push": 0,
-      "notPlayed": 0,
-      "invalid": 700,
+      "notPlayed": 537,
+      "invalid": 163,
       "successRate": null
     },
     "leagues": {
@@ -32,8 +32,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 320,
+        "notPlayed": 187,
+        "invalid": 133,
         "successRate": null
       },
       "EuroLeague": {
@@ -42,8 +42,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 380,
+        "notPlayed": 350,
+        "invalid": 30,
         "successRate": null
       }
     },
@@ -674,8 +674,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 2,
+        "invalid": 3,
         "successRate": null
       },
       "2026-10-08": {
@@ -684,8 +684,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 14,
+        "notPlayed": 14,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-09": {
@@ -694,8 +694,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-10": {
@@ -704,8 +704,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-11": {
@@ -714,8 +714,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 7,
+        "notPlayed": 7,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-12": {
@@ -724,8 +724,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-13": {
@@ -734,8 +734,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 10,
+        "notPlayed": 10,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-14": {
@@ -744,8 +744,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 8,
+        "notPlayed": 8,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-15": {
@@ -754,8 +754,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 10,
+        "notPlayed": 10,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-16": {
@@ -764,8 +764,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 11,
+        "notPlayed": 11,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-17": {
@@ -774,8 +774,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 8,
+        "notPlayed": 8,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-20": {
@@ -784,8 +784,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-21": {
@@ -794,8 +794,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 7,
+        "notPlayed": 7,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-22": {
@@ -804,8 +804,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 13,
+        "notPlayed": 13,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-23": {
@@ -814,8 +814,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 9,
+        "notPlayed": 9,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-24": {
@@ -824,8 +824,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 10,
+        "notPlayed": 10,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-25": {
@@ -834,8 +834,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 11,
+        "notPlayed": 11,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-26": {
@@ -844,8 +844,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-27": {
@@ -854,8 +854,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 12,
+        "notPlayed": 12,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-28": {
@@ -864,8 +864,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 12,
+        "notPlayed": 12,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-29": {
@@ -874,8 +874,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 11,
+        "notPlayed": 11,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-30": {
@@ -884,8 +884,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 14,
+        "notPlayed": 14,
+        "invalid": 0,
         "successRate": null
       },
       "2026-10-31": {
@@ -894,8 +894,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 8,
+        "notPlayed": 8,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-01": {
@@ -904,8 +904,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-02": {
@@ -914,8 +914,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-03": {
@@ -924,8 +924,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 15,
+        "notPlayed": 15,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-04": {
@@ -934,8 +934,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 1,
+        "notPlayed": 1,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-05": {
@@ -944,8 +944,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 19,
+        "notPlayed": 19,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-06": {
@@ -954,8 +954,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-07": {
@@ -964,8 +964,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 9,
+        "notPlayed": 9,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-11": {
@@ -974,8 +974,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-12": {
@@ -984,8 +984,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-13": {
@@ -994,8 +994,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-17": {
@@ -1004,8 +1004,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 9,
+        "notPlayed": 9,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-18": {
@@ -1014,8 +1014,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 1,
+        "notPlayed": 1,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-19": {
@@ -1024,8 +1024,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-20": {
@@ -1034,8 +1034,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-24": {
@@ -1044,8 +1044,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-11-25": {
@@ -1054,8 +1054,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-03": {
@@ -1064,8 +1064,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-04": {
@@ -1074,8 +1074,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-10": {
@@ -1084,8 +1084,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-11": {
@@ -1094,8 +1094,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-15": {
@@ -1104,8 +1104,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 7,
+        "notPlayed": 7,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-16": {
@@ -1114,8 +1114,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-17": {
@@ -1124,8 +1124,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-18": {
@@ -1134,8 +1134,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-22": {
@@ -1144,8 +1144,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-23": {
@@ -1154,8 +1154,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-29": {
@@ -1164,8 +1164,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2026-12-30": {
@@ -1174,8 +1174,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-06": {
@@ -1184,8 +1184,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 1,
+        "notPlayed": 1,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-07": {
@@ -1194,8 +1194,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-08": {
@@ -1204,8 +1204,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-12": {
@@ -1214,8 +1214,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 8,
+        "notPlayed": 8,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-13": {
@@ -1224,8 +1224,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-14": {
@@ -1234,8 +1234,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-15": {
@@ -1244,8 +1244,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-21": {
@@ -1254,8 +1254,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-22": {
@@ -1264,8 +1264,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-28": {
@@ -1274,8 +1274,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-01-29": {
@@ -1284,8 +1284,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-02": {
@@ -1294,8 +1294,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-03": {
@@ -1304,8 +1304,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-04": {
@@ -1314,8 +1314,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-05": {
@@ -1324,8 +1324,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-10": {
@@ -1334,8 +1334,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-11": {
@@ -1344,8 +1344,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-02-12": {
@@ -1354,8 +1354,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-04": {
@@ -1364,8 +1364,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-05": {
@@ -1374,8 +1374,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-09": {
@@ -1384,8 +1384,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 8,
+        "notPlayed": 8,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-10": {
@@ -1394,8 +1394,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-11": {
@@ -1404,8 +1404,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-12": {
@@ -1414,8 +1414,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-18": {
@@ -1424,8 +1424,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-19": {
@@ -1434,8 +1434,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 5,
+        "notPlayed": 5,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-23": {
@@ -1444,8 +1444,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-24": {
@@ -1454,8 +1454,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-25": {
@@ -1464,8 +1464,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-26": {
@@ -1474,8 +1474,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-03-31": {
@@ -1484,8 +1484,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-01": {
@@ -1494,8 +1494,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-02": {
@@ -1504,8 +1504,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-06": {
@@ -1514,8 +1514,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 8,
+        "notPlayed": 8,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-07": {
@@ -1524,8 +1524,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 2,
+        "notPlayed": 2,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-08": {
@@ -1534,8 +1534,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 7,
+        "notPlayed": 7,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-09": {
@@ -1544,8 +1544,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 3,
+        "notPlayed": 3,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-15": {
@@ -1554,8 +1554,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 6,
+        "notPlayed": 6,
+        "invalid": 0,
         "successRate": null
       },
       "2027-04-16": {
@@ -1564,8 +1564,8 @@
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 0,
-        "invalid": 4,
+        "notPlayed": 4,
+        "invalid": 0,
         "successRate": null
       }
     },
@@ -4206,7 +4206,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4222,7 +4222,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4238,7 +4238,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4254,7 +4254,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4270,7 +4270,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4286,7 +4286,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4302,7 +4302,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4318,7 +4318,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4334,7 +4334,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4350,7 +4350,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4366,7 +4366,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4382,7 +4382,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4398,7 +4398,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4414,7 +4414,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4430,7 +4430,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4446,7 +4446,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4462,7 +4462,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4478,7 +4478,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4494,7 +4494,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4510,7 +4510,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4526,7 +4526,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4542,7 +4542,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4558,7 +4558,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4574,7 +4574,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4590,7 +4590,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4606,7 +4606,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4622,7 +4622,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4632,13 +4632,13 @@
       "date": "2026-10-11",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 223.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4654,7 +4654,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4670,7 +4670,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4686,7 +4686,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4697,12 +4697,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 223.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4718,7 +4718,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4728,13 +4728,13 @@
       "date": "2026-10-12",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 223.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4750,7 +4750,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4760,13 +4760,13 @@
       "date": "2026-10-12",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 226.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4782,7 +4782,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4798,7 +4798,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4814,7 +4814,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4830,7 +4830,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4846,7 +4846,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4862,7 +4862,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4878,7 +4878,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4894,7 +4894,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4910,7 +4910,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4926,7 +4926,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4937,12 +4937,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 223.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4958,7 +4958,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4968,13 +4968,13 @@
       "date": "2026-10-14",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 226.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -4990,7 +4990,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5000,13 +5000,13 @@
       "date": "2026-10-14",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5022,7 +5022,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5038,7 +5038,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5054,7 +5054,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5070,7 +5070,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5086,7 +5086,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5102,7 +5102,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5112,13 +5112,13 @@
       "date": "2026-10-15",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5129,12 +5129,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5150,7 +5150,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5166,7 +5166,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5182,7 +5182,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5198,7 +5198,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5214,7 +5214,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5230,7 +5230,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5246,7 +5246,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5256,13 +5256,13 @@
       "date": "2026-10-16",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 226.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5278,7 +5278,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5294,7 +5294,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5310,7 +5310,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5326,7 +5326,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5342,7 +5342,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5358,7 +5358,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5369,12 +5369,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5384,13 +5384,13 @@
       "date": "2026-10-16",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5406,7 +5406,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5422,27 +5422,11 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
       "id": "401908943",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-17",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 219.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401898408",
       "league": "NBA",
       "season": "2026",
       "date": "2026-10-17",
@@ -5454,7 +5438,23 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401898408",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-17",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 219.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
       "success": null
     },
     {
@@ -5464,17 +5464,33 @@
       "date": "2026-10-17",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
       "id": "401906509",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-17",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 219.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401898843",
       "league": "NBA",
       "season": "2026",
       "date": "2026-10-17",
@@ -5486,23 +5502,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401898843",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-17",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 219.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5513,12 +5513,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 222.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5534,7 +5534,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5550,7 +5550,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5561,12 +5561,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5577,12 +5577,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5598,7 +5598,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5614,7 +5614,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5625,12 +5625,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5640,13 +5640,13 @@
       "date": "2026-10-21",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5662,7 +5662,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5672,13 +5672,13 @@
       "date": "2026-10-21",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5688,13 +5688,13 @@
       "date": "2026-10-21",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5704,13 +5704,13 @@
       "date": "2026-10-22",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 223.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5720,13 +5720,13 @@
       "date": "2026-10-22",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 226.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5737,48 +5737,16 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 220.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
       "id": "401909092",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-22",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 222.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401909841",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-22",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 219.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401909842",
       "league": "NBA",
       "season": "2026",
       "date": "2026-10-22",
@@ -5790,7 +5758,39 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401909841",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-22",
+      "home": null,
+      "away": null,
+      "prediction": "ALT",
+      "line": 227.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401909842",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-22",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 219.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
       "success": null
     },
     {
@@ -5806,7 +5806,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5822,7 +5822,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5838,7 +5838,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5854,7 +5854,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5870,7 +5870,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5886,7 +5886,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5902,7 +5902,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5912,13 +5912,13 @@
       "date": "2026-10-23",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 226.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5934,7 +5934,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5950,7 +5950,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5966,7 +5966,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5977,12 +5977,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -5993,12 +5993,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6008,13 +6008,13 @@
       "date": "2026-10-23",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6025,12 +6025,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6040,13 +6040,13 @@
       "date": "2026-10-23",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6057,12 +6057,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6072,33 +6072,17 @@
       "date": "2026-10-24",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
       "id": "401909096",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-24",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 219.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401909849",
       "league": "NBA",
       "season": "2026",
       "date": "2026-10-24",
@@ -6110,7 +6094,23 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401909849",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-24",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 219.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
       "success": null
     },
     {
@@ -6120,13 +6120,13 @@
       "date": "2026-10-24",
       "home": null,
       "away": null,
-      "prediction": "ALT",
-      "line": 222.5,
+      "prediction": "ÜST",
+      "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6137,12 +6137,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 222.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6152,13 +6152,13 @@
       "date": "2026-10-24",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6168,13 +6168,13 @@
       "date": "2026-10-24",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6185,12 +6185,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 223.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6201,12 +6201,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6217,12 +6217,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6232,13 +6232,13 @@
       "date": "2026-10-25",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6249,12 +6249,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6265,12 +6265,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 223.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6281,16 +6281,48 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
+      "line": 227.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401909861",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-25",
+      "home": null,
+      "away": null,
+      "prediction": "ALT",
+      "line": 225.5,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "401909862",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-25",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
-      "id": "401909861",
+      "id": "401909864",
       "league": "NBA",
       "season": "2026",
       "date": "2026-10-25",
@@ -6302,39 +6334,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401909862",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-25",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 219.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
-      "success": null
-    },
-    {
-      "id": "401909864",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-25",
-      "home": null,
-      "away": null,
-      "prediction": "ALT",
-      "line": 219.5,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6345,12 +6345,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6360,13 +6360,13 @@
       "date": "2026-10-25",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6377,12 +6377,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6392,13 +6392,13 @@
       "date": "2026-10-26",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6414,7 +6414,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6425,12 +6425,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6441,12 +6441,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6456,13 +6456,13 @@
       "date": "2026-10-26",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6472,13 +6472,13 @@
       "date": "2026-10-27",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6488,13 +6488,13 @@
       "date": "2026-10-27",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6505,12 +6505,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6520,13 +6520,13 @@
       "date": "2026-10-27",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6537,12 +6537,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6558,7 +6558,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6574,7 +6574,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6590,7 +6590,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6606,7 +6606,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6622,7 +6622,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6638,7 +6638,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6649,12 +6649,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6665,12 +6665,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6681,12 +6681,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6697,12 +6697,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6718,7 +6718,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6734,7 +6734,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6750,7 +6750,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6766,7 +6766,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6776,13 +6776,13 @@
       "date": "2026-10-28",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6793,12 +6793,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6809,12 +6809,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6825,12 +6825,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6841,12 +6841,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6857,12 +6857,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6873,12 +6873,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 220.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6889,12 +6889,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6905,12 +6905,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6921,12 +6921,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6936,13 +6936,13 @@
       "date": "2026-10-29",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6953,12 +6953,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6974,7 +6974,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -6990,7 +6990,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7006,7 +7006,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7017,12 +7017,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7032,13 +7032,13 @@
       "date": "2026-10-30",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7049,12 +7049,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7070,7 +7070,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7086,7 +7086,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7102,7 +7102,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7118,7 +7118,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7134,7 +7134,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7150,7 +7150,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7166,7 +7166,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7182,7 +7182,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7193,12 +7193,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7209,12 +7209,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7225,12 +7225,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7241,12 +7241,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7257,12 +7257,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 220.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7272,13 +7272,13 @@
       "date": "2026-10-31",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7289,12 +7289,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7305,12 +7305,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7321,12 +7321,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 227.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7337,12 +7337,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7353,12 +7353,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7368,13 +7368,13 @@
       "date": "2026-10-31",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7384,13 +7384,13 @@
       "date": "2026-11-01",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7401,12 +7401,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7417,12 +7417,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7432,13 +7432,13 @@
       "date": "2026-11-01",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7449,12 +7449,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7464,13 +7464,13 @@
       "date": "2026-11-01",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7481,12 +7481,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7496,13 +7496,13 @@
       "date": "2026-11-02",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7512,13 +7512,13 @@
       "date": "2026-11-03",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7529,12 +7529,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7545,12 +7545,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7561,12 +7561,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7577,12 +7577,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7593,12 +7593,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7608,13 +7608,13 @@
       "date": "2026-11-03",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7624,13 +7624,13 @@
       "date": "2026-11-03",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7641,12 +7641,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7657,12 +7657,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7673,12 +7673,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7689,12 +7689,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7705,12 +7705,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 227.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7720,13 +7720,13 @@
       "date": "2026-11-03",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7736,13 +7736,13 @@
       "date": "2026-11-03",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7758,7 +7758,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7769,12 +7769,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7784,13 +7784,13 @@
       "date": "2026-11-05",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7801,12 +7801,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7822,7 +7822,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7833,12 +7833,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7848,13 +7848,13 @@
       "date": "2026-11-05",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7864,13 +7864,13 @@
       "date": "2026-11-05",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7880,13 +7880,13 @@
       "date": "2026-11-05",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7897,12 +7897,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7913,12 +7913,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7929,12 +7929,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 227.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7945,12 +7945,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7960,13 +7960,13 @@
       "date": "2026-11-05",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7976,13 +7976,13 @@
       "date": "2026-11-05",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -7998,7 +7998,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8014,7 +8014,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8030,7 +8030,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8046,7 +8046,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8062,7 +8062,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8073,12 +8073,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 227.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8088,13 +8088,13 @@
       "date": "2026-11-06",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8110,7 +8110,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8126,7 +8126,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8142,7 +8142,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8158,7 +8158,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8168,13 +8168,13 @@
       "date": "2026-11-07",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8185,12 +8185,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 224.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8201,12 +8201,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 223.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8216,13 +8216,13 @@
       "date": "2026-11-07",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8232,13 +8232,13 @@
       "date": "2026-11-07",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8248,13 +8248,13 @@
       "date": "2026-11-07",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8264,13 +8264,13 @@
       "date": "2026-11-07",
       "home": null,
       "away": null,
-      "prediction": "ALT",
+      "prediction": "ÜST",
       "line": 219.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8281,12 +8281,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 225.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8297,12 +8297,12 @@
       "home": null,
       "away": null,
       "prediction": "ALT",
-      "line": 219.5,
+      "line": 226.5,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8318,7 +8318,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8334,7 +8334,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8350,7 +8350,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8366,7 +8366,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8382,7 +8382,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8398,7 +8398,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8414,7 +8414,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8430,7 +8430,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8446,7 +8446,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8462,7 +8462,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8478,7 +8478,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8494,7 +8494,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8510,7 +8510,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8526,7 +8526,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8542,7 +8542,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8558,7 +8558,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8574,7 +8574,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8590,7 +8590,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8606,7 +8606,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8622,7 +8622,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8638,7 +8638,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8654,7 +8654,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8670,7 +8670,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8686,7 +8686,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8702,7 +8702,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8718,7 +8718,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8734,7 +8734,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8750,7 +8750,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8766,7 +8766,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8782,7 +8782,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8798,7 +8798,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8814,7 +8814,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8830,7 +8830,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8846,7 +8846,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8862,7 +8862,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8878,7 +8878,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8894,7 +8894,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8910,7 +8910,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8926,7 +8926,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8942,7 +8942,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8958,7 +8958,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8974,7 +8974,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -8990,7 +8990,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9006,7 +9006,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9022,7 +9022,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9038,7 +9038,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9054,7 +9054,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9070,7 +9070,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9086,7 +9086,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9102,7 +9102,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9118,7 +9118,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9134,7 +9134,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9150,7 +9150,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9166,7 +9166,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9182,7 +9182,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9198,7 +9198,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9214,7 +9214,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9230,7 +9230,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9246,7 +9246,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9262,7 +9262,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9278,7 +9278,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9294,7 +9294,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9310,7 +9310,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9326,7 +9326,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9342,7 +9342,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9358,7 +9358,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9374,7 +9374,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9390,7 +9390,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9406,7 +9406,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9422,7 +9422,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9438,7 +9438,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9454,7 +9454,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9470,7 +9470,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9486,7 +9486,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9502,7 +9502,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9518,7 +9518,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9534,7 +9534,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9550,7 +9550,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9566,7 +9566,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9582,7 +9582,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9598,7 +9598,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9614,7 +9614,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9630,7 +9630,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9646,7 +9646,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9662,7 +9662,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9678,7 +9678,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9694,7 +9694,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9710,7 +9710,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9726,7 +9726,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9742,7 +9742,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9758,7 +9758,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9774,7 +9774,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9790,7 +9790,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9806,7 +9806,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9822,7 +9822,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9838,7 +9838,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9854,7 +9854,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9870,7 +9870,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9886,7 +9886,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9902,7 +9902,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9918,7 +9918,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9934,7 +9934,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9950,7 +9950,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9966,7 +9966,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9982,7 +9982,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -9998,7 +9998,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10014,7 +10014,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10030,7 +10030,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10046,7 +10046,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10062,7 +10062,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10078,7 +10078,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10094,7 +10094,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10110,7 +10110,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10126,7 +10126,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10142,7 +10142,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10158,7 +10158,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10174,7 +10174,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10190,7 +10190,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10206,7 +10206,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10222,7 +10222,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10238,7 +10238,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10254,7 +10254,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10270,7 +10270,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10286,7 +10286,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10302,7 +10302,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10318,7 +10318,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10334,7 +10334,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10350,7 +10350,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10366,7 +10366,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10382,7 +10382,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10398,7 +10398,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10414,7 +10414,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10430,7 +10430,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10446,7 +10446,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10462,7 +10462,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10478,7 +10478,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10494,7 +10494,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10510,7 +10510,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10526,7 +10526,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10542,7 +10542,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10558,7 +10558,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10574,7 +10574,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10590,7 +10590,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10606,7 +10606,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10622,7 +10622,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10638,7 +10638,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10654,7 +10654,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10670,7 +10670,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10686,7 +10686,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10702,7 +10702,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10718,7 +10718,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10734,7 +10734,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10750,7 +10750,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10766,7 +10766,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10782,7 +10782,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10798,7 +10798,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10814,7 +10814,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10830,7 +10830,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10846,7 +10846,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10862,7 +10862,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10878,7 +10878,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10894,7 +10894,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10910,7 +10910,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10926,7 +10926,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10942,7 +10942,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10958,7 +10958,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10974,7 +10974,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -10990,7 +10990,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11006,7 +11006,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11022,7 +11022,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11038,7 +11038,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11054,7 +11054,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11070,7 +11070,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11086,7 +11086,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11102,7 +11102,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11118,7 +11118,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11134,7 +11134,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11150,7 +11150,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11166,7 +11166,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11182,7 +11182,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11198,7 +11198,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11214,7 +11214,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11230,7 +11230,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11246,7 +11246,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11262,7 +11262,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11278,7 +11278,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11294,7 +11294,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11310,7 +11310,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11326,7 +11326,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11342,7 +11342,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11358,7 +11358,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11374,7 +11374,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11390,7 +11390,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11406,7 +11406,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11422,7 +11422,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11438,7 +11438,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11454,7 +11454,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11470,7 +11470,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11486,7 +11486,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11502,7 +11502,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11518,7 +11518,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11534,7 +11534,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11550,7 +11550,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11566,7 +11566,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11582,7 +11582,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11598,7 +11598,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11614,7 +11614,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11630,7 +11630,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11646,7 +11646,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11662,7 +11662,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11678,7 +11678,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11694,7 +11694,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11710,7 +11710,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11726,7 +11726,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11742,7 +11742,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11758,7 +11758,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11774,7 +11774,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11790,7 +11790,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11806,7 +11806,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11822,7 +11822,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11838,7 +11838,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11854,7 +11854,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11870,7 +11870,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11886,7 +11886,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11902,7 +11902,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11918,7 +11918,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11934,7 +11934,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11950,7 +11950,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11966,7 +11966,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11982,7 +11982,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -11998,7 +11998,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12014,7 +12014,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12030,7 +12030,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12046,7 +12046,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12062,7 +12062,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12078,7 +12078,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12094,7 +12094,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12110,7 +12110,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12126,7 +12126,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12142,7 +12142,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12158,7 +12158,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12174,7 +12174,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12190,7 +12190,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12206,7 +12206,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12222,7 +12222,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12238,7 +12238,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12254,7 +12254,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12270,7 +12270,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12286,7 +12286,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12302,7 +12302,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12318,7 +12318,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12334,7 +12334,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12350,7 +12350,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12366,7 +12366,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12382,7 +12382,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12398,7 +12398,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12414,7 +12414,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12430,7 +12430,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12446,7 +12446,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12462,7 +12462,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12478,7 +12478,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12494,7 +12494,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12510,7 +12510,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12526,7 +12526,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12542,7 +12542,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12558,7 +12558,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12574,7 +12574,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12590,7 +12590,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12606,7 +12606,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12622,7 +12622,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12638,7 +12638,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12654,7 +12654,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12670,7 +12670,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12686,7 +12686,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12702,7 +12702,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12718,7 +12718,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12734,7 +12734,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12750,7 +12750,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12766,7 +12766,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     },
     {
@@ -12782,7 +12782,7 @@
       "awayScore": 0,
       "actualTotal": null,
       "actualResult": null,
-      "status": "invalid",
+      "status": "not_played",
       "success": null
     }
   ]
