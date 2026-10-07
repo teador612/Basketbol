@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T12:52:24.068979+00:00",
+  "updatedAt": "2026-10-07T21:21:38.593911+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -7,13 +7,13 @@
     "secondaryMarketsExcluded": true
   },
   "overall": {
-    "total": 138,
-    "completed": 138,
-    "successful": 64,
+    "total": 139,
+    "completed": 139,
+    "successful": 65,
     "failed": 74,
     "push": 0,
-    "successRate": 46.38,
-    "averageError": 14.65
+    "successRate": 46.76,
+    "averageError": 14.69
   },
   "leagues": {
     "NBA": {
@@ -26,24 +26,24 @@
       "averageError": 14.52
     },
     "EuroLeague": {
-      "total": 20,
-      "completed": 20,
-      "successful": 9,
+      "total": 21,
+      "completed": 21,
+      "successful": 10,
       "failed": 11,
       "push": 0,
-      "successRate": 45.0,
-      "averageError": 15.44
+      "successRate": 47.62,
+      "averageError": 15.67
     }
   },
   "predictionTypes": {
     "ÜST": {
-      "total": 119,
-      "completed": 119,
-      "successful": 57,
+      "total": 120,
+      "completed": 120,
+      "successful": 58,
       "failed": 62,
       "push": 0,
-      "successRate": 47.9,
-      "averageError": 14.43
+      "successRate": 48.33,
+      "averageError": 14.48
     },
     "ALT": {
       "total": 18,
@@ -84,13 +84,13 @@
       "averageError": 15.61
     },
     "160-179": {
-      "total": 15,
-      "completed": 15,
-      "successful": 6,
+      "total": 16,
+      "completed": 16,
+      "successful": 7,
       "failed": 9,
       "push": 0,
-      "successRate": 40.0,
-      "averageError": 15.6
+      "successRate": 43.75,
+      "averageError": 15.9
     },
     "140-159": {
       "total": 1,
@@ -3503,6 +3503,25 @@
       "actualTotal": 222,
       "difference": 7.79,
       "absoluteError": 7.79,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
+      "id": "17b46ddd-0884-406c-97a0-13f60cae97cc",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-07",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 173.56,
+      "expectedTotal": 175.4,
+      "homeScore": 96,
+      "awayScore": 98,
+      "actualTotal": 194,
+      "difference": 20.44,
+      "absoluteError": 20.44,
       "actualResult": "Üst",
       "status": "Başarılı",
       "success": true
