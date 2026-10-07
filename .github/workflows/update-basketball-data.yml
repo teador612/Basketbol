@@ -1,4 +1,4 @@
-name: Basketbol Veri ve Tahmin Güncelleme
+name: Basketbol Veri ve Odds Güncelleme
 
 on:
   workflow_dispatch:
@@ -18,348 +18,127 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # ======================================================
+      # REPO
+      # ======================================================
+
       - name: 📥 Repo indir
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ======================================================
+      # PYTHON
+      # ======================================================
 
       - name: 🐍 Python kur
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+      # ======================================================
+      # PAKETLER
+      # ======================================================
+
       - name: 📦 Paketleri kur
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          pip install requests playwright
+
+      # ======================================================
+      # CHROMIUM
+      # ======================================================
+
+      - name: 🌐 Chromium kur
+        run: |
+          playwright install --with-deps chromium
+
+      # ======================================================
+      # ANA BASKETBOL VERİLERİ
+      # ======================================================
 
       - name: 🏀 Basketbol verilerini güncelle
         run: |
           python update_basketball_data.py
 
+      # ======================================================
+      # BİLYONER ODDS ENDPOINT KEŞFİ
+      # ======================================================
+
+      - name: 🔎 Bilyoner odds verisini keşfet
+        run: |
+          python discover_bilyoner_odds.py
+
+      # ======================================================
+      # TAHMİNLER
+      # ======================================================
+
       - name: 🎯 Tahminleri oluştur
         run: |
           python predictions.py
+
+      # ======================================================
+      # SONUÇLAR
+      # ======================================================
 
       - name: 📊 Sonuçları hesapla
         run: |
           python results.py
 
+      # ======================================================
+      # ANALİZ
+      # ======================================================
+
       - name: 🔬 Tahmin performansını analiz et
         run: |
           python analysis.py
 
+      # ======================================================
+      # DOSYA KONTROLÜ
+      # ======================================================
+
       - name: 🔎 Dosyaları kontrol et
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
+          echo "========================================"
+          echo "📁 DOSYA KONTROLÜ"
+          echo "========================================"
 
-          print("=" * 70)
-          print("🏀 BASKETBOL SİSTEM KONTROLÜ")
-          print("=" * 70)
+          test -f basketball.json
+          test -f predictions.json
+          test -f results.json
+          test -f analysis.json
 
-          basketball_file = None
+          if [ -f bilyoner_network.json ]; then
+            echo "✅ bilyoner_network.json"
+          else
+            echo "⚠️ bilyoner_network.json bulunamadı"
+          fi
 
-          if Path("basketball.json").exists():
-              basketball_file = Path("basketball.json")
+          echo ""
+          echo "📦 basketball.json:"
+          ls -lh basketball.json
 
-          elif Path("data/basketball.json").exists():
-              basketball_file = Path("data/basketball.json")
+          echo ""
+          echo "🎯 predictions.json:"
+          ls -lh predictions.json
 
-          if basketball_file is None:
-              raise SystemExit(
-                  "❌ basketball.json bulunamadı"
-              )
+          echo ""
+          echo "📊 results.json:"
+          ls -lh results.json
 
-          required_files = [
-              basketball_file,
-              Path("predictions.json"),
-              Path("results.json"),
-              Path("analysis.json")
-          ]
+          echo ""
+          echo "🔬 analysis.json:"
+          ls -lh analysis.json
 
-          for file in required_files:
-              if not file.exists():
-                  raise SystemExit(
-                      f"❌ Dosya bulunamadı: {file}"
-                  )
+          echo ""
+          echo "========================================"
+          echo "✅ KONTROL TAMAM"
+          echo "========================================"
 
-              print(f"✅ {file}")
-
-          with basketball_file.open(
-              encoding="utf-8"
-          ) as f:
-              basketball = json.load(f)
-
-          with Path("predictions.json").open(
-              encoding="utf-8"
-          ) as f:
-              predictions = json.load(f)
-
-          with Path("results.json").open(
-              encoding="utf-8"
-          ) as f:
-              results = json.load(f)
-
-          with Path("analysis.json").open(
-              encoding="utf-8"
-          ) as f:
-              analysis = json.load(f)
-
-          matches = basketball.get(
-              "matches",
-              []
-          )
-
-          prediction_list = predictions.get(
-              "predictions",
-              []
-          )
-
-          overall = (
-              results
-              .get("statistics", {})
-              .get("overall", {})
-          )
-
-          analysis_overall = (
-              analysis
-              .get("overall", {})
-          )
-
-          print()
-          print("=" * 70)
-          print("📊 VERİ")
-          print("=" * 70)
-
-          print(
-              "Toplam maç       :",
-              len(matches)
-          )
-
-          print(
-              "NBA              :",
-              basketball.get("nba")
-          )
-
-          print(
-              "NBA tamamlanan   :",
-              basketball.get("nbaFinished")
-          )
-
-          print(
-              "EuroLeague       :",
-              basketball.get("euroleague")
-          )
-
-          print(
-              "EuroLeague biten :",
-              basketball.get("euroleagueFinished")
-          )
-
-          print()
-          print("=" * 70)
-          print("🎯 TAHMİN")
-          print("=" * 70)
-
-          print(
-              "Toplam tahmin    :",
-              len(prediction_list)
-          )
-
-          print(
-              "Ana market       :",
-              "Maç Toplam Alt/Üst"
-          )
-
-          print()
-          print("=" * 70)
-          print("🏆 ANA BAŞARI")
-          print("=" * 70)
-
-          print(
-              "Tamamlanan       :",
-              overall.get("completed", 0)
-          )
-
-          print(
-              "Başarılı         :",
-              overall.get("successful", 0)
-          )
-
-          print(
-              "Başarısız        :",
-              overall.get("failed", 0)
-          )
-
-          print(
-              "Push             :",
-              overall.get("push", 0)
-          )
-
-          print(
-              "Oynanmamış       :",
-              overall.get("notPlayed", 0)
-          )
-
-          print(
-              "Başarı oranı     :",
-              overall.get("successRate")
-          )
-
-          print()
-          print("=" * 70)
-          print("🔬 PERFORMANS ANALİZİ")
-          print("=" * 70)
-
-          print(
-              "Tamamlanan       :",
-              analysis_overall.get(
-                  "completed",
-                  0
-              )
-          )
-
-          print(
-              "Başarılı         :",
-              analysis_overall.get(
-                  "successful",
-                  0
-              )
-          )
-
-          print(
-              "Başarısız        :",
-              analysis_overall.get(
-                  "failed",
-                  0
-              )
-          )
-
-          print(
-              "Push             :",
-              analysis_overall.get(
-                  "push",
-                  0
-              )
-          )
-
-          print(
-              "Başarı oranı     :",
-              analysis_overall.get(
-                  "successRate"
-              )
-          )
-
-          print(
-              "Ortalama hata    :",
-              analysis_overall.get(
-                  "averageError"
-              )
-          )
-
-          print()
-          print("=" * 70)
-          print("🏆 LİG BAŞARILARI")
-          print("=" * 70)
-
-          leagues = (
-              results
-              .get("statistics", {})
-              .get("leagues", {})
-          )
-
-          for league, stats in leagues.items():
-
-              print(
-                  f"{league}: "
-                  f"{stats.get('successful', 0)}/"
-                  f"{stats.get('completed', 0)} "
-                  f"→ %{stats.get('successRate')}"
-              )
-
-          print()
-          print("=" * 70)
-          print("📈 ALT / ÜST")
-          print("=" * 70)
-
-          distribution = (
-              results
-              .get("statistics", {})
-              .get(
-                  "predictionDistribution",
-                  {}
-              )
-          )
-
-          for market, stats in distribution.items():
-
-              print(
-                  f"{market}: "
-                  f"{stats.get('successful', 0)}/"
-                  f"{stats.get('total', 0)} "
-                  f"→ %{stats.get('successRate')}"
-              )
-
-          print()
-          print("=" * 70)
-          print("🎯 BAREM ANALİZİ")
-          print("=" * 70)
-
-          line_ranges = analysis.get(
-              "lineRanges",
-              {}
-          )
-
-          range_order = [
-              "<140",
-              "140-159",
-              "160-179",
-              "180-199",
-              "200+"
-          ]
-
-          for range_name in range_order:
-
-              stats = line_ranges.get(
-                  range_name
-              )
-
-              if not stats:
-                  continue
-
-              print(
-                  f"{range_name}: "
-                  f"{stats.get('successful', 0)}/"
-                  f"{stats.get('successful', 0) + stats.get('failed', 0)} "
-                  f"→ %{stats.get('successRate')} "
-                  f"| Hata: "
-                  f"{stats.get('averageError')}"
-              )
-
-          print()
-          print("=" * 70)
-          print("🔥 EN BÜYÜK HATALAR")
-          print("=" * 70)
-
-          for row in analysis.get(
-              "biggestErrors",
-              []
-          )[:10]:
-
-              print(
-                  f"{row.get('home')} - "
-                  f"{row.get('away')} | "
-                  f"Barem: {row.get('line')} | "
-                  f"Tahmin: {row.get('prediction')} | "
-                  f"Gerçek: {row.get('actualTotal')} | "
-                  f"Fark: {row.get('difference')}"
-              )
-
-          print()
-          print("=" * 70)
-          print("✅ TÜM KONTROLLER TAMAMLANDI")
-          print("=" * 70)
-          PY
+      # ======================================================
+      # GIT
+      # ======================================================
 
       - name: 💾 Değişiklikleri kaydet
         run: |
@@ -370,7 +149,24 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "ℹ️ Yeni değişiklik yok."
-          else
-            git commit -m "Basketbol verileri ve tahmin analizleri güncellendi"
-            git push
+            exit 0
           fi
+
+          git commit -m "Basketbol verileri ve odds güncellendi"
+
+      # ======================================================
+      # REMOTE İLE SENKRONİZE OL
+      # ======================================================
+
+      - name: 🔄 Remote ile senkronize ol
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      # ======================================================
+      # PUSH
+      # ======================================================
+
+      - name: 🚀 GitHub'a gönder
+        run: |
+          git push origin HEAD:main
