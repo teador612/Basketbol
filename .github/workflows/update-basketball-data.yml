@@ -1,4 +1,4 @@
-name: Basketbol Veri ve Odds Güncelleme
+name: Basketbol Veri ve Tahmin Güncelleme
 
 on:
   workflow_dispatch:
@@ -19,84 +19,76 @@ jobs:
 
     steps:
 
-      # ======================================================
+      # ==================================================
       # REPO
-      # ======================================================
+      # ==================================================
 
       - name: 📥 Repo indir
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # ======================================================
+      # ==================================================
       # PYTHON
-      # ======================================================
+      # ==================================================
 
       - name: 🐍 Python kur
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # ======================================================
+      # ==================================================
       # PAKETLER
-      # ======================================================
+      # ==================================================
 
       - name: 📦 Paketleri kur
         run: |
           python -m pip install --upgrade pip
-          pip install requests playwright
+          pip install requests
 
-      # ======================================================
-      # CHROMIUM
-      # ======================================================
-
-      - name: 🌐 Chromium kur
-        run: |
-          playwright install --with-deps chromium
-
-      # ======================================================
-      # ANA BASKETBOL VERİLERİ
-      # ======================================================
+      # ==================================================
+      # BASKETBOL VERİLERİ
+      # ==================================================
 
       - name: 🏀 Basketbol verilerini güncelle
         run: |
           python update_basketball_data.py
 
-      # ======================================================
-      # BİLYONER ODDS ENDPOINT KEŞFİ
-      # ======================================================
+      # ==================================================
+      # BİLYONER GERÇEK BAREMLER
+      # ==================================================
 
-      - name: 🔎 Bilyoner odds verisini keşfet
+      - name: 💰 Bilyoner baremlerini güncelle
         run: |
-          python discover_bilyoner_odds.py
+          python update_basketball_odds.py
 
-      # ======================================================
+      # ==================================================
       # TAHMİNLER
-      # ======================================================
+      # ==================================================
 
       - name: 🎯 Tahminleri oluştur
         run: |
           python predictions.py
 
-      # ======================================================
+      # ==================================================
       # SONUÇLAR
-      # ======================================================
+      # ==================================================
 
       - name: 📊 Sonuçları hesapla
         run: |
           python results.py
 
-      # ======================================================
+      # ==================================================
       # ANALİZ
-      # ======================================================
+      # ==================================================
 
       - name: 🔬 Tahmin performansını analiz et
         run: |
           python analysis.py
 
-      # ======================================================
+      # ==================================================
       # DOSYA KONTROLÜ
-      # ======================================================
+      # ==================================================
 
       - name: 🔎 Dosyaları kontrol et
         run: |
@@ -105,40 +97,39 @@ jobs:
           echo "========================================"
 
           test -f basketball.json
+          test -f odds.json
           test -f predictions.json
           test -f results.json
           test -f analysis.json
 
-          if [ -f bilyoner_network.json ]; then
-            echo "✅ bilyoner_network.json"
-          else
-            echo "⚠️ bilyoner_network.json bulunamadı"
-          fi
-
           echo ""
-          echo "📦 basketball.json:"
+          echo "🏀 basketball.json"
           ls -lh basketball.json
 
           echo ""
-          echo "🎯 predictions.json:"
+          echo "💰 odds.json"
+          ls -lh odds.json
+
+          echo ""
+          echo "🎯 predictions.json"
           ls -lh predictions.json
 
           echo ""
-          echo "📊 results.json:"
+          echo "📊 results.json"
           ls -lh results.json
 
           echo ""
-          echo "🔬 analysis.json:"
+          echo "🔬 analysis.json"
           ls -lh analysis.json
 
           echo ""
           echo "========================================"
-          echo "✅ KONTROL TAMAM"
+          echo "✅ TÜM DOSYALAR HAZIR"
           echo "========================================"
 
-      # ======================================================
+      # ==================================================
       # GIT
-      # ======================================================
+      # ==================================================
 
       - name: 💾 Değişiklikleri kaydet
         run: |
@@ -152,20 +143,20 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Basketbol verileri ve odds güncellendi"
+          git commit -m "Basketbol verileri ve baremler güncellendi"
 
-      # ======================================================
-      # REMOTE İLE SENKRONİZE OL
-      # ======================================================
+      # ==================================================
+      # REMOTE SENKRONİZASYON
+      # ==================================================
 
       - name: 🔄 Remote ile senkronize ol
         run: |
           git fetch origin main
           git rebase origin/main
 
-      # ======================================================
+      # ==================================================
       # PUSH
-      # ======================================================
+      # ==================================================
 
       - name: 🚀 GitHub'a gönder
         run: |
