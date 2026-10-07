@@ -314,6 +314,32 @@
       white-space: nowrap;
     }
 
+    /* BİTMİŞ + BAŞARILI */
+    .prediction.success {
+      background: #153626;
+      color: #65df9a;
+    }
+
+    /* BİTMİŞ + BAŞARISIZ */
+    .prediction.fail {
+      background: #361d22;
+      color: #ef7e89;
+    }
+
+    /* PUSH */
+    .prediction.push {
+      background: #30281d;
+      color: #e0ad55;
+    }
+
+    /* OYNANMAMIŞ */
+    .prediction.pending {
+      background: #4a3d16;
+      color: #f0cf62;
+      border: 1px solid #685722;
+    }
+
+    /* Eski sınıflar - güvenlik için */
     .prediction.over {
       background: #153626;
       color: #65df9a;
@@ -322,26 +348,6 @@
     .prediction.under {
       background: #302c18;
       color: #e3c55e;
-    }
-
-    .prediction.pending {
-      background: #202730;
-      color: #929dab;
-    }
-
-    .prediction.push {
-      background: #30281d;
-      color: #e0ad55;
-    }
-
-    .prediction.fail {
-      background: #361d22;
-      color: #ef7e89;
-    }
-
-    .prediction.success {
-      background: #153626;
-      color: #65df9a;
     }
 
     .prediction-1x2 {
@@ -660,7 +666,6 @@
       </div>
     </div>
 
-    <!-- MACKOLIK -->
     <a
       href="https://teador612.github.io/mackolik1/"
       class="mackolik-btn"
@@ -688,7 +693,6 @@
       </div>
     </div>
 
-
     <div class="summary-card">
       <div
         class="summary-value"
@@ -702,7 +706,6 @@
       </div>
     </div>
 
-
     <div class="summary-card">
       <div
         class="summary-value"
@@ -715,7 +718,6 @@
         Başarısız
       </div>
     </div>
-
 
     <div class="summary-card">
       <div
@@ -750,7 +752,6 @@
 
     </div>
 
-
     <div class="filter">
 
       <label for="leagueFilter">
@@ -774,7 +775,6 @@
       </select>
 
     </div>
-
 
     <div class="filter">
 
@@ -843,9 +843,7 @@
   const CACHE_KEY =
     "?v=" + Date.now();
 
-
   let predictions = [];
-
 
   const dateFilter =
     document.getElementById(
@@ -1021,7 +1019,25 @@
   }
 
 
+  /* ========================================================
+     DURUM
+  ======================================================== */
+
   function getStatus(p) {
+
+    /*
+      ÖNEMLİ:
+
+      played !== true ise maç kesinlikle
+      "pending" kabul edilir.
+
+      Böylece oynanmamış maçlar:
+      - başarılı olmaz
+      - başarısız olmaz
+      - push olmaz
+      - yeşil olmaz
+      - sarı Bekliyor olur
+    */
 
     if (
       p.played !== true
@@ -1029,26 +1045,33 @@
       return "pending";
     }
 
+
     if (
       p.result === "successful"
-      || p.success === true
+      ||
+      p.success === true
     ) {
       return "success";
     }
 
+
     if (
       p.result === "failed"
-      || p.success === false
+      ||
+      p.success === false
     ) {
       return "failed";
     }
 
+
     if (
       p.result === "push"
-      || p.result === "Push"
+      ||
+      p.result === "Push"
     ) {
       return "push";
     }
+
 
     return "pending";
 
@@ -1080,10 +1103,24 @@
   }
 
 
+  /*
+    OYNANMAMIŞ MAÇTA prediction ne olursa olsun
+    pending döndürülür.
+
+    Böylece "ÜST" olduğu için yeşile dönmez.
+  */
+
   function predictionClass(
     prediction,
     status
   ) {
+
+    if (
+      status === "pending"
+    ) {
+      return "pending";
+    }
+
 
     if (
       status === "success"
@@ -1091,11 +1128,13 @@
       return "success";
     }
 
+
     if (
       status === "failed"
     ) {
       return "fail";
     }
+
 
     if (
       status === "push"
@@ -1103,22 +1142,6 @@
       return "push";
     }
 
-    const text =
-      String(
-        prediction ?? ""
-      ).toLowerCase();
-
-    if (
-      text === "üst"
-    ) {
-      return "over";
-    }
-
-    if (
-      text === "alt"
-    ) {
-      return "under";
-    }
 
     return "pending";
 
@@ -1169,6 +1192,7 @@
 
     return {
       prediction,
+
       confidence:
         number(
           p.confidence1X2
@@ -1213,30 +1237,44 @@
     let resultText =
       data.prediction;
 
+
     if (
       p.played === true
-      && data.success === true
+      &&
+      data.success === true
     ) {
+
       resultText =
         "✓ " +
         data.prediction;
+
     }
+
 
     if (
       p.played === true
-      && data.success === false
+      &&
+      data.success === false
     ) {
+
       resultText =
         "✕ " +
         data.prediction;
+
     }
+
 
     return `
       <div class="prediction-1x2">
+
         1X2
+
         <strong>
-          ${escapeHtml(resultText)}
+          ${escapeHtml(
+            resultText
+          )}
         </strong>
+
       </div>
     `;
 
@@ -1257,7 +1295,8 @@
 
     if (
       !data
-      || typeof data !== "object"
+      ||
+      typeof data !== "object"
     ) {
       return null;
     }
@@ -1336,6 +1375,7 @@
 
     const cards = [];
 
+
     if (
       number(p.line) !== null
     ) {
@@ -1372,9 +1412,11 @@
       ??
       null;
 
+
     if (
       firstHalf
-      && typeof firstHalf === "object"
+      &&
+      typeof firstHalf === "object"
     ) {
 
       const line =
@@ -1385,6 +1427,7 @@
         number(
           firstHalf.barem
         );
+
 
       cards.push(`
         <div class="period-card">
@@ -1506,8 +1549,6 @@
 
       <div class="details">
 
-        <!-- ANA İSTATİSTİK -->
-
         <div class="detail-top">
 
           <div class="detail-box">
@@ -1569,8 +1610,6 @@
         </div>
 
 
-        <!-- BEKLENEN SKOR -->
-
         <div class="detail-top">
 
           <div class="detail-box">
@@ -1631,8 +1670,6 @@
 
         </div>
 
-
-        <!-- 1X2 -->
 
         ${
           x2
@@ -1738,6 +1775,7 @@
 
               </div>
 
+
               <div class="detail-top">
 
                 <div class="detail-box">
@@ -1801,8 +1839,6 @@
         }
 
 
-        <!-- PERİYOT -->
-
         ${buildPeriodSection(p)}
 
       </div>
@@ -1821,12 +1857,14 @@
     const status =
       getStatus(p);
 
+
     const home =
       p.home
       ??
       p.homeTeam
       ??
       "-";
+
 
     const away =
       p.away
@@ -1835,23 +1873,33 @@
       ??
       "-";
 
+
     const homeScore =
       number(
         p.homeScore
       );
+
 
     const awayScore =
       number(
         p.awayScore
       );
 
+
     const hasScore =
       homeScore !== null
       &&
       awayScore !== null;
 
+
     const predictionLabel =
       predictionText(p);
+
+
+    /*
+      BURADA ARTIK:
+      pending = her zaman sarı
+    */
 
     const predictionClassName =
       predictionClass(
@@ -1859,13 +1907,16 @@
         status
       );
 
+
     const x2 =
       get1X2(p);
+
 
     const time =
       p.time
       ??
       "";
+
 
     const league =
       p.league
@@ -1877,6 +1928,7 @@
       document.createElement(
         "div"
       );
+
 
     card.className =
       "match-card";
@@ -2020,6 +2072,7 @@
           "open"
         );
 
+
       head.setAttribute(
         "aria-expanded",
         open
@@ -2087,6 +2140,7 @@
             p.utcDate
           );
 
+
         if (
           date
           &&
@@ -2145,6 +2199,7 @@
       const status =
         getStatus(p);
 
+
       if (
         status === "success"
       ) {
@@ -2154,6 +2209,7 @@
 
       }
 
+
       else if (
         status === "failed"
       ) {
@@ -2162,6 +2218,7 @@
         failed++;
 
       }
+
 
       else if (
         status === "push"
@@ -2337,6 +2394,7 @@
         "div"
       );
 
+
     list.className =
       "matches";
 
@@ -2390,9 +2448,11 @@
       if (
         !response.ok
       ) {
+
         throw new Error(
           "predictions.json alınamadı."
         );
+
       }
 
 
@@ -2443,6 +2503,7 @@
       render();
 
     }
+
 
     catch (error) {
 
