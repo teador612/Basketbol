@@ -2,18 +2,13 @@
 # BASKETBOL TAHMİN SİSTEMİ
 # NBA + EUROLEAGUE
 #
-# VERİ KAYNAĞI:
-# basketball.json
+# basketball.json değişmez.
+# played alanına güvenilmez.
+# Gelecek maçlar tarih/saat üzerinden belirlenir.
 #
-# ÖZELLİKLER:
-# - Veri çekme sistemine dokunmaz.
-# - Sadece basketball.json okur.
-# - Kullanıcının belirlediği baremleri analiz eder.
-# - Her barem için ÜST / ALT yüzdesi üretir.
-# - En güçlü baremi ana tahmin yapar.
-# - Geçmiş verisi az olan maçları silmez.
-# - Tahmin üretilemeyen maçlarda yine kayıt oluşturur.
-# - MS handikap YOK.
+# ANA TAHMİN:
+# Kullanıcının belirlediği baremler üzerinden
+# ÜST / ALT yüzdesi hesaplanır.
 # ============================================================
 
 import json
@@ -26,26 +21,7 @@ OUTPUT_FILE = "predictions.json"
 
 
 # ============================================================
-# BAREM AYARLARI
-# ============================================================
-#
-# BURAYI SEN DEĞİŞTİREBİLİRSİN.
-#
-# Örnek:
-#
-# 210.5 - 219.5
-# 220.5 - 229.5
-#
-# Sistem otomatik olarak:
-#
-# 210.5
-# 211.5
-# 212.5
-# ...
-# 219.5
-#
-# şeklinde baremleri oluşturur.
-#
+# BAREM ARALIKLARI
 # ============================================================
 
 BAREM_ARALIKLARI = [
@@ -59,34 +35,18 @@ BAREM_ARALIKLARI = [
 ]
 
 
-# Bir barem için minimum geçmiş maç.
-#
-# Bu sayıdan az maç varsa barem yine gösterilir.
-# Ancak güven seviyesi düşük kabul edilir.
+MAX_HISTORY = 10
 MIN_SAMPLE = 5
-
-
-# Ana tahmin için tercih edilen minimum güven.
 MIN_CONFIDENCE = 70
 
-
-# Takım başına kullanılacak son maç sayısı.
-MAX_HISTORY = 10
-
-
-# Yeni maçların ağırlığı.
 NEWEST_WEIGHT = 1.00
-
-# Eski maçların ağırlığı.
 OLDEST_WEIGHT = 0.55
 
-
-# Ev sahibi avantajı.
 HOME_ADVANTAGE = 2.0
 
 
 # ============================================================
-# JSON OKU
+# JSON
 # ============================================================
 
 def load_json(path):
@@ -101,30 +61,12 @@ def load_json(path):
         "r",
         encoding="utf-8"
     ) as f:
-
         return json.load(f)
 
 
 # ============================================================
 # SAYI
 # ============================================================
-
-def safe_float(value):
-
-    try:
-
-        if value is None:
-            return None
-
-        if isinstance(value, str):
-            value = value.replace(",", ".").strip()
-
-        return float(value)
-
-    except Exception:
-
-        return None
-
 
 def safe_int(value):
 
@@ -134,6 +76,22 @@ def safe_int(value):
             return None
 
         return int(float(value))
+
+    except Exception:
+
+        return None
+
+
+def safe_float(value):
+
+    try:
+
+        if value is None:
+            return None
+
+        return float(
+            str(value).replace(",", ".")
+        )
 
     except Exception:
 
@@ -161,11 +119,7 @@ def normalize_team(name):
     }
 
     for old, new in replacements.items():
-
-        text = text.replace(
-            old,
-            new
-        )
+        text = text.replace(old, new)
 
     return " ".join(
         text.split()
@@ -173,23 +127,17 @@ def normalize_team(name):
 
 
 # ============================================================
-# TARİH
+# TARİH PARSE
 # ============================================================
 
-def date_value(match):
-
-    value = (
-        match.get("utcDate")
-        or match.get("date")
-        or ""
-    )
+def parse_datetime(value):
 
     if not value:
-        return 0
+        return None
+
+    text = str(value).strip()
 
     try:
-
-        text = str(value)
 
         if text.endswith("Z"):
             text = (
@@ -197,23 +145,92 @@ def date_value(match):
                 + "+00:00"
             )
 
-        return datetime.fromisoformat(
+        dt = datetime.fromisoformat(
             text
-        ).timestamp()
+        )
+
+        if dt.tzinfo is None:
+
+            dt = dt.replace(
+                tzinfo=timezone.utc
+            )
+
+        return dt
+
+    except Exception:
+        pass
+
+    # Sadece YYYY-MM-DD varsa
+    try:
+
+        dt = datetime.strptime(
+            text[:10],
+            "%Y-%m-%d"
+        )
+
+        return dt.replace(
+            tzinfo=timezone.utc
+        )
 
     except Exception:
 
-        return 0
+        return None
 
 
 # ============================================================
-# OYNANMIŞ MI?
+# MAÇ TARİHİ
 # ============================================================
 
-def is_played(match):
+def match_datetime(match):
 
-    if match.get("played") is True:
-        return True
+    value = (
+        match.get("utcDate")
+        or
+        match.get("date")
+    )
+
+    return parse_datetime(
+        value
+    )
+
+
+# ============================================================
+# GELECEK MAÇ KONTROLÜ
+# ============================================================
+#
+# ARTIK played alanına güvenmiyoruz.
+#
+# Maç zamanı gelecekteyse:
+#     oynanmamış
+#
+# Maç zamanı geçmişteyse:
+#     geçmiş
+#
+# Ancak maç skoru varsa ve maç gerçekten
+# tamamlanmışsa geçmiş kabul edilir.
+# ============================================================
+
+def is_future_match(match):
+
+    dt = match_datetime(
+        match
+    )
+
+    if dt is None:
+        return False
+
+    now = datetime.now(
+        timezone.utc
+    )
+
+    return dt > now
+
+
+# ============================================================
+# SKOR VAR MI?
+# ============================================================
+
+def has_score(match):
 
     home = safe_int(
         match.get("homeScore")
@@ -225,12 +242,39 @@ def is_played(match):
 
     return (
         home is not None
-        and away is not None
+        and
+        away is not None
     )
 
 
 # ============================================================
-# TOPLAM SAYI
+# GEÇMİŞ MAÇ
+# ============================================================
+
+def is_historical_match(match):
+
+    dt = match_datetime(
+        match
+    )
+
+    if dt is None:
+        return False
+
+    now = datetime.now(
+        timezone.utc
+    )
+
+    if dt < now:
+
+        return has_score(
+            match
+        )
+
+    return False
+
+
+# ============================================================
+# TOPLAM SKOR
 # ============================================================
 
 def total_score(match):
@@ -245,7 +289,8 @@ def total_score(match):
 
     if (
         home is None
-        or away is None
+        or
+        away is None
     ):
         return None
 
@@ -268,7 +313,8 @@ def result_1x2(match):
 
     if (
         home is None
-        or away is None
+        or
+        away is None
     ):
         return None
 
@@ -282,12 +328,12 @@ def result_1x2(match):
 
 
 # ============================================================
-# BAREMLERİ OLUŞTUR
+# BAREMLER
 # ============================================================
 
 def generate_barems():
 
-    barems = []
+    values = []
 
     for start, end in BAREM_ARALIKLARI:
 
@@ -296,16 +342,10 @@ def generate_barems():
 
         if (
             start is None
-            or end is None
+            or
+            end is None
         ):
             continue
-
-        if end < start:
-
-            start, end = (
-                end,
-                start
-            )
 
         current = start
 
@@ -316,24 +356,19 @@ def generate_barems():
                 1
             )
 
-            if value not in barems:
-
-                barems.append(
-                    value
-                )
+            if value not in values:
+                values.append(value)
 
             current += 1.0
 
-    return sorted(
-        barems
-    )
+    return sorted(values)
 
 
 BAREMS = generate_barems()
 
 
 # ============================================================
-# GEÇMİŞİ HAZIRLA
+# GEÇMİŞ VERİ
 # ============================================================
 
 def prepare_history(matches):
@@ -342,7 +377,9 @@ def prepare_history(matches):
 
     for match in matches:
 
-        if not is_played(match):
+        if not is_historical_match(
+            match
+        ):
             continue
 
         total = total_score(
@@ -364,11 +401,18 @@ def prepare_history(matches):
             )
         )
 
-        if (
-            not home
-            or not away
-        ):
+        if not home or not away:
             continue
+
+        dt = match_datetime(
+            match
+        )
+
+        timestamp = (
+            dt.timestamp()
+            if dt
+            else 0
+        )
 
         history.append({
 
@@ -403,15 +447,14 @@ def prepare_history(matches):
                     match
                 ),
 
-            "date":
-                date_value(
-                    match
-                ),
+            "timestamp":
+                timestamp,
 
         })
 
     history.sort(
-        key=lambda x: x["date"]
+        key=lambda x:
+            x["timestamp"]
     )
 
     return history
@@ -434,42 +477,49 @@ def get_team_history(
 
     for match in history:
 
-        if match["homeTeam"] == team:
+        if match[
+            "homeTeam"
+        ] == team:
 
             result.append({
 
                 **match,
 
-                "teamHome":
-                    True,
-
                 "teamScore":
-                    match["homeScore"],
+                    match[
+                        "homeScore"
+                    ],
 
                 "opponentScore":
-                    match["awayScore"],
+                    match[
+                        "awayScore"
+                    ],
 
             })
 
-        elif match["awayTeam"] == team:
+        elif match[
+            "awayTeam"
+        ] == team:
 
             result.append({
 
                 **match,
 
-                "teamHome":
-                    False,
-
                 "teamScore":
-                    match["awayScore"],
+                    match[
+                        "awayScore"
+                    ],
 
                 "opponentScore":
-                    match["homeScore"],
+                    match[
+                        "homeScore"
+                    ],
 
             })
 
     result.sort(
-        key=lambda x: x["date"],
+        key=lambda x:
+            x["timestamp"],
         reverse=True
     )
 
@@ -529,7 +579,6 @@ def team_statistics(
             "sample": 0,
             "pointsFor": None,
             "pointsAgainst": None,
-            "totalAverage": None,
             "weightedPointsFor": None,
             "weightedPointsAgainst": None,
             "weightedTotal": None,
@@ -537,24 +586,26 @@ def team_statistics(
 
     total_weight = 0
 
-    points_for = 0
-    points_against = 0
-    totals = 0
+    pf_total = 0
+    pa_total = 0
 
-    weighted_points_for = 0
-    weighted_points_against = 0
+    weighted_pf = 0
+    weighted_pa = 0
     weighted_total = 0
 
-    valid_games = 0
+    valid = 0
 
-    for index, game in enumerate(games):
+    for index, game in enumerate(
+        games
+    ):
 
         pf = game["teamScore"]
         pa = game["opponentScore"]
 
         if (
             pf is None
-            or pa is None
+            or
+            pa is None
         ):
             continue
 
@@ -563,40 +614,37 @@ def team_statistics(
             len(games)
         )
 
-        game_total = (
-            pf + pa
-        )
+        total_weight += weight
 
-        points_for += pf
-        points_against += pa
-        totals += game_total
+        pf_total += pf
+        pa_total += pa
 
-        weighted_points_for += (
+        weighted_pf += (
             pf * weight
         )
 
-        weighted_points_against += (
+        weighted_pa += (
             pa * weight
         )
 
         weighted_total += (
-            game_total * weight
+            (pf + pa)
+            *
+            weight
         )
 
-        total_weight += weight
-
-        valid_games += 1
+        valid += 1
 
     if (
-        valid_games == 0
-        or total_weight <= 0
+        valid == 0
+        or
+        total_weight == 0
     ):
 
         return {
             "sample": 0,
             "pointsFor": None,
             "pointsAgainst": None,
-            "totalAverage": None,
             "weightedPointsFor": None,
             "weightedPointsAgainst": None,
             "weightedTotal": None,
@@ -605,30 +653,21 @@ def team_statistics(
     return {
 
         "sample":
-            valid_games,
+            valid,
 
         "pointsFor":
-            points_for
-            /
-            valid_games,
+            pf_total / valid,
 
         "pointsAgainst":
-            points_against
-            /
-            valid_games,
-
-        "totalAverage":
-            totals
-            /
-            valid_games,
+            pa_total / valid,
 
         "weightedPointsFor":
-            weighted_points_for
+            weighted_pf
             /
             total_weight,
 
         "weightedPointsAgainst":
-            weighted_points_against
+            weighted_pa
             /
             total_weight,
 
@@ -650,32 +689,22 @@ def calculate_expected_scores(
     history
 ):
 
-    home_stats = team_statistics(
+    home = team_statistics(
         home_team,
         history
     )
 
-    away_stats = team_statistics(
+    away = team_statistics(
         away_team,
         history
     )
 
-    home_sample = (
-        home_stats["sample"]
-    )
-
-    away_sample = (
-        away_stats["sample"]
-    )
-
-    # İki takımın da geçmişi yoksa
-    # yine tahmin oluşturacağız.
-    #
-    # Ancak beklenen skor olmayacak.
-
+    # İki takım da bilinmiyorsa
+    # beklenen skor üretmiyoruz.
     if (
-        home_sample == 0
-        and away_sample == 0
+        home["sample"] == 0
+        and
+        away["sample"] == 0
     ):
 
         return {
@@ -697,14 +726,50 @@ def calculate_expected_scores(
 
         }
 
-    # Sadece ev takımında veri varsa
     if (
-        home_sample > 0
-        and away_sample == 0
+        home["sample"] > 0
+        and
+        away["sample"] > 0
     ):
 
         expected_home = (
-            home_stats[
+
+            (
+                home[
+                    "weightedPointsFor"
+                ]
+                +
+                away[
+                    "weightedPointsAgainst"
+                ]
+            )
+            /
+            2
+            +
+            HOME_ADVANTAGE
+
+        )
+
+        expected_away = (
+
+            (
+                away[
+                    "weightedPointsFor"
+                ]
+                +
+                home[
+                    "weightedPointsAgainst"
+                ]
+            )
+            /
+            2
+
+        )
+
+    elif home["sample"] > 0:
+
+        expected_home = (
+            home[
                 "weightedPointsFor"
             ]
             +
@@ -712,62 +777,25 @@ def calculate_expected_scores(
         )
 
         expected_away = (
-            home_stats[
+            home[
                 "weightedPointsAgainst"
             ]
         )
 
-    # Sadece deplasmanda veri varsa
-    elif (
-        home_sample == 0
-        and away_sample > 0
-    ):
-
-        expected_home = (
-            away_stats[
-                "weightedPointsAgainst"
-            ]
-            +
-            HOME_ADVANTAGE
-        )
-
-        expected_away = (
-            away_stats[
-                "weightedPointsFor"
-            ]
-        )
-
-    # İkisinde de veri varsa
     else:
 
         expected_home = (
-            (
-                home_stats[
-                    "weightedPointsFor"
-                ]
-                +
-                away_stats[
-                    "weightedPointsAgainst"
-                ]
-            )
-            /
-            2
+            away[
+                "weightedPointsAgainst"
+            ]
             +
             HOME_ADVANTAGE
         )
 
         expected_away = (
-            (
-                away_stats[
-                    "weightedPointsFor"
-                ]
-                +
-                home_stats[
-                    "weightedPointsAgainst"
-                ]
-            )
-            /
-            2
+            away[
+                "weightedPointsFor"
+            ]
         )
 
     expected_total = (
@@ -797,10 +825,10 @@ def calculate_expected_scores(
             ),
 
         "homeSample":
-            home_sample,
+            home["sample"],
 
         "awaySample":
-            away_sample,
+            away["sample"],
 
     }
 
@@ -826,58 +854,53 @@ def analyze_barem(
         history
     )
 
-    combined = []
+    games = []
 
-    combined.extend(
+    games.extend(
         home_history
     )
 
-    combined.extend(
+    games.extend(
         away_history
     )
 
-    # Aynı maçı iki kere sayma.
+    # Aynı maçın iki kez sayılmasını önle.
     seen = set()
 
-    relevant = []
+    unique = []
 
-    for game in combined:
+    for game in games:
 
-        key = (
-            game.get("id")
-            or (
-                game["date"],
+        key = game.get(
+            "id"
+        )
+
+        if key is None:
+
+            key = (
+                game["timestamp"],
                 game["homeTeam"],
                 game["awayTeam"]
             )
-        )
 
         if key in seen:
             continue
 
         seen.add(key)
 
-        if game["total"] is not None:
+        unique.append(
+            game
+        )
 
-            relevant.append(
-                game
-            )
-
-    relevant.sort(
-        key=lambda x: x["date"],
+    unique.sort(
+        key=lambda x:
+            x["timestamp"],
         reverse=True
     )
 
-    # İki takımın toplam son 20 maçı.
-    relevant = relevant[:20]
+    unique = unique[:20]
 
-    sample = len(
-        relevant
-    )
-
-    # Hiç geçmiş veri yoksa bile
-    # baremi JSON'a koyuyoruz.
-    if sample == 0:
+    if not unique:
 
         return {
 
@@ -909,33 +932,34 @@ def analyze_barem(
     ust_count = 0
     alt_count = 0
 
+    push_count = 0
+
     for index, game in enumerate(
-        relevant
+        unique
     ):
 
-        game_total = game["total"]
+        total = game["total"]
 
         weight = calculate_weight(
             index,
-            len(relevant)
+            len(unique)
         )
 
         total_weight += weight
 
-        if game_total > barem:
+        if total > barem:
 
             ust_weight += weight
-
             ust_count += 1
 
-        elif game_total < barem:
+        elif total < barem:
 
             alt_weight += weight
-
             alt_count += 1
 
-        # Eşitlik push kabul edilir.
-        # Üst veya Alt'a eklenmez.
+        else:
+
+            push_count += 1
 
     if total_weight <= 0:
 
@@ -945,7 +969,7 @@ def analyze_barem(
                 barem,
 
             "sample":
-                sample,
+                len(unique),
 
             "ust":
                 None,
@@ -961,7 +985,7 @@ def analyze_barem(
 
         }
 
-    ust_percent = (
+    ust = (
         ust_weight
         /
         total_weight
@@ -969,7 +993,7 @@ def analyze_barem(
         100
     )
 
-    alt_percent = (
+    alt = (
         alt_weight
         /
         total_weight
@@ -977,48 +1001,39 @@ def analyze_barem(
         100
     )
 
-    # Eşit barem sonuçlarını hesaptan
-    # çıkardığımız için yüzdelerin toplamı
-    # 100 olmak zorunda değil.
-    #
-    # Daha anlaşılır olması için kalan
-    # yüzdeleri yeniden normalize ediyoruz.
-
-    combined_percent = (
-        ust_percent
+    counted = (
+        ust
         +
-        alt_percent
+        alt
     )
 
-    if combined_percent > 0:
+    if counted > 0:
 
-        ust_percent = (
-            ust_percent
+        ust = (
+            ust
             /
-            combined_percent
+            counted
             *
             100
         )
 
-        alt_percent = (
-            alt_percent
+        alt = (
+            alt
             /
-            combined_percent
+            counted
             *
             100
         )
 
-    if ust_percent >= alt_percent:
+    if ust >= alt:
 
         prediction = "ÜST"
-
-        confidence = ust_percent
+        confidence = ust
 
     else:
 
         prediction = "ALT"
-
-        confidence = alt_percent
+        confidence = alt
 
     return {
 
@@ -1026,17 +1041,17 @@ def analyze_barem(
             barem,
 
         "sample":
-            sample,
+            len(unique),
 
         "ust":
             round(
-                ust_percent,
+                ust,
                 2
             ),
 
         "alt":
             round(
-                alt_percent,
+                alt,
                 2
             ),
 
@@ -1045,6 +1060,9 @@ def analyze_barem(
 
         "altCount":
             alt_count,
+
+        "pushCount":
+            push_count,
 
         "prediction":
             prediction,
@@ -1068,11 +1086,9 @@ def analyze_all_barems(
     history
 ):
 
-    results = []
+    return [
 
-    for barem in BAREMS:
-
-        result = analyze_barem(
+        analyze_barem(
 
             barem,
 
@@ -1084,50 +1100,46 @@ def analyze_all_barems(
 
         )
 
-        results.append(
-            result
-        )
+        for barem in BAREMS
 
-    return results
+    ]
 
 
 # ============================================================
-# ANA TAHMİN SEÇİMİ
+# ANA BAREM
 # ============================================================
 
 def select_main_prediction(
-    barem_results,
-    expected_total=None
+    barems,
+    expected_total
 ):
 
     valid = [
 
-        item
+        x
 
-        for item in barem_results
+        for x in barems
 
         if (
-            item["prediction"]
+            x["prediction"]
             is not None
             and
-            item["confidence"]
+            x["confidence"]
             is not None
         )
 
     ]
 
     if not valid:
-
         return None
 
-    # Önce minimum güveni geçenler.
     strong = [
 
-        item
+        x
 
-        for item in valid
+        for x in valid
 
-        if item["confidence"]
+        if x["confidence"]
         >= MIN_CONFIDENCE
 
     ]
@@ -1138,34 +1150,26 @@ def select_main_prediction(
         else valid
     )
 
-    # Beklenen toplam varsa
-    # bareme yakınlığı ikinci kriter.
-    if expected_total is not None:
+    candidates.sort(
 
-        candidates.sort(
+        key=lambda x: (
 
-            key=lambda x: (
+            -x["confidence"],
 
-                -x["confidence"],
-
+            (
                 abs(
                     x["barem"]
                     -
                     expected_total
                 )
-
+                if expected_total
+                is not None
+                else 999999
             )
 
         )
 
-    else:
-
-        candidates.sort(
-
-            key=lambda x:
-                -x["confidence"]
-
-        )
+    )
 
     selected = candidates[0]
 
@@ -1212,11 +1216,10 @@ def calculate_1x2(
         history
     )
 
-    home_weight = 0
-    draw_weight = 0
-    away_weight = 0
+    one = 0
+    draw = 0
+    two = 0
 
-    # Ev takımının geçmişi
     for index, game in enumerate(
         home_games
     ):
@@ -1232,7 +1235,7 @@ def calculate_1x2(
             game["opponentScore"]
         ):
 
-            home_weight += weight
+            one += weight
 
         elif (
             game["teamScore"]
@@ -1240,13 +1243,12 @@ def calculate_1x2(
             game["opponentScore"]
         ):
 
-            draw_weight += weight
+            draw += weight
 
         else:
 
-            away_weight += weight
+            two += weight
 
-    # Deplasman takımının geçmişi
     for index, game in enumerate(
         away_games
     ):
@@ -1262,7 +1264,7 @@ def calculate_1x2(
             game["opponentScore"]
         ):
 
-            away_weight += weight
+            two += weight
 
         elif (
             game["teamScore"]
@@ -1270,18 +1272,18 @@ def calculate_1x2(
             game["opponentScore"]
         ):
 
-            draw_weight += weight
+            draw += weight
 
         else:
 
-            home_weight += weight
+            one += weight
 
     total = (
-        home_weight
+        one
         +
-        draw_weight
+        draw
         +
-        away_weight
+        two
     )
 
     if total <= 0:
@@ -1306,7 +1308,7 @@ def calculate_1x2(
         }
 
     home_percent = (
-        home_weight
+        one
         /
         total
         *
@@ -1314,7 +1316,7 @@ def calculate_1x2(
     )
 
     draw_percent = (
-        draw_weight
+        draw
         /
         total
         *
@@ -1322,7 +1324,7 @@ def calculate_1x2(
     )
 
     away_percent = (
-        away_weight
+        two
         /
         total
         *
@@ -1380,7 +1382,7 @@ def calculate_1x2(
 
 
 # ============================================================
-# TEK MAÇ TAHMİNİ
+# MAÇ TAHMİNİ
 # ============================================================
 
 def predict_match(
@@ -1388,43 +1390,39 @@ def predict_match(
     history
 ):
 
-    home_team = match.get(
-        "homeTeam"
+    home_team = (
+        match.get("homeTeam")
+        or "-"
     )
 
-    away_team = match.get(
-        "awayTeam"
+    away_team = (
+        match.get("awayTeam")
+        or "-"
     )
 
-    if not home_team:
-        home_team = "-"
-
-    if not away_team:
-        away_team = "-"
-
-    normalized_home = normalize_team(
+    home_normalized = normalize_team(
         home_team
     )
 
-    normalized_away = normalize_team(
+    away_normalized = normalize_team(
         away_team
     )
 
     expected = calculate_expected_scores(
 
-        normalized_home,
+        home_normalized,
 
-        normalized_away,
+        away_normalized,
 
         history
 
     )
 
-    barem_results = analyze_all_barems(
+    barems = analyze_all_barems(
 
-        normalized_home,
+        home_normalized,
 
-        normalized_away,
+        away_normalized,
 
         history
 
@@ -1432,7 +1430,7 @@ def predict_match(
 
     main = select_main_prediction(
 
-        barem_results,
+        barems,
 
         expected[
             "expectedTotal"
@@ -1442,20 +1440,13 @@ def predict_match(
 
     x2 = calculate_1x2(
 
-        normalized_home,
+        home_normalized,
 
-        normalized_away,
+        away_normalized,
 
         history
 
     )
-
-    # ========================================================
-    # ÖNEMLİ:
-    #
-    # Artık main None olsa bile maçı silmiyoruz.
-    # Böylece "Veri bulunamadı" problemi yaşanmaz.
-    # ========================================================
 
     if main is None:
 
@@ -1504,10 +1495,6 @@ def predict_match(
         "awayTeam":
             away_team,
 
-        # ====================================================
-        # ANA TAHMİN
-        # ====================================================
-
         "prediction":
             main["prediction"],
 
@@ -1526,16 +1513,8 @@ def predict_match(
         "altPercent":
             main["alt"],
 
-        # ====================================================
-        # BÜTÜN BAREMLER
-        # ====================================================
-
         "barems":
-            barem_results,
-
-        # ====================================================
-        # MODEL BEKLENTİSİ
-        # ====================================================
+            barems,
 
         "expectedHome":
             expected[
@@ -1552,10 +1531,6 @@ def predict_match(
                 "expectedTotal"
             ],
 
-        # ====================================================
-        # ÖRNEKLEM
-        # ====================================================
-
         "homeSample":
             expected[
                 "homeSample"
@@ -1565,10 +1540,6 @@ def predict_match(
             expected[
                 "awaySample"
             ],
-
-        # ====================================================
-        # 1X2
-        # ====================================================
 
         "prediction1X2":
             x2["prediction"],
@@ -1585,12 +1556,8 @@ def predict_match(
         "awayWinProbability":
             x2["away"],
 
-        # ====================================================
-        # MAÇ SONUCU
-        # ====================================================
-
         "played":
-            is_played(match),
+            False,
 
         "homeScore":
             safe_int(
@@ -1619,37 +1586,6 @@ def main():
     print("=" * 70)
     print("🏀 NBA + EUROLEAGUE BASKETBOL TAHMİN")
     print("=" * 70)
-
-    print()
-
-    print(
-        "📁 Veri:",
-        INPUT_FILE
-    )
-
-    print(
-        "🎯 Barem sayısı:",
-        len(BAREMS)
-    )
-
-    print(
-        "📊 Baremler:",
-        ", ".join(
-            str(x)
-            for x in BAREMS
-        )
-    )
-
-    print(
-        "📈 Minimum güven:",
-        f"%{MIN_CONFIDENCE}"
-    )
-
-    print(
-        "📚 Minimum örnek:",
-        MIN_SAMPLE
-    )
-
     print()
 
     data = load_json(
@@ -1661,19 +1597,14 @@ def main():
         []
     )
 
-    if not isinstance(
-        matches,
-        list
-    ):
-
-        raise RuntimeError(
-            "basketball.json içindeki matches bulunamadı."
-        )
-
     print(
         "🏀 Toplam maç:",
         len(matches)
     )
+
+    # --------------------------------------------------------
+    # GERÇEK GEÇMİŞ
+    # --------------------------------------------------------
 
     history = prepare_history(
         matches
@@ -1684,9 +1615,11 @@ def main():
         len(history)
     )
 
-    # ========================================================
-    # SADECE OYNANMAMIŞ MAÇLAR
-    # ========================================================
+    # --------------------------------------------------------
+    # GELECEK MAÇLAR
+    #
+    # played alanına BAKMIYORUZ.
+    # --------------------------------------------------------
 
     upcoming = [
 
@@ -1694,12 +1627,12 @@ def main():
 
         for match in matches
 
-        if not is_played(match)
+        if is_future_match(match)
 
     ]
 
     print(
-        "🔮 Oynanmamış maç:",
+        "🔮 Gelecek maç:",
         len(upcoming)
     )
 
@@ -1719,9 +1652,6 @@ def main():
 
             )
 
-            # Hiçbir maçı tahmin yok
-            # diye silmiyoruz.
-
             predictions.append(
                 prediction
             )
@@ -1729,7 +1659,7 @@ def main():
         except Exception as error:
 
             print(
-                "⚠️ Maç analiz hatası:",
+                "⚠️ Hata:",
                 match.get(
                     "homeTeam"
                 ),
@@ -1740,127 +1670,23 @@ def main():
                 error
             )
 
-            # Hata olsa bile temel kayıt
-            # oluştur.
-
-            predictions.append({
-
-                "id":
-                    match.get(
-                        "id"
-                    ),
-
-                "league":
-                    match.get(
-                        "league"
-                    ),
-
-                "season":
-                    match.get(
-                        "season"
-                    ),
-
-                "date":
-                    match.get(
-                        "date"
-                    ),
-
-                "utcDate":
-                    match.get(
-                        "utcDate"
-                    ),
-
-                "homeTeam":
-                    match.get(
-                        "homeTeam"
-                    ),
-
-                "awayTeam":
-                    match.get(
-                        "awayTeam"
-                    ),
-
-                "prediction":
-                    None,
-
-                "line":
-                    None,
-
-                "barem":
-                    None,
-
-                "confidence":
-                    None,
-
-                "ustPercent":
-                    None,
-
-                "altPercent":
-                    None,
-
-                "barems":
-                    [],
-
-                "expectedHome":
-                    None,
-
-                "expectedAway":
-                    None,
-
-                "expectedTotal":
-                    None,
-
-                "homeSample":
-                    0,
-
-                "awaySample":
-                    0,
-
-                "prediction1X2":
-                    None,
-
-                "confidence1X2":
-                    None,
-
-                "homeWinProbability":
-                    None,
-
-                "drawProbability":
-                    None,
-
-                "awayWinProbability":
-                    None,
-
-                "played":
-                    False,
-
-                "homeScore":
-                    None,
-
-                "awayScore":
-                    None,
-
-            })
-
     # ========================================================
-    # TARİH SIRASI
+    # TARİHE GÖRE
     # ========================================================
 
     predictions.sort(
 
-        key=lambda x: (
-
+        key=lambda x:
             str(
-                x.get("date")
-                or ""
-            ),
-
-            str(
-                x.get("homeTeam")
+                x.get(
+                    "utcDate"
+                )
+                or
+                x.get(
+                    "date"
+                )
                 or ""
             )
-
-        )
 
     )
 
@@ -1935,14 +1761,8 @@ def main():
 
         if x.get(
             "prediction"
-        )
+        ) is not None
 
-    )
-
-    without_prediction = (
-        len(predictions)
-        -
-        with_prediction
     )
 
     print()
@@ -1956,13 +1776,15 @@ def main():
     )
 
     print(
-        "✅ Tahmin bulunan:",
+        "✅ Ana tahmin bulunan:",
         with_prediction
     )
 
     print(
-        "⚠️ Tahmin bulunmayan:",
-        without_prediction
+        "⚠️ Ana tahmin bulunmayan:",
+        len(predictions)
+        -
+        with_prediction
     )
 
     print(
@@ -1973,10 +1795,10 @@ def main():
     print()
 
     # ========================================================
-    # İLK 10 MAÇI GÖSTER
+    # ÖRNEK
     # ========================================================
 
-    for item in predictions[:10]:
+    for item in predictions[:5]:
 
         print(
             f"🏀 {item['homeTeam']} "
@@ -1984,52 +1806,25 @@ def main():
             f"{item['awayTeam']}"
         )
 
-        if item["prediction"]:
+        print(
+            "   🎯 ANA:",
+            item["prediction"],
+            item["line"],
+            f"%{item['confidence']}"
+            if item["confidence"]
+            is not None
+            else "-"
+        )
 
-            print(
-                f"   🎯 ANA: "
-                f"{item['barem']} "
-                f"{item['prediction']} "
-                f"%{item['confidence']}"
+        print(
+            "   📊 Baremler:",
+            len(
+                item["barems"]
             )
-
-        else:
-
-            print(
-                "   🎯 ANA: "
-                "Tahmin için yeterli veri yok"
-            )
-
-        if item["barems"]:
-
-            print(
-                "   📊 BAREMLER:"
-            )
-
-            for barem in item[
-                "barems"
-            ]:
-
-                if (
-                    barem["ust"]
-                    is None
-                ):
-
-                    continue
-
-                print(
-
-                    f"      "
-                    f"{barem['barem']}: "
-                    f"ÜST %{barem['ust']} "
-                    f"/ "
-                    f"ALT %{barem['alt']}"
-
-                )
+        )
 
         print()
 
 
 if __name__ == "__main__":
-
     main()
