@@ -495,20 +495,48 @@
   </div>
   <div class="summary">
     <div class="summary-card">
-      <div class="summary-value" id="successRate">-</div>
-      <div class="summary-label">Başarı</div>
+      <div
+        class="summary-value"
+        id="successRate"
+      >
+        -
+      </div>
+      <div class="summary-label">
+        Başarı
+      </div>
     </div>
     <div class="summary-card">
-      <div class="summary-value" id="successful">-</div>
-      <div class="summary-label">Başarılı</div>
+      <div
+        class="summary-value"
+        id="successful"
+      >
+        -
+      </div>
+      <div class="summary-label">
+        Başarılı
+      </div>
     </div>
     <div class="summary-card">
-      <div class="summary-value" id="failed">-</div>
-      <div class="summary-label">Başarısız</div>
+      <div
+        class="summary-value"
+        id="failed"
+      >
+        -
+      </div>
+      <div class="summary-label">
+        Başarısız
+      </div>
     </div>
     <div class="summary-card">
-      <div class="summary-value" id="completed">-</div>
-      <div class="summary-label">Biten</div>
+      <div
+        class="summary-value"
+        id="completed"
+      >
+        -
+      </div>
+      <div class="summary-label">
+        Biten
+      </div>
     </div>
   </div>
   <div class="filters">
@@ -668,8 +696,8 @@
     );
   }
   /* ========================================================
-     BAŞLAMAMIŞ MAÇ KONTROLÜ
-     ======================================================== */
+     BAŞLAMAMIŞ / BİTMEMİŞ MAÇ KONTROLÜ
+  ======================================================== */
   function hasRealScore(p) {
     const home =
       number(p.homeScore);
@@ -680,11 +708,69 @@
       away !== null
     );
   }
+  function isFinished(p) {
+    /*
+      Öncelik Python tarafından üretilen
+      açık alanlarda.
+    */
+    if (p.isFinished === true) {
+      return true;
+    }
+    if (p.played === true) {
+      return true;
+    }
+    /*
+      Açık şekilde bitmemiş durumlar.
+    */
+    const statusValues = [
+      p.status,
+      p.matchStatus,
+      p.gameStatus,
+      p.state
+    ]
+      .filter(
+        value =>
+          value !== null &&
+          value !== undefined
+      )
+      .map(
+        value =>
+          String(value)
+            .trim()
+            .toLowerCase()
+      );
+    const finalWords = [
+      "finished",
+      "completed",
+      "final",
+      "ended",
+      "ft",
+      "full_time",
+      "full time",
+      "bitmiş",
+      "bitmis",
+      "tamamlandı",
+      "tamamlandi"
+    ];
+    if (
+      statusValues.some(
+        value =>
+          finalWords.includes(value)
+      )
+    ) {
+      return true;
+    }
+    return false;
+  }
   function isStarted(p) {
     /*
-      Veri sağlayıcı açıkça maçın başlamadığını
-      söylüyorsa kesinlikle başlamamıştır.
+      Python tarafında maçın açıkça
+      başlamadığı belirtilmişse:
+      kesinlikle başlamamıştır.
     */
+    if (p.isUnstarted === true) {
+      return false;
+    }
     const statusValues = [
       p.status,
       p.matchStatus,
@@ -725,8 +811,7 @@
       return false;
     }
     /*
-      started / live / in_progress gibi açık
-      durumlar varsa başlamıştır.
+      Açık şekilde canlı / başlamış / bitmiş.
     */
     const startedWords = [
       "live",
@@ -737,7 +822,11 @@
       "ongoing",
       "finished",
       "completed",
-      "final"
+      "final",
+      "ended",
+      "ft",
+      "full_time",
+      "full time"
     ];
     if (
       statusValues.some(
@@ -748,36 +837,39 @@
       return true;
     }
     /*
-      Gerçek skor varsa maçın başlamış olduğunu
+      JSON üreticisi isLive olarak belirtiyorsa
+      maç başlamıştır.
+    */
+    if (p.isLive === true) {
+      return true;
+    }
+    /*
+      Bitmiş olarak işaretlendiyse başlamıştır.
+    */
+    if (isFinished(p)) {
+      return true;
+    }
+    /*
+      Yalnızca gerçek skor varsa başlamış
       kabul ediyoruz.
-      0-0 bile olsa SCORE alanları gerçekten
-      sağlayıcı tarafından verilmişse başlamış
-      olabilir.
+      ÖNEMLİ:
+      Python tarafındaki isUnstarted / status
+      bilgisi yukarıda daha öncelikli.
     */
     if (hasRealScore(p)) {
       return true;
     }
-    /*
-      Yukarıdakilerin hiçbiri yoksa:
-      güvenli tarafta kalıyoruz ve maçı
-      başlamamış kabul ediyoruz.
-    */
     return false;
   }
   function getStatus(p) {
     /*
-      EN ÖNEMLİ KURAL:
-      Maç başlamadıysa JSON içindeki
-      result / success / played değerlerini
-      DİKKATE ALMA.
-      Her zaman pending.
+      BİTMEMİŞ MAÇLARDA:
+      result / success alanları ne olursa olsun
+      başarı veya başarısız gösterme.
     */
-    if (!isStarted(p)) {
+    if (!isFinished(p)) {
       return "pending";
     }
-    /*
-      Maç başladıysa artık sonucu değerlendirebiliriz.
-    */
     if (
       p.result === "successful" ||
       p.success === true
@@ -828,13 +920,23 @@
     }
     return "pending";
   }
+  /* ========================================================
+     ANA TAHMİN METNİ
+  ======================================================== */
   function predictionText(p) {
     const prediction =
       String(
         p.prediction ?? ""
       ).trim();
+    /*
+      Bazı JSON sürümlerinde barem
+      "line", bazılarında "barem"
+      olarak bulunabilir.
+    */
     const line =
-      number(p.line);
+      number(p.line)
+      ??
+      number(p.barem);
     if (!prediction) {
       return "Tahmin yok";
     }
@@ -849,7 +951,7 @@
   }
   /* ========================================================
      1X2
-     ======================================================== */
+  ======================================================== */
   function get1X2(p) {
     const prediction =
       String(
@@ -885,8 +987,8 @@
     const status =
       getStatus(p);
     /*
-      Başlamamış maçta 1X2 sonucu da
-      başarılı/başarısız gösterilmeyecek.
+      Biten maçlarda ✓ / ✕.
+      Bekleyen maçlarda yalnızca tahmin.
     */
     let resultText =
       data.prediction;
@@ -919,7 +1021,7 @@
   }
   /* ========================================================
      PERİYOT
-     ======================================================== */
+  ======================================================== */
   function getPeriodData(p, key) {
     const data = p[key];
     if (
@@ -979,14 +1081,22 @@
   }
   function buildPeriodSection(p) {
     const cards = [];
-    if (number(p.line) !== null) {
+    if (
+      number(p.line) !== null
+      ||
+      number(p.barem) !== null
+    ) {
+      const mainLine =
+        number(p.line)
+        ??
+        number(p.barem);
       cards.push(`
         <div class="period-card">
           <div class="period-name">
             Maç
           </div>
           <div class="period-line">
-            ${number(p.line).toFixed(2)}
+            ${mainLine.toFixed(2)}
           </div>
           <div class="period-prediction">
             ${escapeHtml(
@@ -1066,7 +1176,7 @@
   }
   /* ========================================================
      DETAY
-     ======================================================== */
+  ======================================================== */
   function buildDetails(p) {
     const expected =
       number(p.expectedTotal);
@@ -1093,7 +1203,9 @@
               ${
                 number(p.line) !== null
                   ? number(p.line).toFixed(2)
-                  : "-"
+                  : number(p.barem) !== null
+                    ? number(p.barem).toFixed(2)
+                    : "-"
               }
             </div>
           </div>
@@ -1116,7 +1228,8 @@
             <div class="detail-value">
               ${
                 confidence !== null
-                  ? "%" + Math.round(confidence)
+                  ? "%" +
+                    Math.round(confidence)
                   : "-"
               }
             </div>
@@ -1271,7 +1384,9 @@
                   <div class="detail-value">
                     ${
                       x2.actual
-                        ? escapeHtml(x2.actual)
+                        ? escapeHtml(
+                            x2.actual
+                          )
                         : "-"
                     }
                   </div>
@@ -1286,7 +1401,7 @@
   }
   /* ========================================================
      MAÇ KARTI
-     ======================================================== */
+  ======================================================== */
   function createMatchCard(p) {
     const status =
       getStatus(p);
@@ -1309,6 +1424,10 @@
     const hasScore =
       homeScore !== null &&
       awayScore !== null;
+    /*
+      ARTIK PENDING MAÇTA DA
+      GERÇEK TAHMİN GÖSTERİLİYOR.
+    */
     const predictionLabel =
       predictionText(p);
     const predictionClassName =
@@ -1326,14 +1445,24 @@
       document.createElement("div");
     card.className =
       "match-card";
-    /*
-      BAŞLAMAMIŞ MAÇTA KARTIN TAMAMI SARI.
-    */
     if (status === "pending") {
       card.classList.add(
         "pending-card"
       );
     }
+    /*
+      ÖNEMLİ DEĞİŞİKLİK:
+      Önce:
+      status === "pending"
+        ? "Bekliyor"
+        : predictionLabel
+      Şimdi:
+      HER DURUMDA predictionLabel
+      Böylece:
+      Bekliyor
+      ÜST 224.50
+      şeklinde görünür.
+    */
     card.innerHTML = `
       <div
         class="match-head"
@@ -1400,13 +1529,9 @@
           <div
             class="prediction ${predictionClassName}"
           >
-            ${
-              status === "pending"
-                ? "Bekliyor"
-                : escapeHtml(
-                    predictionLabel
-                  )
-            }
+            ${escapeHtml(
+              predictionLabel
+            )}
           </div>
           ${
             x2
@@ -1454,7 +1579,7 @@
   }
   /* ========================================================
      FİLTRELEME
-     ======================================================== */
+  ======================================================== */
   function filterPredictions() {
     const date =
       dateFilter.value;
@@ -1496,7 +1621,7 @@
   }
   /* ========================================================
      ÖZET
-     ======================================================== */
+  ======================================================== */
   function updateSummary() {
     let completed = 0;
     let successful = 0;
@@ -1506,21 +1631,27 @@
     ) {
       const status =
         getStatus(p);
-      if (status === "success") {
+      if (
+        status === "success"
+      ) {
         completed++;
         successful++;
       }
-      else if (status === "failed") {
+      else if (
+        status === "failed"
+      ) {
         completed++;
         failed++;
       }
-      else if (status === "push") {
+      else if (
+        status === "push"
+      ) {
         completed++;
       }
     }
     /*
-      Pending maçlar burada özellikle
-      hesaplamaya alınmaz.
+      Bekleyen maçlar başarı oranına
+      kesinlikle dahil edilmez.
     */
     const denominator =
       successful + failed;
@@ -1551,7 +1682,7 @@
   }
   /* ========================================================
      TARİHLER
-     ======================================================== */
+  ======================================================== */
   function setDefaultDate() {
     const dates =
       [
@@ -1572,7 +1703,9 @@
     }
     const today =
       todayString();
-    if (dates.includes(today)) {
+    if (
+      dates.includes(today)
+    ) {
       dateFilter.value =
         today;
     }
@@ -1583,15 +1716,18 @@
   }
   /* ========================================================
      RENDER
-     ======================================================== */
+  ======================================================== */
   function render() {
     updateSummary();
     const filtered =
       filterPredictions();
     content.innerHTML = "";
     matchCount.textContent =
-      filtered.length + " maç";
-    if (dateFilter.value) {
+      filtered.length +
+      " maç";
+    if (
+      dateFilter.value
+    ) {
       dateTitle.textContent =
         formatDate(
           dateFilter.value
@@ -1601,7 +1737,9 @@
       dateTitle.textContent =
         "Maçlar";
     }
-    if (filtered.length === 0) {
+    if (
+      filtered.length === 0
+    ) {
       content.innerHTML = `
         <div class="empty">
           Bu filtrelere uygun maç bulunamadı.
@@ -1622,11 +1760,13 @@
         )
       );
     }
-    content.appendChild(list);
+    content.appendChild(
+      list
+    );
   }
   /* ========================================================
      VERİ YÜKLE
-     ======================================================== */
+  ======================================================== */
   async function loadData() {
     try {
       content.innerHTML = `
@@ -1649,8 +1789,11 @@
       }
       const data =
         await response.json();
-      if (Array.isArray(data)) {
-        predictions = data;
+      if (
+        Array.isArray(data)
+      ) {
+        predictions =
+          data;
       }
       else {
         predictions =
@@ -1660,7 +1803,9 @@
             ? data.predictions
             : [];
       }
-      if (predictions.length === 0) {
+      if (
+        predictions.length === 0
+      ) {
         content.innerHTML = `
           <div class="empty">
             Tahmin verisi bulunamadı.
@@ -1685,7 +1830,7 @@
   }
   /* ========================================================
      EVENTLER
-     ======================================================== */
+  ======================================================== */
   dateFilter.addEventListener(
     "change",
     render
@@ -1700,8 +1845,17 @@
   );
   /* ========================================================
      BAŞLAT
-     ======================================================== */
+  ======================================================== */
   loadData();
 </script>
 </body>
 </html>
+
+Bu sürümde özellikle tek kritik değişiklik yapıldı: maç beklemede olsa bile tahmin kutusu artık "Bekliyor" ile değiştirilmiyor. Örneğin:
+
+Bekliyor
+🟡 ÜST 224.50
+
+şeklinde görünecek.
+
+Ayrıca bekleyen maçlar başarı hesabına girmeyecek ve 1X2 için de beklerken ✓/✕ gösterilmeyecek.
