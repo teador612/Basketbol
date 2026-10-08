@@ -560,7 +560,11 @@ def parse_partials(value):
     return result
 
 
-def parse_euro_game(game):
+def parse_euro_game(
+    game,
+    league="EuroLeague",
+    season="E2026",
+):
     local = (
         game.get("local")
         or {}
@@ -721,8 +725,8 @@ def parse_euro_game(game):
     )
 
     return build_match(
-        league="EuroLeague",
-        season="E2026",
+        league=league,
+        season=season,
         home_team=home_team,
         away_team=away_team,
         home_score=home_score,
@@ -779,6 +783,80 @@ def fetch_euroleague():
         except Exception as e:
             print(
                 f"⚠️ EuroLeague maç okunamadı: {e}"
+            )
+
+    matches = deduplicate(
+        matches
+    )
+
+    print(
+        f"✅ Kullanılabilir: "
+        f"{len(matches)}"
+    )
+
+    print(
+        f"🏁 Tamamlanan: "
+        f"{sum(m['played'] for m in matches)}"
+    )
+
+    print(
+        f"⏱️ Periyotlu: "
+        f"{sum(m['hasPeriodData'] for m in matches)}"
+    )
+
+    return matches
+
+
+# ============================================================
+# EUROCUP
+# ============================================================
+
+def fetch_eurocup():
+    print()
+    print("=" * 60)
+    print("🌍 EUROCUP U2026")
+    print("=" * 60)
+
+    url = (
+        "https://api-live.euroleague.net/v2/"
+        "competitions/U/seasons/U2026/games"
+    )
+
+    data = get_json(url)
+
+    if not data:
+        return []
+
+    raw_games = (
+        data.get("data")
+        or
+        data.get("games")
+        or
+        []
+    )
+
+    print(
+        f"📡 API maçları: "
+        f"{len(raw_games)}"
+    )
+
+    matches = []
+
+    for game in raw_games:
+
+        try:
+            match = parse_euro_game(
+                game,
+                league="EuroCup",
+                season="U2026",
+            )
+
+            if match:
+                matches.append(match)
+
+        except Exception as e:
+            print(
+                f"⚠️ EuroCup maç okunamadı: {e}"
             )
 
     matches = deduplicate(
@@ -890,11 +968,18 @@ def collect_all():
         nba
     )
 
-    # SADECE GÜNCEL EUROLEAGUE
+    # EUROLEAGUE
     euroleague = fetch_euroleague()
 
     all_matches.extend(
         euroleague
+    )
+
+    # SADECE EKLENEN EUROCUP
+    eurocup = fetch_eurocup()
+
+    all_matches.extend(
+        eurocup
     )
 
     all_matches = deduplicate(
@@ -1027,11 +1112,15 @@ def print_summary(matches):
 
     print()
     print(
-        "📌 Ligler: NBA + EuroLeague"
+        "📌 Ligler: NBA + EuroLeague + EuroCup"
     )
 
     print(
         "📌 EuroLeague: sadece E2026"
+    )
+
+    print(
+        "📌 EuroCup: sadece U2026"
     )
 
     print(
@@ -1050,7 +1139,7 @@ def print_summary(matches):
 def main():
 
     print("=" * 60)
-    print("🏀 NBA + EUROLEAGUE")
+    print("🏀 NBA + EUROLEAGUE + EUROCUP")
     print("=" * 60)
 
     print(
