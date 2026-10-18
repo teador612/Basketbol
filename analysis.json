@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T03:36:02.141461+00:00",
+  "updatedAt": "2026-10-18T10:34:58.329781+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -13,7 +13,7 @@
     "failed": 107,
     "push": 1,
     "successRate": 49.53,
-    "averageError": 15.26
+    "averageError": 15.27
   },
   "leagues": {
     "NBA": {
@@ -81,7 +81,7 @@
       "failed": 67,
       "push": 1,
       "successRate": 46.4,
-      "averageError": 15.33
+      "averageError": 15.34
     },
     "180-199": {
       "total": 15,
@@ -665,25 +665,6 @@
       "success": false
     },
     {
-      "id": "401901822",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-17",
-      "home": null,
-      "away": null,
-      "prediction": "ÜST",
-      "line": 215.94,
-      "expectedTotal": 218.36,
-      "homeScore": 117,
-      "awayScore": 98,
-      "actualTotal": 215,
-      "difference": -0.94,
-      "absoluteError": 0.94,
-      "actualResult": "Alt",
-      "status": "Başarısız",
-      "success": false
-    },
-    {
       "id": "401869399",
       "league": "NBA",
       "season": "2026",
@@ -831,6 +812,25 @@
       "actualTotal": 219,
       "difference": -1.86,
       "absoluteError": 1.86,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "401901822",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-17",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 215.94,
+      "expectedTotal": 218.36,
+      "homeScore": 116,
+      "awayScore": 98,
+      "actualTotal": 214,
+      "difference": -1.94,
+      "absoluteError": 1.94,
       "actualResult": "Alt",
       "status": "Başarısız",
       "success": false
@@ -4837,11 +4837,11 @@
       "prediction": "ÜST",
       "line": 215.94,
       "expectedTotal": 218.36,
-      "homeScore": 117,
+      "homeScore": 116,
       "awayScore": 98,
-      "actualTotal": 215,
-      "difference": -0.94,
-      "absoluteError": 0.94,
+      "actualTotal": 214,
+      "difference": -1.94,
+      "absoluteError": 1.94,
       "actualResult": "Alt",
       "status": "Başarısız",
       "success": false
