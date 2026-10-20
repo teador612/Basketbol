@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T11:06:08.842008+00:00",
+  "updatedAt": "2026-10-20T16:32:04.698927+00:00",
   "source": "predictions.json",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
@@ -1219,22 +1219,22 @@
         "successRate": null
       },
       "2027-01-21": {
-        "totalPredictions": 6,
+        "totalPredictions": 7,
         "completed": 0,
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 6,
+        "notPlayed": 7,
         "invalid": 0,
         "successRate": null
       },
       "2027-01-22": {
-        "totalPredictions": 4,
+        "totalPredictions": 3,
         "completed": 0,
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 4,
+        "notPlayed": 3,
         "invalid": 0,
         "successRate": null
       },
@@ -14660,6 +14660,22 @@
       "success": null
     },
     {
+      "id": "f6a455fb-7643-41a2-8da3-82e3b21676be",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2027-01-21",
+      "home": null,
+      "away": null,
+      "prediction": null,
+      "line": 188.59,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
       "id": "786d38a8-a5b5-4281-9d30-d639baecd568",
       "league": "EuroLeague",
       "season": "E2026",
@@ -14748,22 +14764,6 @@
       "away": null,
       "prediction": "ÜST",
       "line": 170.19,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "not_played",
-      "success": null
-    },
-    {
-      "id": "f6a455fb-7643-41a2-8da3-82e3b21676be",
-      "league": "EuroLeague",
-      "season": "E2026",
-      "date": "2027-01-22",
-      "home": null,
-      "away": null,
-      "prediction": null,
-      "line": 188.59,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
