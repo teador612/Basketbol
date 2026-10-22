@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22T03:46:59.116768+00:00",
+  "updatedAt": "2026-10-22T11:22:24.721714+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -7,23 +7,23 @@
     "secondaryMarketsExcluded": true
   },
   "overall": {
-    "total": 230,
-    "completed": 230,
-    "successful": 115,
-    "failed": 115,
+    "total": 233,
+    "completed": 233,
+    "successful": 116,
+    "failed": 117,
     "push": 0,
-    "successRate": 50.0,
-    "averageError": 15.33
+    "successRate": 49.79,
+    "averageError": 15.26
   },
   "leagues": {
     "NBA": {
-      "total": 131,
-      "completed": 131,
-      "successful": 64,
-      "failed": 67,
+      "total": 134,
+      "completed": 134,
+      "successful": 65,
+      "failed": 69,
       "push": 0,
-      "successRate": 48.85,
-      "averageError": 16.05
+      "successRate": 48.51,
+      "averageError": 15.91
     },
     "EuroLeague": {
       "total": 51,
@@ -46,13 +46,13 @@
   },
   "predictionTypes": {
     "ÜST": {
-      "total": 173,
-      "completed": 173,
-      "successful": 102,
-      "failed": 71,
+      "total": 176,
+      "completed": 176,
+      "successful": 103,
+      "failed": 73,
       "push": 0,
-      "successRate": 58.96,
-      "averageError": 14.83
+      "successRate": 58.52,
+      "averageError": 14.75
     },
     "None": {
       "total": 14,
@@ -75,13 +75,13 @@
   },
   "lineRanges": {
     "200+": {
-      "total": 126,
-      "completed": 126,
-      "successful": 62,
-      "failed": 64,
+      "total": 129,
+      "completed": 129,
+      "successful": 63,
+      "failed": 66,
       "push": 0,
-      "successRate": 49.21,
-      "averageError": 15.18
+      "successRate": 48.84,
+      "averageError": 15.06
     },
     "180-199": {
       "total": 15,
@@ -5263,6 +5263,63 @@
       "actualResult": "Üst",
       "status": "Başarılı",
       "success": true
+    },
+    {
+      "id": "401909092",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-22",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 220.32,
+      "expectedTotal": 221.15,
+      "homeScore": 127,
+      "awayScore": 105,
+      "actualTotal": 232,
+      "difference": 11.68,
+      "absoluteError": 11.68,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
+      "id": "401909841",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-22",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 221.59,
+      "expectedTotal": 224.64,
+      "homeScore": 124,
+      "awayScore": 83,
+      "actualTotal": 207,
+      "difference": -14.59,
+      "absoluteError": 14.59,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "401909842",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-22",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 220.32,
+      "expectedTotal": 222.57,
+      "homeScore": 121,
+      "awayScore": 96,
+      "actualTotal": 217,
+      "difference": -3.32,
+      "absoluteError": 3.32,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
     }
   ]
 }
