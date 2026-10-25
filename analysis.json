@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T03:43:59.111586+00:00",
+  "updatedAt": "2026-10-25T10:57:32.724042+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -7,23 +7,23 @@
     "secondaryMarketsExcluded": true
   },
   "overall": {
-    "total": 252,
-    "completed": 252,
-    "successful": 125,
+    "total": 254,
+    "completed": 254,
+    "successful": 127,
     "failed": 127,
     "push": 0,
-    "successRate": 49.6,
-    "averageError": 15.24
+    "successRate": 50.0,
+    "averageError": 15.45
   },
   "leagues": {
     "NBA": {
-      "total": 144,
-      "completed": 144,
-      "successful": 72,
+      "total": 146,
+      "completed": 146,
+      "successful": 74,
       "failed": 72,
       "push": 0,
-      "successRate": 50.0,
-      "averageError": 15.68
+      "successRate": 50.68,
+      "averageError": 16.03
     },
     "EuroLeague": {
       "total": 60,
@@ -46,13 +46,13 @@
   },
   "predictionTypes": {
     "ÜST": {
-      "total": 184,
-      "completed": 184,
-      "successful": 107,
+      "total": 186,
+      "completed": 186,
+      "successful": 109,
       "failed": 77,
       "push": 0,
-      "successRate": 58.15,
-      "averageError": 14.58
+      "successRate": 58.6,
+      "averageError": 14.86
     },
     "ALT": {
       "total": 48,
@@ -75,13 +75,13 @@
   },
   "lineRanges": {
     "200+": {
-      "total": 139,
-      "completed": 139,
-      "successful": 71,
+      "total": 141,
+      "completed": 141,
+      "successful": 73,
       "failed": 68,
       "push": 0,
-      "successRate": 51.08,
-      "averageError": 15.1
+      "successRate": 51.77,
+      "averageError": 15.47
     },
     "180-199": {
       "total": 18,
@@ -167,6 +167,25 @@
       "actualResult": "Alt",
       "status": "Başarısız",
       "success": false
+    },
+    {
+      "id": "401909859",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-25",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 225.1,
+      "expectedTotal": 225.66,
+      "homeScore": 141,
+      "awayScore": 135,
+      "actualTotal": 276,
+      "difference": 50.9,
+      "absoluteError": 50.9,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
     },
     {
       "id": "1f1378cc-9bae-478e-9230-6860acecd86d",
@@ -490,25 +509,6 @@
       "actualResult": "Alt",
       "status": "Başarılı",
       "success": true
-    },
-    {
-      "id": "034eaad3-a49e-44cd-b4d1-6f2d7bf52425",
-      "league": "EuroCup",
-      "season": "U2026",
-      "date": "2026-10-14",
-      "home": null,
-      "away": null,
-      "prediction": "ÜST",
-      "line": 174.31,
-      "expectedTotal": 176.89,
-      "homeScore": 75,
-      "awayScore": 65,
-      "actualTotal": 140,
-      "difference": -34.31,
-      "absoluteError": 34.31,
-      "actualResult": "Alt",
-      "status": "Başarısız",
-      "success": false
     }
   ],
   "closestPredictions": [
@@ -5681,6 +5681,44 @@
       "actualResult": "Üst",
       "status": "Başarısız",
       "success": false
+    },
+    {
+      "id": "401909859",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-25",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 225.1,
+      "expectedTotal": 225.66,
+      "homeScore": 141,
+      "awayScore": 135,
+      "actualTotal": 276,
+      "difference": 50.9,
+      "absoluteError": 50.9,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
+      "id": "401909860",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-10-25",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 221.45,
+      "expectedTotal": 223.34,
+      "homeScore": 131,
+      "awayScore": 122,
+      "actualTotal": 253,
+      "difference": 31.55,
+      "absoluteError": 31.55,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
     }
   ]
 }
