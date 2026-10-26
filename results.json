@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T12:28:09.863227+00:00",
+  "updatedAt": "2026-10-26T22:25:11.850141+00:00",
   "source": "predictions.json",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
@@ -689,22 +689,22 @@
         "successRate": null
       },
       "2026-10-29": {
-        "totalPredictions": 11,
+        "totalPredictions": 10,
         "completed": 0,
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 11,
+        "notPlayed": 10,
         "invalid": 0,
         "successRate": null
       },
       "2026-10-30": {
-        "totalPredictions": 14,
+        "totalPredictions": 15,
         "completed": 0,
         "successful": 0,
         "failed": 0,
         "push": 0,
-        "notPlayed": 14,
+        "notPlayed": 15,
         "invalid": 0,
         "successRate": null
       },
@@ -7091,7 +7091,7 @@
       "id": "401909893",
       "league": "NBA",
       "season": "2026",
-      "date": "2026-10-29",
+      "date": "2026-10-30",
       "home": null,
       "away": null,
       "prediction": null,
