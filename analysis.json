@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T12:21:40.472065+00:00",
+  "updatedAt": "2026-10-30T22:02:26.155209+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -7,13 +7,13 @@
     "secondaryMarketsExcluded": true
   },
   "overall": {
-    "total": 304,
-    "completed": 304,
-    "successful": 151,
-    "failed": 153,
+    "total": 311,
+    "completed": 311,
+    "successful": 154,
+    "failed": 157,
     "push": 0,
-    "successRate": 49.67,
-    "averageError": 14.78
+    "successRate": 49.52,
+    "averageError": 15.16
   },
   "leagues": {
     "NBA": {
@@ -26,13 +26,13 @@
       "averageError": 15.21
     },
     "EuroLeague": {
-      "total": 73,
-      "completed": 73,
-      "successful": 31,
-      "failed": 42,
+      "total": 80,
+      "completed": 80,
+      "successful": 34,
+      "failed": 46,
       "push": 0,
-      "successRate": 42.47,
-      "averageError": 14.18
+      "successRate": 42.5,
+      "averageError": 15.7
     },
     "EuroCup": {
       "total": 64,
@@ -46,22 +46,22 @@
   },
   "predictionTypes": {
     "ÜST": {
-      "total": 229,
-      "completed": 229,
-      "successful": 129,
-      "failed": 100,
+      "total": 235,
+      "completed": 235,
+      "successful": 131,
+      "failed": 104,
       "push": 0,
-      "successRate": 56.33,
-      "averageError": 14.63
+      "successRate": 55.74,
+      "averageError": 15.18
     },
     "ALT": {
-      "total": 46,
-      "completed": 46,
-      "successful": 22,
+      "total": 47,
+      "completed": 47,
+      "successful": 23,
       "failed": 24,
       "push": 0,
-      "successRate": 47.83,
-      "averageError": 15.87
+      "successRate": 48.94,
+      "averageError": 15.59
     },
     "None": {
       "total": 29,
@@ -84,22 +84,22 @@
       "averageError": 15.1
     },
     "180-199": {
-      "total": 17,
-      "completed": 17,
-      "successful": 7,
+      "total": 19,
+      "completed": 19,
+      "successful": 9,
       "failed": 10,
       "push": 0,
-      "successRate": 41.18,
-      "averageError": 12.49
+      "successRate": 47.37,
+      "averageError": 11.91
     },
     "160-179": {
-      "total": 106,
-      "completed": 106,
-      "successful": 49,
-      "failed": 57,
+      "total": 111,
+      "completed": 111,
+      "successful": 50,
+      "failed": 61,
       "push": 0,
-      "successRate": 46.23,
-      "averageError": 14.4
+      "successRate": 45.05,
+      "averageError": 15.61
     },
     "140-159": {
       "total": 15,
@@ -130,6 +130,25 @@
     "averageError": 0.0
   },
   "biggestErrors": [
+    {
+      "id": "babdabd1-645c-47cf-80e2-bd3615f8854d",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 171.99,
+      "expectedTotal": 176.81,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": 0,
+      "difference": -171.99,
+      "absoluteError": 171.99,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
     {
       "id": "401914130",
       "league": "NBA",
@@ -490,25 +509,6 @@
       "actualResult": "Alt",
       "status": "Başarılı",
       "success": true
-    },
-    {
-      "id": "401898718",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-10-14",
-      "home": null,
-      "away": null,
-      "prediction": "None",
-      "line": 225.32,
-      "expectedTotal": 225.77,
-      "homeScore": 89,
-      "awayScore": 101,
-      "actualTotal": 190,
-      "difference": -35.32,
-      "absoluteError": 35.32,
-      "actualResult": "Alt",
-      "status": "Başarısız",
-      "success": false
     }
   ],
   "closestPredictions": [
@@ -6666,6 +6666,139 @@
       "actualTotal": 227,
       "difference": -3.05,
       "absoluteError": 3.05,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "2d9c7d00-8e64-41eb-a85b-3f5ed7abbad6",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ALT",
+      "line": 182.52,
+      "expectedTotal": 179.63,
+      "homeScore": 97,
+      "awayScore": 83,
+      "actualTotal": 180,
+      "difference": -2.52,
+      "absoluteError": 2.52,
+      "actualResult": "Alt",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
+      "id": "3fe2519d-e3b0-4b3b-8ec6-10a74dd8ca3e",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 167.79,
+      "expectedTotal": 168.69,
+      "homeScore": 83,
+      "awayScore": 68,
+      "actualTotal": 151,
+      "difference": -16.79,
+      "absoluteError": 16.79,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "a2d3d0e9-462b-4a47-91d6-602086477f48",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 161.77,
+      "expectedTotal": 165.51,
+      "homeScore": 87,
+      "awayScore": 80,
+      "actualTotal": 167,
+      "difference": 5.23,
+      "absoluteError": 5.23,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
+      "id": "e4946db9-1fd3-48b8-90c6-50e36808928b",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 176.99,
+      "expectedTotal": 180.79,
+      "homeScore": 94,
+      "awayScore": 79,
+      "actualTotal": 173,
+      "difference": -3.99,
+      "absoluteError": 3.99,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "4e05fb62-e56c-45b4-ab87-7de78d92e160",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 170.5,
+      "expectedTotal": 175.45,
+      "homeScore": 84,
+      "awayScore": 78,
+      "actualTotal": 162,
+      "difference": -8.5,
+      "absoluteError": 8.5,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "7e28cdbf-4a20-48b7-99cc-1e9f42cc2ab4",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 180.48,
+      "expectedTotal": 184.16,
+      "homeScore": 98,
+      "awayScore": 94,
+      "actualTotal": 192,
+      "difference": 11.52,
+      "absoluteError": 11.52,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
+      "id": "babdabd1-645c-47cf-80e2-bd3615f8854d",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-10-30",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 171.99,
+      "expectedTotal": 176.81,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": 0,
+      "difference": -171.99,
+      "absoluteError": 171.99,
       "actualResult": "Alt",
       "status": "Başarısız",
       "success": false
