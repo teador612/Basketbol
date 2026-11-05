@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T05:40:53.365550+00:00",
+  "updatedAt": "2026-11-05T14:14:27.760112+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -7,23 +7,23 @@
     "secondaryMarketsExcluded": true
   },
   "overall": {
-    "total": 364,
-    "completed": 364,
+    "total": 365,
+    "completed": 365,
     "successful": 176,
-    "failed": 187,
+    "failed": 188,
     "push": 1,
-    "successRate": 48.48,
-    "averageError": 14.83
+    "successRate": 48.35,
+    "averageError": 14.79
   },
   "leagues": {
     "NBA": {
-      "total": 204,
-      "completed": 204,
+      "total": 205,
+      "completed": 205,
       "successful": 101,
-      "failed": 102,
+      "failed": 103,
       "push": 1,
-      "successRate": 49.75,
-      "averageError": 15.23
+      "successRate": 49.51,
+      "averageError": 15.17
     },
     "EuroLeague": {
       "total": 81,
@@ -46,13 +46,13 @@
   },
   "predictionTypes": {
     "ÜST": {
-      "total": 284,
-      "completed": 284,
+      "total": 285,
+      "completed": 285,
       "successful": 152,
-      "failed": 131,
+      "failed": 132,
       "push": 1,
-      "successRate": 53.71,
-      "averageError": 14.82
+      "successRate": 53.52,
+      "averageError": 14.78
     },
     "None": {
       "total": 32,
@@ -75,13 +75,13 @@
   },
   "lineRanges": {
     "200+": {
-      "total": 204,
-      "completed": 204,
+      "total": 205,
+      "completed": 205,
       "successful": 101,
-      "failed": 102,
+      "failed": 103,
       "push": 1,
-      "successRate": 49.75,
-      "averageError": 15.23
+      "successRate": 49.51,
+      "averageError": 15.17
     },
     "160-179": {
       "total": 126,
@@ -7809,6 +7809,25 @@
       "actualResult": "Alt",
       "status": "Başarılı",
       "success": true
+    },
+    {
+      "id": "401909935",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-11-05",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 235.48,
+      "expectedTotal": 236.89,
+      "homeScore": 116,
+      "awayScore": 117,
+      "actualTotal": 233,
+      "difference": -2.48,
+      "absoluteError": 2.48,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
     }
   ]
 }
