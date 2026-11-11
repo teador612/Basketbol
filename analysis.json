@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T05:12:56.088125+00:00",
+  "updatedAt": "2026-11-11T13:45:27.694601+00:00",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
     "analysisPurpose": "Mevcut ana tahminlerin başarı ve hata analizi",
@@ -7,23 +7,23 @@
     "secondaryMarketsExcluded": true
   },
   "overall": {
-    "total": 413,
-    "completed": 413,
-    "successful": 193,
-    "failed": 220,
+    "total": 415,
+    "completed": 415,
+    "successful": 194,
+    "failed": 221,
     "push": 0,
-    "successRate": 46.73,
-    "averageError": 14.94
+    "successRate": 46.75,
+    "averageError": 14.92
   },
   "leagues": {
     "NBA": {
-      "total": 235,
-      "completed": 235,
-      "successful": 111,
-      "failed": 124,
+      "total": 237,
+      "completed": 237,
+      "successful": 112,
+      "failed": 125,
       "push": 0,
-      "successRate": 47.23,
-      "averageError": 15.39
+      "successRate": 47.26,
+      "averageError": 15.34
     },
     "EuroLeague": {
       "total": 90,
@@ -46,13 +46,13 @@
   },
   "predictionTypes": {
     "ÜST": {
-      "total": 321,
-      "completed": 321,
-      "successful": 163,
-      "failed": 158,
+      "total": 323,
+      "completed": 323,
+      "successful": 164,
+      "failed": 159,
       "push": 0,
-      "successRate": 50.78,
-      "averageError": 15.04
+      "successRate": 50.77,
+      "averageError": 15.01
     },
     "ALT": {
       "total": 61,
@@ -75,13 +75,13 @@
   },
   "lineRanges": {
     "200+": {
-      "total": 235,
-      "completed": 235,
-      "successful": 111,
-      "failed": 124,
+      "total": 237,
+      "completed": 237,
+      "successful": 112,
+      "failed": 125,
       "push": 0,
-      "successRate": 47.23,
-      "averageError": 15.39
+      "successRate": 47.26,
+      "averageError": 15.34
     },
     "160-179": {
       "total": 139,
@@ -722,6 +722,25 @@
       "success": true
     },
     {
+      "id": "401909965",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-11-11",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 225.44,
+      "expectedTotal": 227.6,
+      "homeScore": 123,
+      "awayScore": 103,
+      "actualTotal": 226,
+      "difference": 0.56,
+      "absoluteError": 0.56,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
+    },
+    {
       "id": "401909858",
       "league": "NBA",
       "season": "2026",
@@ -869,25 +888,6 @@
       "actualTotal": 223,
       "difference": -1.0,
       "absoluteError": 1.0,
-      "actualResult": "Alt",
-      "status": "Başarısız",
-      "success": false
-    },
-    {
-      "id": "548af703-841c-49ae-8b9f-d48c4ac4eefd",
-      "league": "EuroCup",
-      "season": "U2026",
-      "date": "2026-10-06",
-      "home": null,
-      "away": null,
-      "prediction": "None",
-      "line": 169.03,
-      "expectedTotal": 169.0,
-      "homeScore": 75,
-      "awayScore": 93,
-      "actualTotal": 168,
-      "difference": -1.03,
-      "absoluteError": 1.03,
       "actualResult": "Alt",
       "status": "Başarısız",
       "success": false
@@ -8740,6 +8740,44 @@
       "actualResult": "Alt",
       "status": "Başarısız",
       "success": false
+    },
+    {
+      "id": "401909964",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-11-11",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 225.15,
+      "expectedTotal": 229.81,
+      "homeScore": 100,
+      "awayScore": 107,
+      "actualTotal": 207,
+      "difference": -18.15,
+      "absoluteError": 18.15,
+      "actualResult": "Alt",
+      "status": "Başarısız",
+      "success": false
+    },
+    {
+      "id": "401909965",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-11-11",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 225.44,
+      "expectedTotal": 227.6,
+      "homeScore": 123,
+      "awayScore": 103,
+      "actualTotal": 226,
+      "difference": 0.56,
+      "absoluteError": 0.56,
+      "actualResult": "Üst",
+      "status": "Başarılı",
+      "success": true
     }
   ]
 }
