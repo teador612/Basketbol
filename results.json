@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T13:09:56.795148+00:00",
+  "updatedAt": "2026-11-14T22:06:07.816490+00:00",
   "source": "predictions.json",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
@@ -10208,6 +10208,22 @@
       "success": null
     },
     {
+      "id": "401910016",
+      "league": "NBA",
+      "season": "2026",
+      "date": "2026-11-19",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 225.23,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
       "id": "401910013",
       "league": "NBA",
       "season": "2026",
@@ -10248,22 +10264,6 @@
       "away": null,
       "prediction": "ÜST",
       "line": 216.92,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "not_played",
-      "success": null
-    },
-    {
-      "id": "401910016",
-      "league": "NBA",
-      "season": "2026",
-      "date": "2026-11-19",
-      "home": null,
-      "away": null,
-      "prediction": "ÜST",
-      "line": 225.23,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
