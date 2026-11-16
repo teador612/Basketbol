@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T05:24:23.259182+00:00",
+  "updatedAt": "2026-11-16T15:09:39.644063+00:00",
   "source": "predictions.json",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
@@ -13292,22 +13292,6 @@
       "success": null
     },
     {
-      "id": "dcea1b44-46fd-4bde-a862-f730d855608a",
-      "league": "EuroLeague",
-      "season": "E2026",
-      "date": "2026-12-15",
-      "home": null,
-      "away": null,
-      "prediction": null,
-      "line": 173.39,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "not_played",
-      "success": null
-    },
-    {
       "id": "3bf61184-55b9-4c4b-82d5-24d3718601d1",
       "league": "EuroCup",
       "season": "U2026",
@@ -13364,6 +13348,22 @@
       "away": null,
       "prediction": "ÜST",
       "line": 159.06,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "dcea1b44-46fd-4bde-a862-f730d855608a",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-12-15",
+      "home": null,
+      "away": null,
+      "prediction": null,
+      "line": 173.39,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
@@ -13916,22 +13916,6 @@
       "success": null
     },
     {
-      "id": "8241ac16-1521-4577-a01e-8207f10d3d87",
-      "league": "EuroLeague",
-      "season": "E2026",
-      "date": "2026-12-17",
-      "home": null,
-      "away": null,
-      "prediction": "ÜST",
-      "line": 171.85,
-      "homeScore": 0,
-      "awayScore": 0,
-      "actualTotal": null,
-      "actualResult": null,
-      "status": "not_played",
-      "success": null
-    },
-    {
       "id": "6bf28092-b5a2-476a-bbc2-91b4b6597fc2",
       "league": "EuroLeague",
       "season": "E2026",
@@ -13940,6 +13924,22 @@
       "away": null,
       "prediction": "ÜST",
       "line": 171.98,
+      "homeScore": 0,
+      "awayScore": 0,
+      "actualTotal": null,
+      "actualResult": null,
+      "status": "not_played",
+      "success": null
+    },
+    {
+      "id": "8241ac16-1521-4577-a01e-8207f10d3d87",
+      "league": "EuroLeague",
+      "season": "E2026",
+      "date": "2026-12-17",
+      "home": null,
+      "away": null,
+      "prediction": "ÜST",
+      "line": 171.85,
       "homeScore": 0,
       "awayScore": 0,
       "actualTotal": null,
