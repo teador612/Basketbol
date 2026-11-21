@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T06:04:59.129604+00:00",
+  "updatedAt": "2026-11-21T18:50:02.270339+00:00",
   "source": "predictions.json",
   "settings": {
     "mainMarket": "Maç Toplam Alt/Üst",
@@ -10528,8 +10528,8 @@
       "away": null,
       "prediction": "ALT",
       "line": 238.75,
-      "homeScore": 0,
-      "awayScore": 0,
+      "homeScore": 41,
+      "awayScore": 45,
       "actualTotal": null,
       "actualResult": null,
       "status": "not_played",
